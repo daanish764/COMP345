@@ -1,12 +1,36 @@
-#include<iostream>
-#include<string>
-#include<fstream>
-#include<sstream>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <algorithm>    // std::random_shuffle for shuffling the deck (Part 5)
+#include <ctime>		// used for shuffling
 using namespace std;
 
 #include"City.h"
 #include"Map.h"
 #include"Player.h"
+#include"PowerPlant.h"
+#include"OverviewCard.h"
+
+vector<PowerPlant*> deck; //Vector where all the powerplant and 'Step 3' card will be (Part 5)
+
+//Shuffling the deck (Part 5)
+void Shuffle() {
+	random_shuffle(deck.begin(), deck.end());
+}
+
+// Printing the deck (Part 5)
+void printDeck()
+{
+	/*for (std::vector<PowerPlant*>::iterator i = deck.begin(); i != deck.end(); ++i) {
+		cout << *i << ' ';
+	}*/
+
+	for (int i = 0; i < deck.size(); i++) {
+		cout << deck[i]->getPlantNumber() << ' ';
+	}
+
+}
 
 bool readMapFromFile(Map* map, string file)
 {
@@ -58,6 +82,8 @@ bool readMapFromFile(Map* map, string file)
 	}
 
 }
+
+
 
 
 int main()
@@ -151,9 +177,7 @@ int main()
 
 	*/
 
-
-	
-
+	//PART 2
 	if (readMapFromFile(&map, "data.txt"))
 	{
 		cout << "success" << endl;
@@ -163,7 +187,80 @@ int main()
 		cout << "failure" << endl;
 	}
 
+
+	//PART 5
 	
+	//Creating the 43 powerplant cards
+
+	/*
+	CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD. It would have made little sense to create a new class for it since it has no real properties or owner. It makes sense to keep it with the powerplants because it is kept
+	in the deck with the powerplant cards and looks like a powerplant card from the back so it's like a "surprise draw": you think you're gonna pull a powerplant but it could be the Step 3 card.
+	*/
+
+	for (int i = 1; i <= 43; i++) //for loop creates the powerplant cards only(1 to 43) and pushes them to the deck vector (deck vector created at the top of this file)
+	{
+		PowerPlant* plant = new PowerPlant(i);
+		deck.push_back(plant);
+	}
+
+	cout << "\n\n***Printing the deck of powerplants pre-shuffle:\n\n";
+	printDeck();
+
+	//Shuffling the deck
+	srand(unsigned(std::time(0))); //C++ random is not truly random and you'd get the same shuffle each time. So we are using the current time as seed to get new shuffle patterns.
+	Shuffle();
+
+	cout << "\n\n***Printing the deck of powerplants post-shuffle:\n\n";
+	printDeck();
+
+
+
+	//creating the Step 3 card and inserting it at the bottom of the deck where it belongs after the shuffle
+	PowerPlant* Step3 = new PowerPlant(0);
+	deck.insert(deck.begin(), Step3);
+
+	cout << "\n\n***Printing deck after inserting the Step 3 Card (Card number 0) at the bottom of the deck:\n\n";
+	printDeck();
+	
+
+
+	cout << "\n\n***Now we are taking the top powerplant of the deck and assigning it to player John and using getOwner() method:\n\n";
+	Player* player1 = new Player("John");
+	
+	int topCard = deck.size() - 1;
+	deck[topCard]->setOwner(player1);
+	cout << "The owner of powerplant number "<< deck[topCard]->getPlantNumber() <<" is: " << deck[topCard]->getOwner()->getName();
+
+
+	//Creating and assigning the overview cards
+	/*
+	Images of the back and front of the overview cards: https://imgur.com/a/e1ChGtM  
+	I spoke about these cards with the prof on 28th Feb 2019. In real life, these cards are handed out to each player as a guide as to what the phases are and how much money they'll receive in phase 5(bureaucracy)
+	of the game. So basically, these are useless to the more experienced player and probably get tossed aside (or not even distributed) while playing. But the professor wants to see them in the game and wants 
+	it handed out to each player as she sees it like a player 'ID'. So the only property this card has is the card owner..
+	*/
+
+	//Lets create two overview cards for a 2 player game. I'll assign one of them to John since he's already created.
+	
+	vector<OverviewCard*> players; //storage for overview card pointers. Basically where all the players lie. We will probably use this vector in the future to determine/switch player order etc.
+
+	OverviewCard* idCard1 = new OverviewCard(1);
+	idCard1->setOwner(player1); //player1 aka john
+
+	Player* player2 = new Player("Marcos");
+	OverviewCard* idCard2 = new OverviewCard(2);
+	idCard2->setOwner(player2);
+
+	//placing the id/overview cards into the vector
+	players.push_back(idCard1);
+	players.push_back(idCard2);
+
+
+	cout << "\n\n***Overview cards created and assigned to players John and Marcos(for a 2 player game).\n";
+	cout << "***Printing all participants' names via OverviewCard's getOwner() method:\n\n";
+	for (int i = 0; i < players.size(); i++) {
+		cout << "Player " << i+1 << ": " << players[i]->getOwner()->getName() << '\n';
+	}
 
 	cout << endl;
 	system("PAUSE");
