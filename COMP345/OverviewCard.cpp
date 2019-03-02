@@ -1,6 +1,7 @@
 #include "OverviewCard.h"
 #include "Player.h"
 #include <iostream>
+using namespace std;
 
 
 OverviewCard::OverviewCard()
@@ -18,6 +19,11 @@ void OverviewCard::setOwner(Player* name) {
 	this->owner = name;
 }
 
-Player* OverviewCard::getOwner() {
+const Player* OverviewCard::getOwner() const {
 	return this->owner;
+}
+
+void OverviewCard::printDescription() const
+{
+	cout << "OverViewCard: " << this->getOwner()->getName() << "\n" << this->description << endl;
 }
