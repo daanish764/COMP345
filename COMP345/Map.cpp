@@ -165,3 +165,7 @@ City* Map::getCity(string cityName)
 	}
 	return NULL;
 }
+
+vector<City*> Map::getCityList() {
+	return cityList;
+}

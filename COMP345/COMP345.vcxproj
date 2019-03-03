@@ -21,19 +21,23 @@
   <ItemGroup>
     <ClInclude Include="City.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="OverviewCard.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PowerPlant.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="OverviewCard.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PowerPlant.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{18D868A7-65D6-4AC5-A296-7AD83049D9DD}</ProjectGuid>
     <RootNamespace>COMP345</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
