@@ -79,7 +79,7 @@ void Player::setUranium(int uranium)
 	this->uranium = uranium;
 }
 
-void Player::getInfo()
+void Player::getPlayerInfo()
 {
-	std::cout << "Player Name: " << name << "\nElectro: " << electro << "\nCoal: " << coal << "\nGarbage: " << garbage << "\nOil: " << oil << "\nUranium: " << uranium << std::endl;
+	std::cout << "Player Name: " << name << "\Color: " << color << "\nElectro: " << electro << "\nCoal: " << coal << "\nGarbage: " << garbage << "\nOil: " << oil << "\nUranium: " << uranium << std::endl;
 }

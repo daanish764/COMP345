@@ -4,6 +4,7 @@
 #include <sstream>
 #include <algorithm>    // std::random_shuffle for shuffling the deck (Part 5)
 #include <ctime>		// used for shuffling
+#include <map>
 using namespace std;
 
 #include"City.h"
@@ -43,7 +44,7 @@ bool readMapFromFile(Map* map, string file)
 	string line;
 	if (myFile.is_open())
 	{
-		while (myFile >> line)
+		while (myFile >> line && line != "####")
 		{
 			cities.push_back(line);
 		}
@@ -188,7 +189,49 @@ int main()
 	}
 
 
+	//PART 3
+	
+	int availableHouses = 132;
+	cout << "\n\n***PART 3";
+	cout << "\n***Lets print Montreal's current status\n";
+	cout << map.getCity("Montreal")->getCityStatus();
+
+	cout << "\n\n***Printing Montreal status after adding a red and blue house\n";
+
+	map.getCity("Montreal")->placeRedHouse();
+	map.getCity("Montreal")->placeBlueHouse();
+	cout << map.getCity("Montreal")->getCityStatus() + "\n\n";
+
+
+	cout << "\n\n***Lets add more houses to more cities and print status of all cities\n";
+	map.getCity("Toronto")->placeGreenHouse();
+	map.getCity("Edmonton")->placeYellowHouse();
+	map.getCity("Calgary")->placeOrangeHouse();
+	map.getCity("Calgary")->placePurpleHouse();
+	map.getCity("Houston")->placeGreenHouse();
+	map.getCity("Houston")->placeOrangeHouse();
+
+
+	vector<City*> cityList = map.getCityList();
+	for (int i = 0; i < cityList.size(); i++) {
+		cout << cityList[i]->getCityStatus() << ' ';
+	}
+
+
+	cout << "\n\n***Saving city status onto the game map (check txt file)\n";
+	std::ofstream out;
+	
+	out.open("data.txt", std::ios::app);
+	for (int i = 0; i < cityList.size(); i++) {
+		std::string str = (cityList[i]->getCityStatus());
+		out << str;
+	}
+	
+	
+
 	//PART 5
+
+	cout << "\n\n***PART 5\n\n";
 	
 	//Creating the 43 powerplant cards
 

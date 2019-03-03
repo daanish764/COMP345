@@ -6,6 +6,7 @@ class Player
 {
 private:
 	string name;
+	string color;
 	int electro;
 	int coal;
 	int garbage;
@@ -26,7 +27,7 @@ public:
 	void setOil(int oil);
 	int getUranium();
 	void setUranium(int uranium);
-	void getInfo();
+	void getPlayerInfo();
 
 };
 

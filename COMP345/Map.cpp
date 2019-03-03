@@ -11,6 +11,7 @@ using namespace std;
 
 Map::Map()
 {
+	availableHouses = 132;
 }
 
 
@@ -164,4 +165,8 @@ City* Map::getCity(string cityName)
 
 	}
 	return NULL;
+}
+
+vector<City*> Map::getCityList() {
+	return cityList;
 }

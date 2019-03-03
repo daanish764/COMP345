@@ -12,6 +12,7 @@ private:
 	vector<City*> cityList;
 	City* firstCity;
 public:
+	int availableHouses;
 	Map();
 	~Map();
 	void addCity(City* city);
@@ -20,5 +21,6 @@ public:
 	const bool allCitiesConnected() const;
 	const void printAllCities() const;
 	City* getCity(const string cityName);
+	vector<City*> getCityList();
 };
 
