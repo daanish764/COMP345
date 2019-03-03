@@ -15,6 +15,17 @@ using namespace std;
 
 vector<PowerPlant*> deck; //Vector where all the powerplant and 'Step 3' card will be (Part 5)
 
+int Map::availableRedHouses = 22;
+int Map::availableGreenHouses = 22;
+int Map::availableBlueHouses = 22;
+int Map::availablePurpleHouses = 22;
+int Map::availableOrangeHouses = 22;
+int Map::availableYellowHouses = 22;
+int Map::availableCoal = 24;
+int Map::availableOil = 24;
+int Map::availableGarbage = 24;
+int Map::availableUranium = 12;
+
 //Shuffling the deck (Part 5)
 void Shuffle() {
 	random_shuffle(deck.begin(), deck.end());
@@ -191,7 +202,8 @@ int main()
 
 	//PART 3
 	
-	int availableHouses = 132;
+
+
 	cout << "\n\n***PART 3";
 	cout << "\n***Lets print Montreal's current status\n";
 	cout << map.getCity("Montreal")->getCityStatus();
@@ -203,7 +215,7 @@ int main()
 	cout << map.getCity("Montreal")->getCityStatus() + "\n\n";
 
 
-	cout << "\n\n***Lets add more houses to more cities and print status of all cities\n";
+	cout << "\n\n***Lets add more houses to more cities and print status of all cities and resources\n";
 	map.getCity("Toronto")->placeGreenHouse();
 	map.getCity("Edmonton")->placeYellowHouse();
 	map.getCity("Calgary")->placeOrangeHouse();
@@ -217,8 +229,18 @@ int main()
 		cout << cityList[i]->getCityStatus() << ' ';
 	}
 
+	cout << "\n\n***AVAILABLE HOUSES";
+	string availHouses = ("\nRed Houses: " + std::to_string(Map::availableRedHouses) + " | Green Houses: " + std::to_string(Map::availableGreenHouses) + " | Blue Houses: " + std::to_string(Map::availableBlueHouses)
+		+ " | Purple Houses: " + std::to_string(Map::availablePurpleHouses) + " | Orange Houses: " + std::to_string(Map::availableOrangeHouses) + " | Yellow Houses: " + std::to_string(Map::availableYellowHouses));
+	cout << availHouses;
 
-	cout << "\n\n***Saving city status onto the game map (check txt file)\n";
+	cout << "\n\n***AVAILABLE RESOURCES";
+	string availRes = ("\nCoal: " + std::to_string(Map::availableCoal) + " | Oil: " + std::to_string(Map::availableOil) + " | Garbage: " + std::to_string(Map::availableGarbage) + " | Uranium: " + std::to_string(Map::availableUranium));
+	cout << availRes;
+
+	
+	
+	cout << "\n\n***Saving city and resource status onto the game map (check txt file)\n";
 	std::ofstream out;
 	
 	out.open("data.txt", std::ios::app);
@@ -226,12 +248,14 @@ int main()
 		std::string str = (cityList[i]->getCityStatus());
 		out << str;
 	}
-	
+	out << "\n\n####";
+	out << availHouses;
+	out << availRes;
 	
 
 	//PART 5
 
-	cout << "\n\n***PART 5\n\n";
+	cout << "\n\n***PART 5\n";
 	
 	//Creating the 43 powerplant cards
 
@@ -246,7 +270,7 @@ int main()
 		deck.push_back(plant);
 	}
 
-	cout << "\n\n***Printing the deck of powerplants pre-shuffle:\n\n";
+	cout << "\n***Printing the deck of powerplants pre-shuffle:\n\n";
 	printDeck();
 
 	//Shuffling the deck
