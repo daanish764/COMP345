@@ -251,9 +251,11 @@ int main()
 	OverviewCard* idCard2 = new OverviewCard(2);
 	idCard2->setOwner(player2);
 
+	/*
 	cout << "\n-----\n";
 	idCard2->printDescription();
 	cout << "\n-----\n";
+	*/
 	//placing the id/overview cards into the vector
 	players.push_back(idCard1);
 	players.push_back(idCard2);
