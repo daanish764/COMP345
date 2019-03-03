@@ -22,6 +22,7 @@ public:
 	static int availableOil;
 	static int availableGarbage;
 	static int availableUranium;
+	static int availableElektro;
 	Map();
 	~Map();
 	void addCity(City* city);

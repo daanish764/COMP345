@@ -25,6 +25,7 @@ int Map::availableCoal = 24;
 int Map::availableOil = 24;
 int Map::availableGarbage = 24;
 int Map::availableUranium = 12;
+int Map::availableElektro = 100000;
 
 //Shuffling the deck (Part 5)
 void Shuffle() {
@@ -235,7 +236,8 @@ int main()
 	cout << availHouses;
 
 	cout << "\n\n***AVAILABLE RESOURCES";
-	string availRes = ("\nCoal: " + std::to_string(Map::availableCoal) + " | Oil: " + std::to_string(Map::availableOil) + " | Garbage: " + std::to_string(Map::availableGarbage) + " | Uranium: " + std::to_string(Map::availableUranium));
+	string availRes = ("\nCoal: " + std::to_string(Map::availableCoal) + " | Oil: " + std::to_string(Map::availableOil) + " | Garbage: " + std::to_string(Map::availableGarbage) + " | Uranium: " + std::to_string(Map::availableUranium)
+		+ " | Elektro: " + std::to_string(Map::availableElektro));
 	cout << availRes;
 
 	
@@ -248,9 +250,10 @@ int main()
 		std::string str = (cityList[i]->getCityStatus());
 		out << str;
 	}
-	out << "\n\n####";
+	out << "\n\n####AVAILABLE RESOURCES";
 	out << availHouses;
 	out << availRes;
+	out.close();
 	
 
 	//PART 5
