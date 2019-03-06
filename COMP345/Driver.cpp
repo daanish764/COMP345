@@ -302,7 +302,7 @@ int main()
 
 	// PART 4
 	cout << "\n\t***PART 4\t\n";
-	cout << "***Lets create a new player Scott and assign him team orange/orange houses. So all the cities with red houses would be part of his/her network\n";
+	cout << "***Lets create a new player Scott and assign him team orange/orange houses. So all the cities with orange houses would be part of his/her network\n";
 
 	Player part4player = Player("Scott", "orange");
 	cout << "***Lets see which cities Scott owns using our printPlayerNetwork() method";
