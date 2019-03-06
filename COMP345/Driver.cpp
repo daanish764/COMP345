@@ -96,6 +96,52 @@ bool readMapFromFile(Map* map, string file)
 
 }
 
+void printPlayerNetwork(Player player, vector<City*> cityList) {
+	cout << "\n\nPlayer " + player.getName() + " has in his network:";
+
+	if (player.getHouseColor() == "red") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->redHouse == 1) {
+				cout << "\n-" + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player.getHouseColor() == "blue") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->blueHouse == 1) {
+				cout << "\n-" + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player.getHouseColor() == "green") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->greenHouse == 1) {
+				cout << "\n-" + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player.getHouseColor() == "purple") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->purpleHouse == 1) {
+				cout << "\n-" + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player.getHouseColor() == "orange") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->orangeHouse == 1) {
+				cout << "\n-" + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player.getHouseColor() == "yellow") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->yellowHouse == 1) {
+				cout << "\n-" + cityList[i]->getCityName();
+			}
+		}
+	}
+}
 
 
 
@@ -202,8 +248,6 @@ int main()
 
 
 	//PART 3
-	
-
 
 	cout << "\n\n***PART 3";
 	cout << "\n***Lets print Montreal's current status\n";
@@ -218,6 +262,7 @@ int main()
 
 	cout << "\n\n***Lets add more houses to more cities and print status of all cities and resources\n";
 	map.getCity("Toronto")->placeGreenHouse();
+	map.getCity("Toronto")->placeOrangeHouse();
 	map.getCity("Edmonton")->placeYellowHouse();
 	map.getCity("Calgary")->placeOrangeHouse();
 	map.getCity("Calgary")->placePurpleHouse();
@@ -254,7 +299,27 @@ int main()
 	out << availHouses;
 	out << availRes;
 	out.close();
+
+	// PART 4
+	cout << "\n\t***PART 4\t\n";
+	cout << "***Lets create a new player Scott and assign him team orange/orange houses. So all the cities with red houses would be part of his/her network\n";
+
+	Player part4player = Player("Scott", "orange");
+	cout << "***Lets see which cities Scott owns using our printPlayerNetwork() method";
 	
+	printPlayerNetwork(part4player, cityList);
+
+	cout << "\n\n***Lets assign Scott some resources plus Elektros and print his status:\n\n";
+	part4player.assignCoal(4);
+	part4player.assignOil(6);
+	part4player.assignElektro(5000);
+
+	part4player.getPlayerInfo();
+
+	cout << "\n\n***And now the left over resources are:\n";
+	string tempres = ("\nCoal: " + std::to_string(Map::availableCoal) + " | Oil: " + std::to_string(Map::availableOil) + " | Garbage: " + std::to_string(Map::availableGarbage) + " | Uranium: " + std::to_string(Map::availableUranium)
+		+ " | Elektro: " + std::to_string(Map::availableElektro));
+	cout << tempres;
 
 	//PART 5
 
