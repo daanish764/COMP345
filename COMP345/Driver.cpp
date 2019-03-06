@@ -202,8 +202,6 @@ int main()
 
 
 	//PART 3
-	
-
 
 	cout << "\n\n***PART 3";
 	cout << "\n***Lets print Montreal's current status\n";
@@ -254,6 +252,45 @@ int main()
 	out << availHouses;
 	out << availRes;
 	out.close();
+
+	// PART 4
+	cout << "\n\tPART 4\t\n";
+	Player Johnathan = Player("red");
+	int JohnathanHouseCounter = 0;
+	vector<City*> johnathanCities;
+	Player Mike = Player("green");
+	vector<City*> mikeCities;
+
+	vector<City*> cityList2 = map.getCityList();
+
+	for (int i = 0; i < cityList2.size(); i++) {
+		if (cityList2[i]->redHouse > 0)
+		{
+			johnathanCities.push_back(cityList2[i]);
+		}
+		if (cityList2[i]->greenHouse > 0)
+		{
+			mikeCities.push_back(cityList2[i]);
+		}
+	}
+	
+	cout << "johnathan can power " << johnathanCities.size() << endl;
+	for (int i = 0; i < johnathanCities.size(); i++)
+	{
+		cout << "johnathan owns " << johnathanCities.at(i)->getCityName() << endl;
+	}
+	Johnathan.getPlayerInfo();
+
+	cout << "mike can power " << mikeCities.size() << endl;
+	for (int i = 0; i < mikeCities.size(); i++)
+	{
+		cout << "mike owns " << mikeCities.at(i)->getCityName() << endl;
+	}
+	Mike.getPlayerInfo();
+
+	
+
+
 	
 
 	//PART 5

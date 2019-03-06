@@ -15,7 +15,13 @@ Player::Player()
 
 Player::Player(string playerName)
 {
+	
 	name = playerName;
+	electro = 0;
+	coal = 0;
+	garbage = 0;
+	oil = 0;
+	uranium = 0;
 }
 
 Player::~Player()

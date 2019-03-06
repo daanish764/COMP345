@@ -7,3 +7,135 @@ Chicago Houston
 Edmonton Houston
 
 ####
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
+Toronto | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Montreal | Red House: 1 | Green House: 0 | Blue House: 1 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Ottawa | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Vancover | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Calgary | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 1 | Orange House: 1 | Yellow House: 0
+Chicago | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 0
+Edmonton | Red House: 0 | Green House: 0 | Blue House: 0 | Purple House: 0 | Orange House: 0 | Yellow House: 1
+Houston | Red House: 0 | Green House: 1 | Blue House: 0 | Purple House: 0 | Orange House: 1 | Yellow House: 0
+
+####AVAILABLE RESOURCES
+Red Houses: 21 | Green Houses: 20 | Blue Houses: 21 | Purple Houses: 21 | Orange Houses: 20 | Yellow Houses: 21
+Coal: 24 | Oil: 24 | Garbage: 24 | Uranium: 12 | Elektro: 100000
