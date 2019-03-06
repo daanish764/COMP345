@@ -150,8 +150,8 @@ int main()
 	// creating a Map
 	Map map = Map();
 
-	/*
-	// PART 1 
+	
+	// PART 1
 	Player Johnathan = Player("Johnathan");
 	Player Micheal = Player("Micheal");
 	Player Austin = Player("Austin");
@@ -207,6 +207,7 @@ int main()
 	}
 	else {
 		cout << "no all the cities are not connected " << endl;
+
 	}
 
 	cout << endl;
@@ -225,6 +226,8 @@ int main()
 	}
 	else {
 		cout << "no all the cities are not connected " << endl;
+		system("PAUSE");
+		return 1;
 	}
 
 
@@ -234,7 +237,7 @@ int main()
 	cout << cityX->getCityName() << endl;
 	
 
-	*/
+	
 
 	//PART 2
 	if (readMapFromFile(&map, "data.txt"))
@@ -244,6 +247,8 @@ int main()
 	else
 	{
 		cout << "failure" << endl;
+		system("PAUSE");
+		return 1;
 	}
 
 
