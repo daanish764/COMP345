@@ -7,7 +7,7 @@ class Player
 private:
 	string name;
 	string color;
-	int electro;
+	int elektro;
 	int coal;
 	int garbage;
 	int oil;
@@ -15,19 +15,26 @@ private:
 public:
 	Player();
 	Player(string name);
+	Player(string name, string houseColor);
+	string getHouseColor();
 	~Player();
 	string getName() const;
-	int getElectro();
-	void setElectro(int electro);
+	int getElektro();
+	
 	int getCoal();
-	void setCoal(int coal);
+	
 	int getGarbage();
-	void setGarbage(int garbage);
+	
 	int getOil();
-	void setOil(int oil);
+	
 	int getUranium();
-	void setUranium(int uranium);
+
 	void getPlayerInfo();
 
+	void assignOil(int num);
+	void assignGarbage(int num);
+	void assignCoal(int num);
+	void assignUranium(int num);
+	void assignElektro(int num);
 };
 
