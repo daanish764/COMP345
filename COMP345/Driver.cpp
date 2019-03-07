@@ -149,8 +149,8 @@ int main()
 	// creating a Map
 	Map map = Map();
 
-	
-/*	// PART 1 START 
+/*
+	// PART 1 START 
 	Player Johnathan = Player("Johnathan");
 	Player Micheal = Player("Micheal");
 	Player Austin = Player("Austin");
@@ -231,9 +231,7 @@ int main()
 	}
 	// PART 1 END 
 */
-
-	
-
+/*
 	// PART 2 START
 	// reading from the text file
 	if (readMapFromFile(&map, "data.txt"))
@@ -247,9 +245,8 @@ int main()
 		return 1;
 	}
 	 // PART 2 END
-
-
-	
+*/
+/*
 	//PART 3 (depends on part 2)
 
 	cout << "\n\n***PART 3";
@@ -303,9 +300,11 @@ int main()
 	out << availRes;
 	out.close();
 
-	
+	// PART 3 END
+*/
+/*
 	// PART 4 (depends on part 3)
-	cout << "\n\t***PART 4\t\n";
+	cout << "\n***PART 4\t\n";
 	cout << "***Lets create a new player Scott and assign him team orange/orange houses. So all the cities with orange houses would be part of his/her network\n";
 
 	Player part4player = Player("Scott", "orange");
@@ -324,7 +323,9 @@ int main()
 	string tempres = ("\nCoal: " + std::to_string(Map::availableCoal) + " | Oil: " + std::to_string(Map::availableOil) + " | Garbage: " + std::to_string(Map::availableGarbage) + " | Uranium: " + std::to_string(Map::availableUranium)
 		+ " | Elektro: " + std::to_string(Map::availableElektro));
 	cout << tempres;
-
+	// PART 4 END
+*/
+/*
 	//PART 5 (Depends on Part 4)
 
 	cout << "\n\n***PART 5\n";
@@ -332,7 +333,7 @@ int main()
 	//Creating the 43 powerplant cards
 
 	
-	//	CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD. 
+	//CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD. 
 
 	//for loop creates the powerplant cards only(1 to 43) and pushes them to the deck vector (deck vector created at the top of this file)
 	for (int i = 1; i <= 43; i++) 
@@ -394,7 +395,8 @@ int main()
 	for (int i = 0; i < players.size(); i++) {
 		cout << "Player " << i+1 << ": " << players[i]->getOwner()->getName() << '\n';
 	}
-	
+	// PART 5 END
+*/
 	cout << endl;
 	system("PAUSE");
 	return 0;
