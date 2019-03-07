@@ -33,6 +33,10 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerPlant.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="data - fresh copy.txt" />
+    <Text Include="data.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{18D868A7-65D6-4AC5-A296-7AD83049D9DD}</ProjectGuid>
