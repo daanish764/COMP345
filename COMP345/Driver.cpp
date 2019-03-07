@@ -90,10 +90,9 @@ bool readMapFromFile(Map* map, string file)
 	}
 	else
 	{
-		cout << "Nope, not connected WTF" << endl;
+		cout << "Nope, map is not connected" << endl;
 		return false;
 	}
-
 }
 
 void printPlayerNetwork(Player player, vector<City*> cityList) {
@@ -150,8 +149,8 @@ int main()
 	// creating a Map
 	Map map = Map();
 
-	/*
-	// PART 1 
+	
+/*	// PART 1 START 
 	Player Johnathan = Player("Johnathan");
 	Player Micheal = Player("Micheal");
 	Player Austin = Player("Austin");
@@ -165,6 +164,7 @@ int main()
 	cout << "-----------------------------------" << endl;
 	cout << endl;
 
+	// creating cities with players assigned to them.
 	City montrealCity = City("Montreal", &Johnathan);
 	City lavalCity = City("Laval", &Micheal);
 	City torontoCity = City("Toronto", &Austin);
@@ -207,6 +207,7 @@ int main()
 	}
 	else {
 		cout << "no all the cities are not connected " << endl;
+
 	}
 
 	cout << endl;
@@ -225,18 +226,16 @@ int main()
 	}
 	else {
 		cout << "no all the cities are not connected " << endl;
+		system("PAUSE");
+		return 1;
 	}
+	// PART 1 END 
+*/
 
-
-
-	City* cityX = map.getCity("Montreal");
-
-	cout << cityX->getCityName() << endl;
 	
 
-	*/
-
-	//PART 2
+	// PART 2 START
+	// reading from the text file
 	if (readMapFromFile(&map, "data.txt"))
 	{
 		cout << "success" << endl;
@@ -244,10 +243,14 @@ int main()
 	else
 	{
 		cout << "failure" << endl;
+		system("PAUSE");
+		return 1;
 	}
+	 // PART 2 END
 
 
-	//PART 3
+	
+	//PART 3 (depends on part 2)
 
 	cout << "\n\n***PART 3";
 	cout << "\n***Lets print Montreal's current status\n";
@@ -300,9 +303,10 @@ int main()
 	out << availRes;
 	out.close();
 
-	// PART 4
+	
+	// PART 4 (depends on part 3)
 	cout << "\n\t***PART 4\t\n";
-	cout << "***Lets create a new player Scott and assign him team orange/orange houses. So all the cities with red houses would be part of his/her network\n";
+	cout << "***Lets create a new player Scott and assign him team orange/orange houses. So all the cities with orange houses would be part of his/her network\n";
 
 	Player part4player = Player("Scott", "orange");
 	cout << "***Lets see which cities Scott owns using our printPlayerNetwork() method";
@@ -321,18 +325,17 @@ int main()
 		+ " | Elektro: " + std::to_string(Map::availableElektro));
 	cout << tempres;
 
-	//PART 5
+	//PART 5 (Depends on Part 4)
 
 	cout << "\n\n***PART 5\n";
 	
 	//Creating the 43 powerplant cards
 
-	/*
-	CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD. It would have made little sense to create a new class for it since it has no real properties or owner. It makes sense to keep it with the powerplants because it is kept
-	in the deck with the powerplant cards and looks like a powerplant card from the back so it's like a "surprise draw": you think you're gonna pull a powerplant but it could be the Step 3 card.
-	*/
+	
+	//	CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD. 
 
-	for (int i = 1; i <= 43; i++) //for loop creates the powerplant cards only(1 to 43) and pushes them to the deck vector (deck vector created at the top of this file)
+	//for loop creates the powerplant cards only(1 to 43) and pushes them to the deck vector (deck vector created at the top of this file)
+	for (int i = 1; i <= 43; i++) 
 	{
 		PowerPlant* plant = new PowerPlant(i);
 		deck.push_back(plant);
@@ -367,13 +370,7 @@ int main()
 	cout << "The owner of powerplant number "<< deck[topCard]->getPlantNumber() <<" is: " << deck[topCard]->getOwner()->getName();
 
 
-	//Creating and assigning the overview cards
-	/*
-	Images of the back and front of the overview cards: https://imgur.com/a/e1ChGtM  
-	I spoke about these cards with the prof on 28th Feb 2019. In real life, these cards are handed out to each player as a guide as to what the phases are and how much money they'll receive in phase 5(bureaucracy)
-	of the game. So basically, these are useless to the more experienced player and probably get tossed aside (or not even distributed) while playing. But the professor wants to see them in the game and wants 
-	it handed out to each player as she sees it like a player 'ID'. So the only property this card has is the card owner..
-	*/
+	//Creating and assigning the overview cards	
 
 	//Lets create two overview cards for a 2 player game. I'll assign one of them to John since he's already created.
 	
@@ -386,12 +383,8 @@ int main()
 	OverviewCard* idCard2 = new OverviewCard(2);
 	idCard2->setOwner(player2);
 
-	/*
-	cout << "\n-----\n";
-	idCard2->printDescription();
-	cout << "\n-----\n";
-	*/
-	//placing the id/overview cards into the vector
+
+	//placing the overview cards into the vector
 	players.push_back(idCard1);
 	players.push_back(idCard2);
 
@@ -401,7 +394,7 @@ int main()
 	for (int i = 0; i < players.size(); i++) {
 		cout << "Player " << i+1 << ": " << players[i]->getOwner()->getName() << '\n';
 	}
-
+	
 	cout << endl;
 	system("PAUSE");
 	return 0;

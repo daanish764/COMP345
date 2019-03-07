@@ -27,8 +27,7 @@ City::City(string cityName, Player * player)
 
 City::~City()
 {
-	delete owner;
-	delete &adjacentCities;
+	
 }
 
 void City::setCityName(const string cityName)
