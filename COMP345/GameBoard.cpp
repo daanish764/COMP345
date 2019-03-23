@@ -259,7 +259,8 @@ void GameBoard::part2()
 					cout << "It's " << activeBidders[currentBidder]->getName() << "'s turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
 
-					currentBid = std::max(currentBid, chosenPlant); //ensures the auction starter bids minimum the plant value
+					//ensures the auction starter bids minimum the plant value AND people don't bid over than what they have
+					currentBid = std::min(std::max(currentBid, chosenPlant), activeBidders[currentBidder]->getElektro()); 
 
 					if (currentBid <= highestBid) { //Bad bid. Lower than or equal to  highest bid
 						cout << "Chose to sit out of current bidding war.\n" << endl;
@@ -268,7 +269,7 @@ void GameBoard::part2()
 							currentBidder = 0;
 						}
 					}
-					else { //If it's a good bid i.e. 
+					else { //If it's a good bid
 						cout << activeBidders[currentBidder]->getName() << " bid " << currentBid << ".\n" << endl;
 						currentBidder = (currentBidder + 1) % activeBidders.size(); //point to the next person to ask their bid
 						highestBid = currentBid; //the current bid is now the highest bid
@@ -418,7 +419,7 @@ void setUp()
 	cout << "----END----\n" << endl;
 
 	string startcity;
-	/*for (int i = 0; i < numberOfPlayer; i++)
+	for (int i = 0; i < numberOfPlayer; i++)
 	{
 		while (true)
 		{
@@ -436,7 +437,7 @@ void setUp()
 
 			cout << "ERROR INVALID CITY!" << endl;
 		}
-	}*/
+	}
 }
 
 void setUpPowerPlantCards()
