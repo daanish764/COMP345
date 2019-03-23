@@ -60,6 +60,7 @@ void printPlayerNetwork(Player* player, vector<City*> cityList);
 void printPlayerPlants(Player* player);
 void printDeck();
 void sortPlayersDescending();
+void sortPlayersAscending();
 void sortMarket();
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
@@ -525,6 +526,17 @@ void sortPlayersDescending() {
 			return lhs->largestPlant > rhs->largestPlant;
 		}
 		return lhs->totalHouses > rhs->totalHouses;
+	});
+}
+
+//Same idea as above but reverse. Will be used for phases that require bottom to top turn orders etc.
+void sortPlayersAscending() {
+	stable_sort(players.begin(), players.end(), [](const Player* lhs, const Player* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
+
+		if (lhs->totalHouses == rhs->totalHouses) {
+			return lhs->largestPlant < rhs->largestPlant;
+		}
+		return lhs->totalHouses < rhs->totalHouses;
 	});
 }
 
