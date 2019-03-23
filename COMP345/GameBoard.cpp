@@ -56,134 +56,13 @@ int summaryCard[5][5] = {	{2, 3, 4, 5, 6},		// number of regions/players (set ac
 void setUpPowerPlantCards();
 int getPowerPlant(int x);
 void getBoardStatus(vector<City*> cities);
+void printPlayerNetwork(Player* player, vector<City*> cityList);
+void printPlayerPlants(Player* player);
+void printDeck();
+void sortPlayersDescending();
+void sortMarket();
 
-void printPlayerNetwork(Player* player, vector<City*> cityList) {
-	cout << "\nPlayer " + player->getName() + " has in his network:";
-
-	if (player->getHouseColor() == "red") {
-		for (int i = 0; i < cityList.size(); i++) {
-			if (cityList[i]->redHouse == 1) {
-				cout << " " + cityList[i]->getCityName();
-			}
-		}
-	}
-	if (player->getHouseColor() == "blue") {
-		for (int i = 0; i < cityList.size(); i++) {
-			if (cityList[i]->blueHouse == 1) {
-				cout << " " + cityList[i]->getCityName();
-			}
-		}
-	}
-	if (player->getHouseColor() == "green") {
-		for (int i = 0; i < cityList.size(); i++) {
-			if (cityList[i]->greenHouse == 1) {
-				cout << " " + cityList[i]->getCityName();
-			}
-		}
-	}
-	if (player->getHouseColor() == "purple") {
-		for (int i = 0; i < cityList.size(); i++) {
-			if (cityList[i]->purpleHouse == 1) {
-				cout << " " + cityList[i]->getCityName();
-			}
-		}
-	}
-	if (player->getHouseColor() == "orange") {
-		for (int i = 0; i < cityList.size(); i++) {
-			if (cityList[i]->orangeHouse == 1) {
-				cout << " " + cityList[i]->getCityName();
-			}
-		}
-	}
-	if (player->getHouseColor() == "yellow") {
-		for (int i = 0; i < cityList.size(); i++) {
-			if (cityList[i]->yellowHouse == 1) {
-				cout << " " + cityList[i]->getCityName();
-			}
-		}
-	}
-}
-
-void printPlayerPlants(Player* player) {
-	cout << player->getName() << " owns plants:";
-	for (int i = 0; i < powerplants.size(); i++) {
-		if (powerplants[i]->getOwner() == player) {
-			cout << " " << powerplants[i]->getPlantNumber();
-		}
-	}
-	cout << endl;
-}
-
-void printDeck()
-{
-	cout << "Printing powerplant deck";
-	for (int i = 0; i < deck.size(); i++) {
-		cout << deck[i]->getPlantNumber() << ' ';
-	}
-
-}
-
-//sorts by total houses owned. Ties broken by largest plant owned.
-void sortPlayersDescending() {
-	stable_sort(players.begin(), players.end(), [](const Player* lhs, const Player* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
-		
-		if (lhs->totalHouses == rhs->totalHouses) {
-			return lhs->largestPlant > rhs->largestPlant;
-		}
-		return lhs->totalHouses > rhs->totalHouses;
-	});
-}
-
-//Sorts market (future/actual)
-void sortMarket() {
-	stable_sort(market.begin(), market.end(), [](const PowerPlant* lhs, const PowerPlant* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
-
-		return lhs->getPlantNumber() < rhs->getPlantNumber();
-	});
-}
-
-bool readMapFromFile(Map* map, string file, int numberOfPlayer) //number of players == number of regions
-{
-	std::ifstream infile;
-
-	infile.open(file);
-
-	string city1, city2;
-	int cost;
-	
-	cout << "\n*** Loading " << numberOfPlayer << " adjacent regions and the connections between them with connection cost..." << endl;
-		while (infile >> city1 >> city2 >> cost)
-		{
-			City* firstCity = new City(city1);
-			City* secondCity = new City(city2);
-
-			cout << firstCity->getCityName() << " -> " << secondCity->getCityName() << " (" << cost << ")" << endl;
-
-			map->addCity(firstCity);
-			map->addCity(secondCity);
-
-			map->connectCity(firstCity, secondCity, cost);
-
-			if (map->getCities().size() == (numberOfPlayer * 7)) { //7 cities per number of players/region
-				break;
-			}
-		}
-	
-
-	infile.close();
-
-	if (map->allCitiesConnected())
-	{
-		// cout << "Yes, everything is connected." << endl;
-		return true;
-	}
-	else
-	{
-		cout << "Invalid Map File" << endl;
-		return false;
-	}
-
-}
+bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
 void GameBoard::part1()
 {
@@ -300,11 +179,11 @@ void GameBoard::part2()
 			}
 		}
 	}
-	//Lets see the powerplants all the player own
+	//Lets see the possessions all the player own
 
 	vector<City*> cities = citiesMap->getCities();
 
-	cout << "\n***Lets see which plants each player owns:\n";
+	cout << "\n***Lets see what each player owns at this point:\n";
 	for (int i = 0; i < players.size(); i++) {
 		cout << endl << endl;
 		players[i]->getPlayerInfo();
@@ -313,6 +192,49 @@ void GameBoard::part2()
 	}
 }
 
+
+bool readMapFromFile(Map* map, string file, int numberOfPlayer) //number of players == number of regions
+{
+	std::ifstream infile;
+
+	infile.open(file);
+
+	string city1, city2;
+	int cost;
+
+	cout << "\n*** Loading " << numberOfPlayer << " adjacent regions and the connections between them with connection cost..." << endl;
+	while (infile >> city1 >> city2 >> cost)
+	{
+		City* firstCity = new City(city1);
+		City* secondCity = new City(city2);
+
+		cout << firstCity->getCityName() << " -> " << secondCity->getCityName() << " (" << cost << ")" << endl;
+
+		map->addCity(firstCity);
+		map->addCity(secondCity);
+
+		map->connectCity(firstCity, secondCity, cost);
+
+		if (map->getCities().size() == (numberOfPlayer * 7)) { //7 cities per number of players/region
+			break;
+		}
+	}
+
+
+	infile.close();
+
+	if (map->allCitiesConnected())
+	{
+		// cout << "Yes, everything is connected." << endl;
+		return true;
+	}
+	else
+	{
+		cout << "Invalid Map File" << endl;
+		return false;
+	}
+
+}
 
 int getPowerPlant(int x) //used to be isValidCard. Serves similar purpose. Tells the location of powerplant in the actual market.
 {
@@ -340,7 +262,6 @@ void GameBoard::printMarket()
 	}
 	cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
 }
-
 
 void setUp()
 {
@@ -528,6 +449,91 @@ void getBoardStatus(vector<City*> cities) {
 	for (int i = 0; i < cities.size(); i++) {
 		cout << cities[i]->getCityStatus() << ' ';
 	}
+}
+
+void printPlayerNetwork(Player* player, vector<City*> cityList) {
+	cout << "\nPlayer " + player->getName() + " has in his network:";
+
+	if (player->getHouseColor() == "red") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->redHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player->getHouseColor() == "blue") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->blueHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player->getHouseColor() == "green") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->greenHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player->getHouseColor() == "purple") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->purpleHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player->getHouseColor() == "orange") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->orangeHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (player->getHouseColor() == "yellow") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->yellowHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+}
+
+void printPlayerPlants(Player* player) {
+	cout << player->getName() << " owns plants:";
+	for (int i = 0; i < powerplants.size(); i++) {
+		if (powerplants[i]->getOwner() == player) {
+			cout << " " << powerplants[i]->getPlantNumber();
+		}
+	}
+	cout << endl;
+}
+
+void printDeck()
+{
+	cout << "Printing powerplant deck";
+	for (int i = 0; i < deck.size(); i++) {
+		cout << deck[i]->getPlantNumber() << ' ';
+	}
+
+}
+
+//sorts by total houses owned. Ties broken by largest plant owned.
+void sortPlayersDescending() {
+	stable_sort(players.begin(), players.end(), [](const Player* lhs, const Player* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
+
+		if (lhs->totalHouses == rhs->totalHouses) {
+			return lhs->largestPlant > rhs->largestPlant;
+		}
+		return lhs->totalHouses > rhs->totalHouses;
+	});
+}
+
+//Sorts market (future/actual)
+void sortMarket() {
+	stable_sort(market.begin(), market.end(), [](const PowerPlant* lhs, const PowerPlant* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
+
+		return lhs->getPlantNumber() < rhs->getPlantNumber();
+	});
 }
 
 GameBoard::GameBoard()
