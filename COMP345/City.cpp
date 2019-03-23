@@ -1,6 +1,9 @@
 #include "City.h"
-#include "Map.h"
-#include <string>
+#include "GameBoard.h"
+#include<iostream>
+#include<string>
+using namespace std;
+
 
 City::City()
 {
@@ -10,24 +13,12 @@ City::City()
 City::City(string cityName)
 {
 	this->cityName = cityName;
-	redHouse = 0;
-	greenHouse = 0;
-	blueHouse = 0;
-	purpleHouse = 0;
-	orangeHouse = 0;
-	yellowHouse = 0;
-}
-
-City::City(string cityName, Player * player)
-{
-	this->cityName=cityName,
-	this->owner = player;
 }
 
 
 City::~City()
 {
-	
+
 }
 
 void City::setCityName(const string cityName)
@@ -41,44 +32,10 @@ string City::getCityName() const
 	return this->cityName;
 }
 
-string City::getCityStatus() {
-	return ("\n" + cityName + " | Red House: " + std::to_string(redHouse) + " | Green House: " + std::to_string(greenHouse) + " | Blue House: " + std::to_string(blueHouse)
-		+ " | Purple House: " + std::to_string(purpleHouse) + " | Orange House: " + std::to_string(orangeHouse) + " | Yellow House: " + std::to_string(yellowHouse));
-}
-
-void City::placeRedHouse() {
-	redHouse = 1;
-	Map::availableRedHouses -=1;
-}
-
-void City::placeGreenHouse() {
-	greenHouse = 1;
-	Map::availableGreenHouses -= 1;
-}
-
-void City::placeBlueHouse() {
-	blueHouse = 1;
-	Map::availableBlueHouses -= 1;
-}
-
-void City::placePurpleHouse() {
-	purpleHouse = 1;
-	Map::availablePurpleHouses -= 1;
-}
-
-void City::placeOrangeHouse() {
-	orangeHouse = 1;
-	Map::availableOrangeHouses -= 1;
-}
-
-void City::placeYellowHouse() {
-	yellowHouse = 1;
-	Map::availableYellowHouses -= 1;
-}
-
-void City::addAdjacentCity(City* city)
+void City::addAdjacentCity(City* city, int cost)
 {
 	adjacentCities.push_back(city);
+	this->cost.push_back(cost);
 }
 
 vector<City*> City::getAdjacentCities() const
@@ -92,17 +49,51 @@ void City::removeAdjacentCity(City * city)
 		if (adjacentCities.at(i) == city)
 		{
 			adjacentCities.erase(adjacentCities.begin() + i);
+			cost.erase(cost.begin() + i);
 		}
 	}
 
 }
 
-void City::setOwner(Player* player)
+void City::printAllAdjacentCities()
 {
-	this->owner = player;
+	for (unsigned int i = 0; i < adjacentCities.size(); i++)
+	{
+		cout << adjacentCities.at(i)->getCityName()<< " at a cost " << cost.at(i) << std::endl;
+	}
 }
 
-Player * City::getOwner() const
-{
-	return this->owner;
+string City::getCityStatus() {
+	return ("\n" + cityName + " | Red House: " + std::to_string(redHouse) + " | Green House: " + std::to_string(greenHouse) + " | Blue House: " + std::to_string(blueHouse)
+		+ " | Purple House: " + std::to_string(purpleHouse) + " | Orange House: " + std::to_string(orangeHouse) + " | Yellow House: " + std::to_string(yellowHouse));
+}
+
+void City::placeRedHouse() {
+	redHouse = 1;
+	GameBoard::availableRedHouses -= 1;
+}
+
+void City::placeGreenHouse() {
+	greenHouse = 1;
+	GameBoard::availableGreenHouses -= 1;
+}
+
+void City::placeBlueHouse() {
+	blueHouse = 1;
+	GameBoard::availableBlueHouses -= 1;
+}
+
+void City::placePurpleHouse() {
+	purpleHouse = 1;
+	GameBoard::availablePurpleHouses -= 1;
+}
+
+void City::placeOrangeHouse() {
+	orangeHouse = 1;
+	GameBoard::availableOrangeHouses -= 1;
+}
+
+void City::placeYellowHouse() {
+	yellowHouse = 1;
+	GameBoard::availableYellowHouses -= 1;
 }

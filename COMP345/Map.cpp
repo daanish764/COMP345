@@ -16,9 +16,6 @@ Map::Map()
 
 Map::~Map()
 {
-	// this does not work and I do not why
-	// delete &cityList;
-	// delete firstCity;
 	
 }
 
@@ -56,7 +53,7 @@ void Map::removeCity(City * city)
 	}
 }
 
-const void Map::connectCity(City* city1, City* city2)
+const void Map::connectCity(City* city1, City* city2, int cost)
 {
 
 	if (getCity(city1->getCityName()) != NULL)
@@ -67,8 +64,8 @@ const void Map::connectCity(City* city1, City* city2)
 	{
 		city2 = getCity(city2->getCityName());
 	}
-	city1->addAdjacentCity(city2);
-	city2->addAdjacentCity(city1);
+	city1->addAdjacentCity(city2, cost);
+	city2->addAdjacentCity(city1, cost);
 }
 
 const bool Map::allCitiesConnected() const {
@@ -166,6 +163,7 @@ City* Map::getCity(string cityName)
 	return NULL;
 }
 
-vector<City*> Map::getCityList() {
-	return cityList;
+vector<City*> Map::getCities() const
+{
+	return this->cityList;
 }

@@ -1,9 +1,46 @@
-Toronto Montreal
-Montreal Ottawa
-Vancover Calgary
-Calgary Chicago
-Edmonton Ottawa
-Chicago Houston
-Edmonton Houston
+Toronto Montreal 2
+Winnipeg Toronto 3
+Regina Winnipeg 2
+Edmonton Regina 3
+Victoria Edmonton 4
+Halifax Montreal 5
 
-####
+Seattle Victoria 9
+Portland Seattle 2
+Denver Portland 5
+Phoenix Denver 4
+Dallas Denver 4
+Houston Dallas 2
+Miami Houston 6
+
+Birmingham Miami 10
+London Birmingham 3
+Briston London 2
+Liverpool Birmingham 3
+Manchester Liverpool 1
+Leeds Manchester 2
+Newcastle Leeds 4
+
+Lille London 9
+Paris Lille 3
+Nantes Paris 4
+Lyon Paris 5
+Nice Lyon 4
+Marseille Nice 2
+Toulouse Lyon 5
+
+Barcelona Paris 9
+Madrid Barcelona 5
+Valencia Madrid 4
+Sevilla Madrid 6
+Cadiz Sevilla 3
+Bilbao Madrid 3
+Vigo Bilbao 3
+
+Mumbai Barcelona 11
+Pune Mumbai 1
+Delhi Mumbai 5
+Kolkata Delhi 6
+Chennai Kolkata 7
+Bangalore Chennai 2
+Lucknow Delhi 3

@@ -5,7 +5,7 @@
 class PowerPlant
 {
 private:
-	
+
 public:
 	int plantNumber;
 	int powersCities;
@@ -14,14 +14,15 @@ public:
 	int garbageRequired;
 	int uraniumRequired;
 	int hybridRequired;
+	int storageCap;
 	Player* owner;
 
 	PowerPlant();
 	PowerPlant(int plantNumber);
 	PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired);
 	~PowerPlant();
-	
+
 	int getPlantNumber() const;
-	void setOwner(Player* name);
+	void setOwner(Player* name, int cost);
 	Player* getOwner();
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include<vector>
-#include"Player.h"
+
 
 using std::string;
 using std::vector;
@@ -9,12 +9,12 @@ using std::vector;
 class City
 {
 private:
+	string cityName;
+	vector<City*> adjacentCities;
+	vector<int> cost;
 	
 
 public:
-	string cityName;
-	vector<City*> adjacentCities;
-	Player* owner;
 
 	int redHouse;
 	int greenHouse;
@@ -25,11 +25,16 @@ public:
 
 	City();
 	City(string cityName);
-	City(string cityName, Player* player);
 	~City();
 	
 	void setCityName(string cityName);
 	string getCityName() const;
+
+
+	void addAdjacentCity(City* city, int cost);
+	vector<City*> getAdjacentCities() const;
+	void removeAdjacentCity(City* city);
+	void printAllAdjacentCities();
 	string getCityStatus();
 
 	void placeRedHouse();
@@ -38,15 +43,5 @@ public:
 	void placePurpleHouse();
 	void placeOrangeHouse();
 	void placeYellowHouse();
-
-
-	void addAdjacentCity(City* city);
-	vector<City*> getAdjacentCities() const;
-
-	void removeAdjacentCity(City* city);
-
-	void setOwner(Player * player);
-	Player* getOwner() const;
-
 };
 

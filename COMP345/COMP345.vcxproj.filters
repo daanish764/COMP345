@@ -27,7 +27,7 @@
     <ClInclude Include="PowerPlant.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OverviewCard.h">
+    <ClInclude Include="GameBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,15 +47,12 @@
     <ClCompile Include="PowerPlant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OverviewCard.cpp">
+    <ClCompile Include="GameBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="data.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="data - fresh copy.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

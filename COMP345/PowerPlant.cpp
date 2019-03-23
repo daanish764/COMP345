@@ -12,6 +12,7 @@ PowerPlant::PowerPlant()
 	garbageRequired = 0;
 	uraniumRequired = 0;
 	hybridRequired = 0;
+	storageCap = (coalRequired + oilRequired + garbageRequired + uraniumRequired + hybridRequired) * 2;
 }
 
 PowerPlant::PowerPlant(int plantNumber)
@@ -28,6 +29,7 @@ PowerPlant::PowerPlant(int plantNumber, int powersCities, int coalRequired, int 
 	this->garbageRequired = garbageRequired;
 	this->uraniumRequired = uraniumRequired;
 	this->hybridRequired = hybridRequired;
+	storageCap = (coalRequired + oilRequired + garbageRequired + uraniumRequired + hybridRequired) * 2;
 }
 
 PowerPlant::~PowerPlant()
@@ -39,8 +41,9 @@ int PowerPlant::getPlantNumber() const
 	return plantNumber;
 }
 
-void PowerPlant::setOwner(Player* name) {
+void PowerPlant::setOwner(Player* name, int cost) {
 	this->owner = name;
+	name->subtractElektro(cost);
 }
 
 Player* PowerPlant::getOwner() {
