@@ -116,8 +116,8 @@ void GameBoard::part2()
 			activeAtAuction.erase(activeAtAuction.begin());
 		}
 		else {
-			while (getPowerPlant(chosenPlant) == -1) {
-				cout << "Please choose the power plant to bid on from actual market or enter 0 to pass and sit out entirely: ";
+			while (getPowerPlant(chosenPlant) == -1 || chosenPlant > activeAtAuction[0]->getElektro()) { //getPowerPlant == -1 means its not a valid plant from the actual market. 
+				cout << "Please choose the power plant(you can afford) to bid on from actual market or enter 0 to pass and sit out entirely: ";
 				cin >> chosenPlant;
 			}
 

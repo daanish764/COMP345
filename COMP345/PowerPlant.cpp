@@ -44,6 +44,9 @@ int PowerPlant::getPlantNumber() const
 void PowerPlant::setOwner(Player* name, int cost) {
 	this->owner = name;
 	name->subtractElektro(cost);
+	if (plantNumber > name->largestPlant) {
+		name->largestPlant = plantNumber;
+	}
 }
 
 Player* PowerPlant::getOwner() {
