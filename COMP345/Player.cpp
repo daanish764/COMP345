@@ -170,4 +170,9 @@ void Player::buyPlant(PowerPlant * plant, int cost, int maxPlants)
 
 	ownedPlants.push_back(plant);
 	elektro -= cost;
+
+	//setting the largest plant here
+	if (largestPlant < plant->getPlantNumber()) {
+		largestPlant = plant->getPlantNumber;
+	}
 }
