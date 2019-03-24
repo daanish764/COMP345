@@ -2,21 +2,25 @@
 #include<iostream>
 using std::string;
 #include "City.h"
+#include "PowerPlant.h"
 
 class Player
 {
 private:
 	string name;
 	string color;
+	
+public:
 	int elektro;
 	int coal;
 	int garbage;
 	int oil;
 	int uranium;
-public:
 	int totalHouses;
-	int maxPlants;
 	int largestPlant;
+
+	vector<PowerPlant*> ownedPlants;
+
 	Player();
 	Player(string name);
 	Player(string name, string color, int maxPlants);
@@ -37,4 +41,5 @@ public:
 	void assignElektro(int num);
 	void subtractElektro(int num);
 	void placeHouse(City* city);
+	void buyPlant(PowerPlant* plant, int cost, int maxPlants);
 };

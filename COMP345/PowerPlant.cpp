@@ -17,6 +17,12 @@ PowerPlant::PowerPlant()
 PowerPlant::PowerPlant(int plantNumber)
 {
 	this->plantNumber = plantNumber;
+	powersCities = 0;
+	coalRequired = 0;
+	oilRequired = 0;
+	garbageRequired = 0;
+	uraniumRequired = 0;
+	hybridRequired = 0;
 }
 
 PowerPlant::PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired)
@@ -37,16 +43,4 @@ PowerPlant::~PowerPlant()
 int PowerPlant::getPlantNumber() const
 {
 	return plantNumber;
-}
-
-void PowerPlant::setOwner(Player* name, int cost) {
-	this->owner = name;
-	name->subtractElektro(cost);
-	if (plantNumber > name->largestPlant) {
-		name->largestPlant = plantNumber;
-	}
-}
-
-Player* PowerPlant::getOwner() {
-	return this->owner;
 }

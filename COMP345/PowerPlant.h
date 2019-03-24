@@ -1,5 +1,4 @@
 #pragma once
-#include"Player.h"
 #include <iostream>
 
 class PowerPlant
@@ -14,7 +13,6 @@ public:
 	int garbageRequired;
 	int uraniumRequired;
 	int hybridRequired;
-	Player* owner;
 
 	PowerPlant();
 	PowerPlant(int plantNumber);
@@ -22,6 +20,4 @@ public:
 	~PowerPlant();
 
 	int getPlantNumber() const;
-	void setOwner(Player* name, int cost);
-	Player* getOwner();
 };

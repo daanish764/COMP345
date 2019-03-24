@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #include<map>
 #include<algorithm>
-#include<set>
 #include<fstream>
 #include<sstream>
 
@@ -16,7 +15,6 @@
 using std::cout;
 using std::endl;
 using std::cin;
-using std::pair;
 
 int GameBoard::availableRedHouses = 22;
 int GameBoard::availableGreenHouses = 22;
@@ -66,7 +64,6 @@ void setUpPowerPlantCards();
 int getPowerPlant(int x);
 void getBoardStatus(vector<City*> cities);
 void printPlayerNetwork(Player* player, vector<City*> cityList);
-void printPlayerPlants(Player* player);
 void printDeck();
 void sortPlayersDescending();
 void sortPlayersAscending();
@@ -123,7 +120,7 @@ void GameBoard::part2()
 	while (activeAtAuction.size() > 0) {
 		cout << endl << endl;
 		printMarket();
-		cout << "It's " << activeAtAuction[0]->getName() << "'s turn." << endl;
+		cout << "It's " << activeAtAuction[0]->getName() << "'s ("<< activeAtAuction[0]->getElektro() <<" Elektros) turn." << endl;
 
 		//if the person can't even afford the cheapest plant in the market, we take him/her out of the auction entirely
 		if (market[0]->getPlantNumber() > activeAtAuction[0]->getElektro()) {
@@ -152,7 +149,7 @@ void GameBoard::part2()
 
 				//THE AUCTION WHILE LOOP. ENDS WHEN THERE'S ONE BIDDER LEFT
 				while (activeBidders.size() > 1) {
-					cout << "It's " << activeBidders[currentBidder]->getName() << "'s turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
+					cout << "It's " << activeBidders[currentBidder]->getName() << "'s (" << activeBidders[currentBidder]->getElektro() << " Elektros) turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
 
 					//ensures the auction starter bids minimum the plant value AND people don't bid over than what they have
@@ -173,8 +170,8 @@ void GameBoard::part2()
 				}
 				//*******************AUCTION HAS ENDED. NOW TIME TO ASSIGN THE WINNER THE POWERPLANT AND REPLACE THE POWERPLANT FROM ACTUAL MARKET
 
-				//assign powerplant owner here at activeBidders[0]. Basically the last active bidder
-				market[getPowerPlant(chosenPlant)]->setOwner(activeBidders[0], std::max(chosenPlant, highestBid));
+				//assign powerplant owner here at activeBidders[0]. Basically the last active bidder. 
+				activeBidders[0]->buyPlant(market[getPowerPlant(chosenPlant)], std::max(chosenPlant, highestBid), summaryCard[2][numberOfPlayer - 2]);
 				cout << "Powerplant " << chosenPlant << " bought by " << activeBidders[0]->getName() << " for " << std::max(chosenPlant, highestBid) << " Elektros!" << endl;
 
 
@@ -204,7 +201,7 @@ void GameBoard::part2()
 	for (int i = 0; i < players.size(); i++) {
 		cout << endl << endl;
 		players[i]->getPlayerInfo();
-		printPlayerPlants(players[i]);
+		
 		printPlayerNetwork(players[i], cities);
 	}
 }
@@ -221,7 +218,8 @@ void GameBoard::part3() {
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 	}
 
-	for (int k = 0; k < players.size(); k++){
+	
+	for (int i = 0; i < players.size(); i++){
 		//Capacity for one player to carry any resource given there powerplants
 		int coalCapacity = 0;
 		int oilCapacity = 0;
@@ -235,15 +233,14 @@ void GameBoard::part3() {
 		int uraniumBuy = 0;
 
 		
-		for (int i = 0; i < powerplants.size(); i++) {
-			if (powerplants[i]->getOwner() == players[k]) {
-				coalCapacity += (powerplants[i]->coalRequired * 2) - players[k]->getCoal();
-				oilCapacity += (powerplants[i]->oilRequired * 2) - players[k]->getOil();
-				garbageCapacity += (powerplants[i]->garbageRequired * 2) - players[k]->getGarbage();
-				uraniumCapacity += (powerplants[i]->uraniumRequired * 2) - players[k]->getUranium();
-			}
+		for (int k = 0; k < players[i]->ownedPlants.size(); k++) {
+			coalCapacity += (players[i]->ownedPlants[k]->coalRequired * 2) - players[i]->getCoal();
+			oilCapacity += (players[i]->ownedPlants[k]->oilRequired * 2) - players[i]->getOil();
+			garbageCapacity += (players[i]->ownedPlants[k]->garbageRequired * 2) - players[i]->getGarbage();
+			uraniumCapacity += (players[i]->ownedPlants[k]->uraniumRequired * 2) - players[i]->getUranium();
+		
 		}
-		cout << "\n\n" << players[k]->getName() << "'s total storage capacity for each resource given his/her power plants, minus current resources owned:";
+		cout << "\n\n" << players[i]->getName() << "'s total storage capacity for each resource given his/her power plants, minus current resources owned:";
 		cout << "\nCoal Capacity : " << coalCapacity << endl;
 		cout << "Oil Capacity : " << oilCapacity << endl;
 		cout << "Garbage Capacity : " << garbageCapacity << endl;
@@ -261,12 +258,12 @@ void GameBoard::part3() {
 				cout << "\nOut of resource!\n";
 				break;
 			}
-			if (players[k]->getElektro() < getCoalCost()) {
+			if (players[i]->getElektro() < getCoalCost()) {
 				cout << "\nInsufficient funds!";
 				break;
 			}
 			cout << "\n Acquired 1 coal for " << getCoalCost() << " Elektros";
-			players[k]->assignCoal(1, getCoalCost());
+			players[i]->assignCoal(1, getCoalCost());
 			coalBuy -= 1;
 		}
 
@@ -281,12 +278,12 @@ void GameBoard::part3() {
 				cout << "\nOut of resource!\n";
 				break;
 			}
-			if (players[k]->getElektro() < getOilCost()) {
+			if (players[i]->getElektro() < getOilCost()) {
 				cout << "\nInsufficient funds!";
 				break;
 			}
 			cout << "\n Acquired 1 oil for " << getOilCost() << " Elektros";
-			players[k]->assignOil(1, getOilCost());
+			players[i]->assignOil(1, getOilCost());
 			oilBuy -= 1;
 		}
 
@@ -301,12 +298,12 @@ void GameBoard::part3() {
 				cout << "\nOut of resource!\n";
 				break;
 			}
-			if (players[k]->getElektro() < getGarbageCost()) {
+			if (players[i]->getElektro() < getGarbageCost()) {
 				cout << "\nInsufficient funds!";
 				break;
 			}
 			cout << "\n Acquired 1 garbage for " << getGarbageCost() << " Elektros";
-			players[k]->assignGarbage(1, getGarbageCost());
+			players[i]->assignGarbage(1, getGarbageCost());
 			garbageBuy -= 1;
 		}
 
@@ -321,12 +318,12 @@ void GameBoard::part3() {
 				cout << "\nOut of resource!\n";
 				break;
 			}
-			if (players[k]->getElektro() < getUraniumCost()) {
+			if (players[i]->getElektro() < getUraniumCost()) {
 				cout << "\nInsufficient funds!";
 				break;
 			}
 			cout << "\n Acquired 1 uranium for " << getUraniumCost() << " Elektros";
-			players[k]->assignUranium(1, getUraniumCost());
+			players[i]->assignUranium(1, getUraniumCost());
 			uraniumBuy -= 1;
 		}
 	}
@@ -339,10 +336,11 @@ void GameBoard::part3() {
 	for (int i = 0; i < players.size(); i++) {
 		cout << endl << endl;
 		players[i]->getPlayerInfo();
-		printPlayerPlants(players[i]);
 		printPlayerNetwork(players[i], cities);
 	}
-
+	cout << "\n\n***AVAILABLE RESOURCES";
+	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
+	cout << availRes << "\n\n";
 	
 }
 
@@ -352,6 +350,7 @@ int getCoalCost() {
 			return priceList1[1][i];
 		}
 	}
+	return 1000;
 }
 
 int getOilCost() {
@@ -360,6 +359,7 @@ int getOilCost() {
 			return priceList1[1][i];
 		}
 	}
+	return 1000;
 }
 
 int getGarbageCost() {
@@ -368,6 +368,7 @@ int getGarbageCost() {
 			return priceList1[1][i];
 		}
 	}
+	return 1000;
 }
 
 int getUraniumCost() {
@@ -376,6 +377,7 @@ int getUraniumCost() {
 			return priceList2[1][i];
 		}
 	}
+	return 1000;
 }
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer) //number of players == number of regions
@@ -440,10 +442,17 @@ void GameBoard::printMarket()
 	cout << "|------------------------------------------------------------------------------------|	" << endl;
 	cout << "| plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  |" << endl;
 	cout << "|------------------------------------------------------------------------------------|	" << endl;
+	
 	for (int i = 0; i < 8; i++)
 	{
-
-		cout << "|    " << market[i]->getPlantNumber() << "   |   " << market[i]->coalRequired << "   |  " << market[i]->oilRequired << "   |     " << market[i]->garbageRequired << "   |    " << market[i]->uraniumRequired << "     |        " << market[i]->hybridRequired << "         |       " << market[i]->powersCities << "            |" << endl;
+		string zero;
+		if (market[i]->getPlantNumber() < 10) { 
+			zero = "0";
+		}
+		else {
+			zero = "";
+		}
+		cout << "|   " << zero << market[i]->getPlantNumber() << "   |   " << market[i]->coalRequired << "   |  " << market[i]->oilRequired << "   |     " << market[i]->garbageRequired << "   |    " << market[i]->uraniumRequired << "     |        " << market[i]->hybridRequired << "         |       " << market[i]->powersCities << "            |" << endl;
 	}
 	cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
 }
@@ -530,7 +539,7 @@ void setUp()
 		while (true)
 		{
 			cout << players[i]->getName();
-			cout << ": pick a starting city: " << endl;
+			cout << " pick a starting city: ";
 			getline(cin, startcity);
 
 			City* start_city = citiesMap->getCity(startcity);
@@ -681,16 +690,6 @@ void printPlayerNetwork(Player* player, vector<City*> cityList) {
 			}
 		}
 	}
-}
-
-void printPlayerPlants(Player* player) {
-	cout << player->getName() << " owns plants:";
-	for (int i = 0; i < powerplants.size(); i++) {
-		if (powerplants[i]->getOwner() == player) {
-			cout << " " << powerplants[i]->getPlantNumber();
-		}
-	}
-	cout << endl;
 }
 
 void printDeck()

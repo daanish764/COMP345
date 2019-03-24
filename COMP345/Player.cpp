@@ -1,5 +1,9 @@
 #include"GameBoard.h"
 #include<string>
+#include<algorithm>
+using namespace std;
+
+
 
 
 Player::Player()
@@ -22,7 +26,6 @@ Player::Player(string playerName)
 	oil = 0;
 	uranium = 0;
 	totalHouses = 0;
-	maxPlants = 0;
 	largestPlant = 0;
 }
 
@@ -37,7 +40,6 @@ Player::Player(string name, string color, int maxPlants)
 	oil = 0;
 	uranium = 0;
 	totalHouses = 0;
-	this->maxPlants = maxPlants;
 	largestPlant = 0;
 }
 
@@ -92,7 +94,13 @@ string Player::getColor() const
 
 void Player::getPlayerInfo()
 {
+	std::cout << "*******";
 	std::cout << "Player Name: " << name << "\nColor: " << color << "\nTotal Houses on Board: " << totalHouses << "\nElektro: " << elektro << "\nCoal: " << coal << "\nGarbage: " << garbage << "\nOil: " << oil << "\nUranium: " << uranium << std::endl;
+	std::cout << "Owned power plants:";
+	for (int i = 0; i < ownedPlants.size(); i++) {
+		std::cout << " " << ownedPlants[i]->getPlantNumber();
+	}
+	std::cout << std::endl;
 }
 
 void Player::assignOil(int num, int cost) {
@@ -150,3 +158,16 @@ void Player::placeHouse(City * city)
 	}
 }
 
+void Player::buyPlant(PowerPlant * plant, int cost, int maxPlants)
+{
+	if (ownedPlants.size() == maxPlants) { //If there's no more capacity, takes out the smallest plant by sorting first and removing first plant
+		
+		stable_sort(ownedPlants.begin(), ownedPlants.end(), [](const PowerPlant* lhs, const PowerPlant* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
+			return lhs->getPlantNumber() < rhs->getPlantNumber();
+		});
+		ownedPlants.erase(ownedPlants.begin());
+	}
+
+	ownedPlants.push_back(plant);
+	elektro -= cost;
+}
