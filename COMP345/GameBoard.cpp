@@ -225,6 +225,7 @@ void GameBoard::part3() {
 		int oilCapacity = 0;
 		int garbageCapacity = 0;
 		int uraniumCapacity = 0;
+		int hybridCapacity = 0;
 		
 		//The amounts the player is looking to buy
 		int coalBuy = 0;
@@ -232,55 +233,100 @@ void GameBoard::part3() {
 		int garbageBuy = 0;
 		int uraniumBuy = 0;
 
-		
+		//Players have a limit to how many plants they can hold. If they dump a plant and it turns out they now own more resources then the can hold, we either dump those excess resources
+		//or try to see if we can fit the excess oil or coal into the hybrid plants first before dumping anything that is still left.
+		int excessCoal = 0;
+		int excessOil = 0;
+		//For loop goes through player's powerplants to scan each plant's resource capacity and subtracts what they already own to give new capacity. Excess oil and coal are also calculated here.
 		for (int k = 0; k < players[i]->ownedPlants.size(); k++) {
 			coalCapacity += (players[i]->ownedPlants[k]->coalRequired * 2) - players[i]->getCoal();
+			if (coalCapacity < 0) { //if capacity is negative, turn capacity=0 in this case and update the excessCoal int.
+				excessCoal += players[i]->coal - coalCapacity;
+				coalCapacity = 0;
+			}
+
 			oilCapacity += (players[i]->ownedPlants[k]->oilRequired * 2) - players[i]->getOil();
+			if (oilCapacity < 0) {
+				excessOil += players[i]->oil - oilCapacity;
+				oilCapacity = 0;
+			}
+
 			garbageCapacity += (players[i]->ownedPlants[k]->garbageRequired * 2) - players[i]->getGarbage();
+			if (garbageCapacity < 0) { //If capacity<what we already have, dump the excess
+				players[i]->garbage -= garbageCapacity;
+				garbageCapacity = 0;
+			}
+
 			uraniumCapacity += (players[i]->ownedPlants[k]->uraniumRequired * 2) - players[i]->getUranium();
-		
+			if (uraniumCapacity < 0) { //If capacity<what we already have, dump the excess
+				players[i]->uranium -= uraniumCapacity;
+				uraniumCapacity = 0;
+			}
+
+			hybridCapacity += (players[i]->ownedPlants[k]->hybridRequired * 2) - excessOil - excessCoal; //hybrid capacity gets subtracted by any excess oil or coal the player has
+			if (hybridCapacity < 0) {
+				while (hybridCapacity != 0 || excessOil!=0) { //the two while loops dump as much as needed to ensure storage capacity is not over capacity. We try dumping the oil first.
+					players[i]->oil -= 1;
+					excessOil -= 1;
+				}
+				while (hybridCapacity != 0 || excessCoal!=0) { //if still excess, dump coal until capacity is reached.
+					players[i]->coal -= 1;
+					excessCoal -= 1;
+				}
+				hybridCapacity = 0;
+			}
 		}
 		cout << "\n\n" << players[i]->getName() << "'s total storage capacity for each resource given his/her power plants, minus current resources owned:";
-		cout << "\nCoal Capacity : " << coalCapacity << endl;
-		cout << "Oil Capacity : " << oilCapacity << endl;
-		cout << "Garbage Capacity : " << garbageCapacity << endl;
-		cout << "Uranium Capacity : " << uraniumCapacity << endl;
+		cout << "\nCoal Plant(s) Capacity : " << coalCapacity << endl;
+		cout << "Oil Plant(s) Capacity : " << oilCapacity << endl;
+		cout << "Garbage Plant(s) Capacity : " << garbageCapacity << endl;
+		cout << "Uranium Plant(s) Capacity : " << uraniumCapacity << endl;
+		cout << "Hybrid Plant(s) Capacity (Coal/Oil) : " << hybridCapacity << endl;
 		cout << endl;
 
-		if(coalCapacity>0){
-			cout << "\nPlease enter the amount of COAL you want to buy(and see confirmation for cost): ";
+
+		if(coalCapacity>0 || hybridCapacity>0){
+			cout << "\n\nPlease enter the amount of COAL you want to buy (including for Hybrid plants): ";
 			cin >> coalBuy;
 		}
-		coalBuy = std::min(coalCapacity, coalBuy);
+		coalBuy = std::min((coalCapacity + hybridCapacity), coalBuy); //std::min ensures player doesn't get to input more than what they can hold, coal + hybrid capacity in this case.
 
+		//if the player is buying more coal then there COAL plants can hold, we assume they're buying for the hybrid plant and adjust hybridCapacity.
+		if (coalBuy > coalCapacity) {
+			hybridCapacity = hybridCapacity - (coalBuy - coalCapacity);
+		}
+
+		//we need a while loop to give out the resource one at a time because the price of each resource most likely won't be the same depending on it's availability.
+		// the functions getCoalCost() or getOilCost() etc. return current price of the resource given it's availability after 1 is handed out.
+		//It's the same for every resource so not commenting the same thing for each.
 		while (coalBuy > 0) {
-			if (GameBoard::availableCoal == 0) {
+			if (GameBoard::availableCoal == 0) { //Abort transaction if resources aren't available
 				cout << "\nOut of resource!\n";
-				break;
+				coalBuy = 0;
 			}
-			if (players[i]->getElektro() < getCoalCost()) {
+			if (players[i]->getElektro() < getCoalCost()) { //Abort transaction if the player can't afford the next resource. I.e. if you can afford 2 but enter 3, you still get 2 before it aborts.
 				cout << "\nInsufficient funds!";
-				break;
+				coalBuy = 0;
 			}
 			cout << "\n Acquired 1 coal for " << getCoalCost() << " Elektros";
 			players[i]->assignCoal(1, getCoalCost());
 			coalBuy -= 1;
 		}
 
-		if(oilCapacity>0){
-			cout << "\nPlease enter the amount of OIL you want to buy (and see confirmation for cost): ";
+		if(oilCapacity>0 || hybridCapacity > 0){
+			cout << "\n\nPlease enter the amount of OIL you want to buy (including for Hybrid plants): ";
 			cin >> oilBuy;
 		}
-		oilBuy = std::min(oilCapacity, oilBuy);
+		oilBuy = std::min((oilCapacity + hybridCapacity), oilBuy);
 
 		while (oilBuy > 0) {
 			if (GameBoard::availableOil == 0) {
 				cout << "\nOut of resource!\n";
-				break;
+				oilBuy = 0;
 			}
 			if (players[i]->getElektro() < getOilCost()) {
 				cout << "\nInsufficient funds!";
-				break;
+				oilBuy = 0;
 			}
 			cout << "\n Acquired 1 oil for " << getOilCost() << " Elektros";
 			players[i]->assignOil(1, getOilCost());
@@ -288,7 +334,7 @@ void GameBoard::part3() {
 		}
 
 		if(garbageCapacity>0){
-			cout << "\nPlease enter the amount of GARBAGE you want to buy(and see confirmation for cost): ";
+			cout << "\n\nPlease enter the amount of GARBAGE you want to buy: ";
 			cin >> garbageBuy;
 		}
 		garbageBuy = std::min(garbageCapacity, garbageBuy);
@@ -296,11 +342,11 @@ void GameBoard::part3() {
 		while (garbageBuy > 0) {
 			if (GameBoard::availableGarbage == 0) {
 				cout << "\nOut of resource!\n";
-				break;
+				garbageBuy = 0;
 			}
 			if (players[i]->getElektro() < getGarbageCost()) {
 				cout << "\nInsufficient funds!";
-				break;
+				garbageBuy = 0;
 			}
 			cout << "\n Acquired 1 garbage for " << getGarbageCost() << " Elektros";
 			players[i]->assignGarbage(1, getGarbageCost());
@@ -308,7 +354,7 @@ void GameBoard::part3() {
 		}
 
 		if(uraniumCapacity>0){
-			cout << "\nPlease enter the amount of URANIUM you want to buy(and see confirmation for cost) :";
+			cout << "\n\nPlease enter the amount of URANIUM you want to buy: ";
 			cin >> uraniumBuy;
 		}
 		uraniumBuy = std::min(uraniumCapacity, uraniumBuy);
@@ -316,11 +362,11 @@ void GameBoard::part3() {
 		while (uraniumBuy > 0) {
 			if (GameBoard::availableUranium == 0) {
 				cout << "\nOut of resource!\n";
-				break;
+				uraniumBuy = 0;
 			}
 			if (players[i]->getElektro() < getUraniumCost()) {
 				cout << "\nInsufficient funds!";
-				break;
+				uraniumBuy = 0;
 			}
 			cout << "\n Acquired 1 uranium for " << getUraniumCost() << " Elektros";
 			players[i]->assignUranium(1, getUraniumCost());
@@ -332,7 +378,7 @@ void GameBoard::part3() {
 
 	vector<City*> cities = citiesMap->getCities();
 
-	cout << "\n***Lets see what each player owns at this point:\n";
+	cout << "\n\n***Lets see what each player owns at this point:\n";
 	for (int i = 0; i < players.size(); i++) {
 		cout << endl << endl;
 		players[i]->getPlayerInfo();
