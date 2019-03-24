@@ -173,6 +173,6 @@ void Player::buyPlant(PowerPlant * plant, int cost, int maxPlants)
 
 	//setting the largest plant here
 	if (largestPlant < plant->getPlantNumber()) {
-		largestPlant = plant->getPlantNumber;
+		largestPlant = plant->getPlantNumber();
 	}
 }
