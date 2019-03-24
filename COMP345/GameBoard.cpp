@@ -47,11 +47,20 @@ int numberOfPlayer = 0;
 Map* citiesMap;
 
 //Summary card/array. Absolutely see the rulebook to know exactly what this is.
-int summaryCard[5][5] = {	{2, 3, 4, 5, 6},		// number of regions/players (set according to assignment requirement, not official rules)
+const int summaryCard[5][5] = {	{2, 3, 4, 5, 6},		// number of regions/players (set according to assignment requirement, not official rules)
 							{8, 8, 4, 0, 0},		// number of plant cards to remove randomly from deck
 							{4, 3, 3, 3, 3},		// maximum number of powerplants a player can own
 							{10, 7, 7, 7, 6},		// number of connected cities to trigger STEP 2
 							{21, 17, 17, 15, 14}, };// number of connected cities to trigger GAME END.
+
+
+//Prices that need to be charged for COAL, OIL and GARBAGE; i.e. charge $1 if 22 or more are available, $2 if 19 or more are available etc.
+const int priceList1[2][8] = { {22, 19, 16, 13, 10, 7, 4, 1},
+								{1, 2, 3, 4, 5, 6, 7, 8} };
+
+//Prices that need to be charged for URANIUM; same concept as priceList1
+const int priceList2[2][12] = { {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1},
+								{1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16} };
 
 void setUpPowerPlantCards();
 int getPowerPlant(int x);
@@ -62,6 +71,11 @@ void printDeck();
 void sortPlayersDescending();
 void sortPlayersAscending();
 void sortMarket();
+
+//phase3 functions
+int getCoalCost();
+int getOilCost();
+int getGarbageCost();
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
@@ -119,6 +133,7 @@ void GameBoard::part2()
 			while (getPowerPlant(chosenPlant) == -1 || chosenPlant > activeAtAuction[0]->getElektro()) { //getPowerPlant == -1 means its not a valid plant from the actual market. 
 				cout << "Please choose the power plant(you can afford) to bid on from actual market or enter 0 to pass and sit out entirely: ";
 				cin >> chosenPlant;
+				if (chosenPlant == 0) { break; }
 			}
 
 			if (chosenPlant == 0) {
@@ -193,6 +208,119 @@ void GameBoard::part2()
 	}
 }
 
+void GameBoard::part3() {
+	cout << "\n\nPHASE 3: RESOURCE BUYING" << endl << endl;
+
+	sortPlayersAscending(); //sorts by total houses owned. Ties broken by largest plant owned. But in reverse order than previously done
+	cout << "***Players with least houses go first. Ties are broken by smallest plant owned. Else the order remains intact." << endl;
+
+	//display new order
+	for (int i = 0; i < numberOfPlayer; i++)
+	{
+		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
+	}
+
+	for (int k = 0; k < players.size(); k++){
+		//Capacity for one player to carry any resource given there powerplants
+		int coalCapacity = 0;
+		int oilCapacity = 0;
+		int garbageCapacity = 0;
+		int uraniumCapacity = 0;
+		
+		//The amounts the player is looking to buy
+		int coalBuy = 0;
+		int oilBuy = 0;
+		int garbageBuy = 0;
+		int uraniumBuy = 0;
+
+		
+		for (int i = 0; i < powerplants.size(); i++) {
+			if (powerplants[i]->getOwner() == players[k]) {
+				coalCapacity += (powerplants[i]->coalRequired * 2) - players[k]->getCoal();
+				oilCapacity += (powerplants[i]->oilRequired * 2) - players[k]->getOil();
+				garbageCapacity += (powerplants[i]->garbageRequired * 2) - players[k]->getGarbage();
+				uraniumCapacity += (powerplants[i]->uraniumRequired * 2) - players[k]->getUranium();
+			}
+		}
+		cout << "\n\n" << players[k]->getName() << "'s total storage capacity for each resource given his/her power plants, minus current resources owned:";
+		cout << "\nCoal Capacity : " << coalCapacity << endl;
+		cout << "Oil Capacity : " << oilCapacity << endl;
+		cout << "Garbage Capacity : " << garbageCapacity << endl;
+		cout << "Uranium Capacity : " << uraniumCapacity << endl;
+		cout << endl;
+
+		cout << "\nPlease enter the amount of COAL you want to buy:";
+		cin >> coalBuy;
+
+		coalBuy = std::min(coalCapacity, coalBuy);
+
+		while (coalBuy > 0) {
+			cout << "\n Acquired 1 coal for " << getCoalCost() << " Elektros";
+			players[k]->assignCoal(1, getCoalCost());
+			coalBuy -= 1;
+		}
+
+		cout << "\nPlease enter the amount of OIL you want to buy:";
+		cin >> oilBuy;
+
+		oilBuy = std::min(oilCapacity, oilBuy);
+
+		while (oilBuy > 0) {
+			cout << "\n Acquired 1 oil for " << getOilCost() << " Elektros";
+			players[k]->assignOil(1, getOilCost());
+			oilBuy -= 1;
+		}
+
+		cout << "\nPlease enter the amount of GARBAGE you want to buy:";
+		cin >> garbageBuy;
+
+		garbageBuy = std::min(garbageCapacity, garbageBuy);
+
+		while (garbageBuy > 0) {
+			cout << "\n Acquired 1 garbage for " << getGarbageCost() << " Elektros";
+			players[k]->assignGarbage(1, getGarbageCost());
+			garbageBuy -= 1;
+		}
+	}
+
+	//Lets see the possessions all the player own
+
+	vector<City*> cities = citiesMap->getCities();
+
+	cout << "\n***Lets see what each player owns at this point:\n";
+	for (int i = 0; i < players.size(); i++) {
+		cout << endl << endl;
+		players[i]->getPlayerInfo();
+		printPlayerPlants(players[i]);
+		printPlayerNetwork(players[i], cities);
+	}
+
+	
+}
+
+int getCoalCost() {
+	for (int i = 0; i < 8; i++) {
+		if (GameBoard::availableCoal >= priceList1[0][i]) {
+			return priceList1[1][i];
+		}
+	}
+}
+
+int getOilCost() {
+	for (int i = 0; i < 8; i++) {
+		if (GameBoard::availableOil >= priceList1[0][i]) {
+			return priceList1[1][i];
+		}
+	}
+}
+
+int getGarbageCost() {
+	for (int i = 0; i < 8; i++) {
+		if (GameBoard::availableGarbage >= priceList1[0][i]) {
+			return priceList1[1][i];
+		}
+	}
+}
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer) //number of players == number of regions
 {
