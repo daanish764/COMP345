@@ -11,6 +11,10 @@ int main()
 	gameboard.part1();
 
 	gameboard.part2();
+	
+	gameboard.part3();
+
+
 
 	cout << endl;
 	system("PAUSE");

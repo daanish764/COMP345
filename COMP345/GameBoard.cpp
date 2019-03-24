@@ -76,6 +76,7 @@ void sortMarket();
 int getCoalCost();
 int getOilCost();
 int getGarbageCost();
+int getUraniumCost();
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
@@ -102,7 +103,7 @@ void GameBoard::part1()
 
 void GameBoard::part2()
 {
-	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER" << endl << endl;
+	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
 
 	sortPlayersDescending(); //sorts by total houses owned. Ties broken by largest plant owned.
 	cout << "***Players with most houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
@@ -113,7 +114,7 @@ void GameBoard::part2()
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 	}
 
-	cout << "\n\nPHASE 2: AUCTION" << endl;
+	cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
 
 	int chosenPlant = 0;
 	vector<Player*> activeAtAuction = players;
@@ -209,10 +210,10 @@ void GameBoard::part2()
 }
 
 void GameBoard::part3() {
-	cout << "\n\nPHASE 3: RESOURCE BUYING" << endl << endl;
+	cout << "\n\nPHASE 3: RESOURCE BUYING\n*************************************" << endl << endl;
 
 	sortPlayersAscending(); //sorts by total houses owned. Ties broken by largest plant owned. But in reverse order than previously done
-	cout << "***Players with least houses go first. Ties are broken by smallest plant owned. Else the order remains intact." << endl;
+	cout << "***Players with least houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
 
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
@@ -249,37 +250,84 @@ void GameBoard::part3() {
 		cout << "Uranium Capacity : " << uraniumCapacity << endl;
 		cout << endl;
 
-		cout << "\nPlease enter the amount of COAL you want to buy:";
-		cin >> coalBuy;
-
+		if(coalCapacity>0){
+			cout << "\nPlease enter the amount of COAL you want to buy(and see confirmation for cost): ";
+			cin >> coalBuy;
+		}
 		coalBuy = std::min(coalCapacity, coalBuy);
 
 		while (coalBuy > 0) {
+			if (GameBoard::availableCoal == 0) {
+				cout << "\nOut of resource!\n";
+				break;
+			}
+			if (players[k]->getElektro() < getCoalCost()) {
+				cout << "\nInsufficient funds!";
+				break;
+			}
 			cout << "\n Acquired 1 coal for " << getCoalCost() << " Elektros";
 			players[k]->assignCoal(1, getCoalCost());
 			coalBuy -= 1;
 		}
 
-		cout << "\nPlease enter the amount of OIL you want to buy:";
-		cin >> oilBuy;
-
+		if(oilCapacity>0){
+			cout << "\nPlease enter the amount of OIL you want to buy (and see confirmation for cost): ";
+			cin >> oilBuy;
+		}
 		oilBuy = std::min(oilCapacity, oilBuy);
 
 		while (oilBuy > 0) {
+			if (GameBoard::availableOil == 0) {
+				cout << "\nOut of resource!\n";
+				break;
+			}
+			if (players[k]->getElektro() < getOilCost()) {
+				cout << "\nInsufficient funds!";
+				break;
+			}
 			cout << "\n Acquired 1 oil for " << getOilCost() << " Elektros";
 			players[k]->assignOil(1, getOilCost());
 			oilBuy -= 1;
 		}
 
-		cout << "\nPlease enter the amount of GARBAGE you want to buy:";
-		cin >> garbageBuy;
-
+		if(garbageCapacity>0){
+			cout << "\nPlease enter the amount of GARBAGE you want to buy(and see confirmation for cost): ";
+			cin >> garbageBuy;
+		}
 		garbageBuy = std::min(garbageCapacity, garbageBuy);
 
 		while (garbageBuy > 0) {
+			if (GameBoard::availableGarbage == 0) {
+				cout << "\nOut of resource!\n";
+				break;
+			}
+			if (players[k]->getElektro() < getGarbageCost()) {
+				cout << "\nInsufficient funds!";
+				break;
+			}
 			cout << "\n Acquired 1 garbage for " << getGarbageCost() << " Elektros";
 			players[k]->assignGarbage(1, getGarbageCost());
 			garbageBuy -= 1;
+		}
+
+		if(uraniumCapacity>0){
+			cout << "\nPlease enter the amount of URANIUM you want to buy(and see confirmation for cost) :";
+			cin >> uraniumBuy;
+		}
+		uraniumBuy = std::min(uraniumCapacity, uraniumBuy);
+
+		while (uraniumBuy > 0) {
+			if (GameBoard::availableUranium == 0) {
+				cout << "\nOut of resource!\n";
+				break;
+			}
+			if (players[k]->getElektro() < getUraniumCost()) {
+				cout << "\nInsufficient funds!";
+				break;
+			}
+			cout << "\n Acquired 1 uranium for " << getUraniumCost() << " Elektros";
+			players[k]->assignUranium(1, getUraniumCost());
+			uraniumBuy -= 1;
 		}
 	}
 
@@ -318,6 +366,14 @@ int getGarbageCost() {
 	for (int i = 0; i < 8; i++) {
 		if (GameBoard::availableGarbage >= priceList1[0][i]) {
 			return priceList1[1][i];
+		}
+	}
+}
+
+int getUraniumCost() {
+	for (int i = 0; i < 11; i++) {
+		if (GameBoard::availableUranium >= priceList2[0][i]) {
+			return priceList2[1][i];
 		}
 	}
 }

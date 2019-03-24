@@ -30,10 +30,10 @@ public:
 	int getUranium();
 	string getColor() const;
 	void getPlayerInfo();
-	void assignOil(int num);
-	void assignGarbage(int num);
-	void assignCoal(int num);
-	void assignUranium(int num);
+	void assignOil(int num, int cost);
+	void assignGarbage(int num, int cost);
+	void assignCoal(int num, int cost);
+	void assignUranium(int num, int cost);
 	void assignElektro(int num);
 	void subtractElektro(int num);
 	void placeHouse(City* city);

@@ -95,24 +95,28 @@ void Player::getPlayerInfo()
 	std::cout << "Player Name: " << name << "\nColor: " << color << "\nTotal Houses on Board: " << totalHouses << "\nElektro: " << elektro << "\nCoal: " << coal << "\nGarbage: " << garbage << "\nOil: " << oil << "\nUranium: " << uranium << std::endl;
 }
 
-void Player::assignOil(int num) {
+void Player::assignOil(int num, int cost) {
 	this->oil = oil + num;
 	GameBoard::availableOil = GameBoard::availableOil - num;
+	elektro -= cost;
 }
 
-void Player::assignGarbage(int num) {
+void Player::assignGarbage(int num, int cost) {
 	this->garbage = garbage + num;
 	GameBoard::availableGarbage = GameBoard::availableGarbage - num;
+	elektro -= cost;
 }
 
-void Player::assignCoal(int num) {
+void Player::assignCoal(int num, int cost) {
 	this->coal = coal + num;
 	GameBoard::availableCoal = GameBoard::availableCoal - num;
+	elektro -= cost;
 }
 
-void Player::assignUranium(int num) {
+void Player::assignUranium(int num, int cost) {
 	this->uranium = uranium + num;
 	GameBoard::availableUranium = GameBoard::availableUranium - num;
+	elektro -= cost;
 }
 
 void Player::assignElektro(int num) {

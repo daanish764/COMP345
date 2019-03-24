@@ -14,7 +14,6 @@ public:
 	int garbageRequired;
 	int uraniumRequired;
 	int hybridRequired;
-	int storageCap;
 	Player* owner;
 
 	PowerPlant();
