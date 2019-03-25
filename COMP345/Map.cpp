@@ -3,9 +3,10 @@
 #include"Map.h"
 #include"City.h"
 #include<vector>
-#include <unordered_map> 
+#include<unordered_map> 
 #include<map>
 #include<stack>
+#include<algorithm>
 
 using namespace std;
 
@@ -166,4 +167,30 @@ City* Map::getCity(string cityName)
 vector<City*> Map::getCities() const
 {
 	return this->cityList;
+}
+
+vector<City*> Map::getConnectableCities(City* city, string color)
+{
+	vector<City*> result;
+	// if there is no house on the starting city, we simply add it to result vector and return the result
+	if (city->getNumberOfHouses() == 0)
+		result.push_back(city);
+	else
+	{
+		// loop over all adjacent cities and if there is no house on the 
+		vector<City*> adjCities = city->getAdjacentCities();
+
+		for (int i = 0; i < adjCities.size(); i++)
+		{
+			// if the city is already in the vector we dont want to insert it twice
+			if (std::find(result.begin(), result.end(), adjCities.at(i)) != result.end())
+				continue;
+
+			// if there is no house on the city we would like to add it
+			if (adjCities.at(i)->getNumberOfHouses() == 0)
+				result.push_back(adjCities.at(i));
+		}
+	}
+
+	return result;
 }

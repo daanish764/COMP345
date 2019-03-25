@@ -43,5 +43,7 @@ public:
 	void placePurpleHouse();
 	void placeOrangeHouse();
 	void placeYellowHouse();
+	int getNumberOfHouses(string color);
+	int getNumberOfHouses();
 };
 

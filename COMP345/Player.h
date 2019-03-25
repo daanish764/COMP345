@@ -18,6 +18,7 @@ public:
 	int uranium;
 	int totalHouses;
 	int largestPlant;
+	City* startCity;
 
 	vector<PowerPlant*> ownedPlants;
 
@@ -27,6 +28,8 @@ public:
 	string getHouseColor();
 	~Player();
 	string getName() const;
+	City* getStartCity();
+	void setStartCity(City* startCity);
 	int getElektro();
 	int getCoal();
 	int getGarbage();

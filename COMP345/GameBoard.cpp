@@ -80,6 +80,8 @@ int getOilCost();
 int getGarbageCost();
 int getUraniumCost();
 
+void phase4();
+
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
 void GameBoard::part1()
@@ -396,6 +398,31 @@ void GameBoard::part3() {
 	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
 	cout << availRes << "\n\n";
 	
+
+	phase4();
+}
+
+void phase4()
+{
+	cout << "phase 4 was called " << endl;
+
+	for (int i = 0; i < players.size(); i++)
+	{
+		Player* currentPlayer = players.at(i);
+
+		cout << currentPlayer->getName() << " its your turn and " << currentPlayer->getStartCity()->getCityName() << " is your start city" << endl;
+
+		vector<City*> possibleCities = citiesMap->getConnectableCities(currentPlayer->getStartCity(), currentPlayer->getColor());
+
+		cout << "--possible cities--" << endl;
+		for (int i = 0; i < possibleCities.size(); i++)
+		{
+			cout << possibleCities.at(i)->getCityName() << "\t";
+		}
+		cout << endl;
+
+		system("PAUSE");
+	}
 }
 
 int getCoalCost() {
@@ -604,7 +631,8 @@ void setUp()
 
 			if (start_city != NULL)
 			{
-				players[i]->placeHouse(start_city);
+				players[i]->setStartCity(start_city);
+				// players[i]->placeHouse(start_city);
 				break;
 			}
 

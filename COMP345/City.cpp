@@ -97,3 +97,26 @@ void City::placeYellowHouse() {
 	yellowHouse = 1;
 	GameBoard::availableYellowHouses -= 1;
 }
+
+int City::getNumberOfHouses(string color)
+{
+	if (color == "red")
+		return redHouse;
+	else if (color == "green")
+		return greenHouse;
+	else if (color == "blue")
+		return blueHouse;
+	else if (color == "purple")
+		return purpleHouse;
+	else if (color == "orange")
+		return orangeHouse;
+	else if (color == "yellow")
+		return yellowHouse;
+	else
+		return 0;
+}
+
+int City::getNumberOfHouses()
+{
+	return redHouse + greenHouse + blueHouse + purpleHouse + orangeHouse + yellowHouse;
+}
