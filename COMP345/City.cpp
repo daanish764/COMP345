@@ -120,3 +120,19 @@ int City::getNumberOfHouses()
 {
 	return redHouse + greenHouse + blueHouse + purpleHouse + orangeHouse + yellowHouse;
 }
+
+void City::placeHouse(string color)
+{
+	if (color == "red")
+		placeRedHouse();
+	else if (color == "green")
+		placeGreenHouse();
+	else if (color == "blue")
+		placeBlueHouse();
+	else if (color == "purple")
+		placePurpleHouse();
+	else if (color == "orange")
+		placeOrangeHouse();
+	else if (color == "yellow")
+		placeYellowHouse();
+}

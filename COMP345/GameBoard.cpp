@@ -404,24 +404,85 @@ void GameBoard::part3() {
 
 void phase4()
 {
-	cout << "phase 4 was called " << endl;
+	cout << "--------------------------------------------" << endl;
+	cout << "phase 4 buidling  " << endl;
+	cout << "--------------------------------------------" << endl;
 
 	for (int i = 0; i < players.size(); i++)
 	{
+		bool pass = false;
 		Player* currentPlayer = players.at(i);
 
 		cout << currentPlayer->getName() << " its your turn and " << currentPlayer->getStartCity()->getCityName() << " is your start city" << endl;
 
 		vector<City*> possibleCities = citiesMap->getConnectableCities(currentPlayer->getStartCity(), currentPlayer->getColor());
 
-		cout << "--possible cities--" << endl;
+		int connectionCost = 10;
+		int city_id;
+
+		cout << "Possible cities you can connect to \n" << endl;
+		printf("%-25s%-20s%-15s\n", "City id",  "Name", "cost");
 		for (int i = 0; i < possibleCities.size(); i++)
 		{
-			cout << possibleCities.at(i)->getCityName() << "\t";
-		}
-		cout << endl;
+			
 
-		system("PAUSE");
+			// if there is a house on the city and if there is no house that belongs to be player 
+			if (possibleCities.at(i)->getNumberOfHouses() == 1 && possibleCities.at(i)->getNumberOfHouses(currentPlayer->getColor()) == 0)
+			{
+				/*
+				// step is not yet implemented 
+				if(step == 2)
+				connectionCost = 15;
+				if (step == 3)
+				connectionCost = 20;
+				*/
+
+			}
+
+			printf("%-25s%-20s%-15s\n", std::to_string(i).c_str(), possibleCities.at(i)->getCityName().c_str(), std::to_string(connectionCost).c_str());
+
+		}
+
+		if (pass)
+			break;
+		else {
+			cout << "please enter which the city id of the city you would like to build on (-1 to pass ) > ";
+
+
+			cin >> city_id;
+			cout << endl;
+
+			if (city_id == -1)
+			{
+				pass = true;
+				break;
+			}
+
+			if (city_id >= possibleCities.size())
+			{
+				cout << "invalid input and you lost you turn to build" << endl;
+				pass = true;
+				break;
+			}
+			cout << "you selected " << possibleCities.at(city_id)->getCityName() << endl;
+
+			cout << "you have " << currentPlayer->getElektro() << " elektro at the moment" << endl;
+
+			if (currentPlayer->getElektro() < connectionCost)
+			{
+				cout << "you do not have enough elektro" << endl;
+				break;
+			}
+			else {
+				currentPlayer->subtractElektro(connectionCost);
+				cout << currentPlayer->getName() << " you balance is " << currentPlayer->getElektro() << endl;
+				possibleCities.at(city_id)->placeHouse(currentPlayer->getColor());
+
+				cout << "a " << currentPlayer->getColor() << " house was placed on " << possibleCities.at(city_id)->getCityName() << endl;
+			}
+		}
+
+		cout << endl;
 	}
 }
 

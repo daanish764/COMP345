@@ -194,3 +194,4 @@ vector<City*> Map::getConnectableCities(City* city, string color)
 
 	return result;
 }
+
