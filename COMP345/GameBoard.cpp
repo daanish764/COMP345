@@ -11,6 +11,7 @@
 #include"Map.h"
 #include"GameBoard.h"
 #include"PowerPlant.h"
+#include"OverviewCard.h"
 
 using std::cout;
 using std::endl;
@@ -34,6 +35,10 @@ std::vector<PowerPlant*> deck;
 
 // a pointer that points to an vector of all the players
 vector<Player*> players;
+
+//Vector for the overview cards
+
+vector<OverviewCard*> overviewCards;
 
 // Vector for all powerplants
 vector<PowerPlant*> powerplants;
@@ -233,8 +238,8 @@ void GameBoard::part3() {
 		int garbageBuy = 0;
 		int uraniumBuy = 0;
 
-		//Players have a limit to how many plants they can hold. If they dump a plant and it turns out they now own more resources then the can hold, we either dump those excess resources
-		//or try to see if we can fit the excess oil or coal into the hybrid plants first before dumping anything that is still left.
+		//Players have a limit to how many plants they can hold. If they dump a plant and it turns out they now own a particular resource more than they can hold, we either dump those excess resources
+		//or try to see if we can fit the excess oil or coal into the hybrid plants first.
 		int excessCoal = 0;
 		int excessOil = 0;
 		//For loop goes through player's powerplants to scan each plant's resource capacity and subtracts what they already own to give new capacity. Excess oil and coal are also calculated here.
@@ -265,15 +270,18 @@ void GameBoard::part3() {
 
 			hybridCapacity += (players[i]->ownedPlants[k]->hybridRequired * 2) - excessOil - excessCoal; //hybrid capacity gets subtracted by any excess oil or coal the player has
 			if (hybridCapacity < 0) {
-				while (hybridCapacity != 0 || excessOil!=0) { //the two while loops dump as much as needed to ensure storage capacity is not over capacity. We try dumping the oil first.
-					players[i]->oil -= 1;
-					excessOil -= 1;
+				while (hybridCapacity != 0) { //while we're overcapacity, we dump the excess resources one-by-one in an alternating fashion (if both are excess) until we're not.
+					if (excessCoal > 0) {
+						players[i]->coal -= 1;
+						excessCoal -= 1;
+						hybridCapacity++;
+					}
+					if (excessOil > 0) {
+						players[i]->oil -= 1;
+						excessOil -= 1;
+						hybridCapacity++;
+					}
 				}
-				while (hybridCapacity != 0 || excessCoal!=0) { //if still excess, dump coal until capacity is reached.
-					players[i]->coal -= 1;
-					excessCoal -= 1;
-				}
-				hybridCapacity = 0;
 			}
 		}
 		cout << "\n\n" << players[i]->getName() << "'s total storage capacity for each resource given his/her power plants, minus current resources owned:";
@@ -559,7 +567,11 @@ void setUp()
 	cout << "\n----PLAYER LIST-----" << endl;
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		cout << players[i]->getName() << endl;
+		OverviewCard* newCard = new OverviewCard(i);
+		newCard->setOwner(players[i]);
+		overviewCards.push_back(newCard);
+		cout << players[i]->getName() <<" - Overview Card handed to player." << endl;
+		
 	}
 	cout << "----END----\n" << endl;
 
