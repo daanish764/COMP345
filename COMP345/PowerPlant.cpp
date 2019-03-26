@@ -66,3 +66,26 @@ void PowerPlant::printPlantInfo() const
 	
 
 }
+
+bool PowerPlant::power(int coal, int oil, int garbage, int uranium)
+{
+
+	if (garbageRequired != 0 && garbage <= garbageRequired)
+		return false;
+	if (uraniumRequired != 0 && uranium <= uraniumRequired)
+		return false;
+	int coalAndOil = coal + oil;
+
+	if (hybridRequired != 0 && coalAndOil <= hybridRequired)
+	{
+		return false;
+	}
+
+	if (coalRequired != 0 && coal <= coalRequired)
+		return false;
+
+	if (oilRequired != 0 & oil <= oilRequired)
+		return false;
+
+	return true;
+}

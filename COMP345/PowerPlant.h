@@ -24,4 +24,6 @@ public:
 
 	void printPlantInfo() const;
 
+	bool power(int coal, int oil, int garbage, int uranium);
+
 };

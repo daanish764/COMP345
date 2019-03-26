@@ -418,6 +418,7 @@ void GameBoard::part4()
 
 		cout << endl << "you owned powerplant are listed below " << endl;
 
+		cout << "|-------------------------------------------------------------------------------------------|	" << endl;
 		cout << "|  id  | plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  |" << endl;
 		cout << "|-------------------------------------------------------------------------------------------|	" << endl;
 		for (int i = 0; i < currentPlayer->ownedPlants.size(); i++)
@@ -449,14 +450,34 @@ void GameBoard::part4()
 
 
 		int plantid;
-		cout << "please enter the plant id of the plant you wish to power >";
+		cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
 		cin >> plantid;
+
+		if (plantid == -1)
+		{
+			cout << "you have chosen not to power anything this phase " << endl;
+			continue;
+		}
+
+		if (plantid >= currentPlayer->ownedPlants.size())
+		{
+			cout << "invalid input and you lost your turn " << endl;
+			continue;
+		}
 
 		PowerPlant* plant = currentPlayer->ownedPlants.at(plantid);
 
 		cout << endl;
-		cout << "you selected plant id " << plant->getPlantNumber() << endl;
+		cout << "you selected plant # " << plant->getPlantNumber() << endl;
 
+		if (plant->power(coal, oil, garbage, uranium))
+		{
+			cout << "you are successfully able to power plant # " << plant->getPlantNumber() << endl;
+		}
+		else
+		{
+			cout << "you were not able to power power plant # " << plant->getPlantNumber() << endl;
+		}
 		
 	}
 
