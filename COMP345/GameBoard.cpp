@@ -465,7 +465,17 @@ void GameBoard::part4()
 			continue;
 		}
 
+
+
 		PowerPlant* plant = currentPlayer->ownedPlants.at(plantid);
+
+		if (plant->powersCities > currentPlayer->totalHouses)
+		{
+			cout << "you do not have enough houses to use this card to power cities " << endl;
+			cout << "card " << plant->getPlantNumber() << " power " << plant->powersCities << " cities " << endl;
+			cout << "You only have " << currentPlayer->totalHouses << endl;
+			continue;
+		}
 
 		cout << endl;
 		cout << "you selected plant # " << plant->getPlantNumber() << endl;
@@ -493,15 +503,18 @@ void GameBoard::part4()
 			currentPlayer->garbage = garbage;
 			currentPlayer->uranium = uranium;
 
-			
-
-			
 
 			cout << "player " << currentPlayer->getName() << " your updated are resources shown below" << endl;
 
 			printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
 
 			printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
+			cout << endl;
+
+			cout << "you have " << currentPlayer->totalHouses << " houses on the map " << endl;
+
+			int housesAbleToPower = plant->powersCities;
+
 
 		}
 		else
@@ -591,6 +604,7 @@ void phase4()
 				currentPlayer->subtractElektro(connectionCost);
 				cout << currentPlayer->getName() << " you balance is " << currentPlayer->getElektro() << endl;
 				possibleCities.at(city_id)->placeHouse(currentPlayer->getColor());
+				currentPlayer->totalHouses++;
 
 				cout << "a " << currentPlayer->getColor() << " house was placed on " << possibleCities.at(city_id)->getCityName() << endl;
 			}
