@@ -49,6 +49,8 @@ int numberOfPlayer = 0;
 // the connected map with all the cities 
 Map* citiesMap;
 
+int step;
+
 //Summary card/array. Absolutely see the rulebook to know exactly what this is.
 const int summaryCard[5][5] = {	{2, 3, 4, 5, 6},		// number of regions/players (set according to assignment requirement, not official rules)
 							{8, 8, 4, 0, 0},		// number of plant cards to remove randomly from deck
@@ -429,14 +431,16 @@ void phase4()
 			// if there is a house on the city and if there is no house that belongs to be player 
 			if (possibleCities.at(i)->getNumberOfHouses() == 1 && possibleCities.at(i)->getNumberOfHouses(currentPlayer->getColor()) == 0)
 			{
-				/*
-				// step is not yet implemented 
-				if(step == 2)
-				connectionCost = 15;
-				if (step == 3)
-				connectionCost = 20;
-				*/
-
+				
+				// different charges based on step
+				if (step == 2)
+				{
+					connectionCost = 15;
+				}
+				else if (step == 3)
+				{
+					connectionCost = 20;
+				}
 			}
 
 			printf("%-25s%-20s%-15s\n", std::to_string(i).c_str(), possibleCities.at(i)->getCityName().c_str(), std::to_string(connectionCost).c_str());
@@ -454,8 +458,9 @@ void phase4()
 
 			if (city_id == -1)
 			{
+				cout << currentPlayer->getName() << ", you have chosen to pass.\n" << endl;
 				pass = true;
-				break;
+				continue;
 			}
 
 			if (city_id >= possibleCities.size())
@@ -601,6 +606,8 @@ void GameBoard::printMarket()
 
 void setUp()
 {
+	step = 1;
+
 	// creating a Map
 	Map* map = new Map();
 	vector<string> houseColors= { "red", "green", "blue", "purple", "orange", "yellow" };
