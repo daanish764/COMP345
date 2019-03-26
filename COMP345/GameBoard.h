@@ -19,5 +19,6 @@ public:
 	void part1();
 	void part2();
 	void part3();
+	void part4();
 	void printMarket();
 };

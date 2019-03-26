@@ -14,6 +14,8 @@ int main()
 	
 	gameboard.part3();
 
+	gameboard.part4();
+
 
 
 	cout << endl;

@@ -404,6 +404,64 @@ void GameBoard::part3() {
 	phase4();
 }
 
+void GameBoard::part4()
+{
+	cout << "--------------------------------------------" << endl;
+	cout << "PHASE 5 bureaucracy" << endl;
+	cout << "--------------------------------------------" << endl;
+
+	for (int i = 0; i < players.size(); i++)
+	{
+
+		Player* currentPlayer = players.at(i);
+		cout << currentPlayer->getName() << " it your turn take part in bureaucracy" << endl;
+
+		cout << endl << "you owned powerplant are listed below " << endl;
+
+		cout << "|  id  | plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  |" << endl;
+		cout << "|-------------------------------------------------------------------------------------------|	" << endl;
+		for (int i = 0; i < currentPlayer->ownedPlants.size(); i++)
+		{
+			cout << "|  " << i << "   ";
+			currentPlayer->ownedPlants.at(i)->printPlantInfo();
+		}
+		cout << "|-------------------------------------------------------------------------------------------|	" << endl << endl;
+		cout << endl;
+
+		int coal = currentPlayer->getCoal();
+		int oil = currentPlayer->getOil();
+		int garbage = currentPlayer->getGarbage();
+		int uranium = currentPlayer->getUranium();
+		
+		cout << "player " << currentPlayer->getName() << " you have the resources shown below" << endl;
+
+		printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
+
+		printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
+		
+
+		if (coal == 0 && oil == 0 && garbage == 0 && uranium == 0)
+		{
+			cout << endl << "you do not have enough resources to power anything" << endl;
+			cout << "your turn is forfeit " << endl << endl;
+			continue;
+		}
+
+
+		int plantid;
+		cout << "please enter the plant id of the plant you wish to power >";
+		cin >> plantid;
+
+		PowerPlant* plant = currentPlayer->ownedPlants.at(plantid);
+
+		cout << endl;
+		cout << "you selected plant id " << plant->getPlantNumber() << endl;
+
+		
+	}
+
+}
+
 void phase4()
 {
 	cout << "--------------------------------------------" << endl;

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include<string>
 
 class PowerPlant
 {
@@ -20,4 +21,7 @@ public:
 	~PowerPlant();
 
 	int getPlantNumber() const;
+
+	void printPlantInfo() const;
+
 };

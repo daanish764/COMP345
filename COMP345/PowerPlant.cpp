@@ -1,7 +1,10 @@
 #include "PowerPlant.h"
-#include "Player.h"
 #include <iostream>
+#include<string>
 
+using std::cout;
+using std::endl;
+using std::string;
 
 PowerPlant::PowerPlant()
 {
@@ -43,4 +46,23 @@ PowerPlant::~PowerPlant()
 int PowerPlant::getPlantNumber() const
 {
 	return plantNumber;
+}
+
+void PowerPlant::printPlantInfo() const
+{
+	
+	
+
+
+	string zero = "";
+	if (this->getPlantNumber() < 10) {
+		zero = "0";
+	}
+	else {
+		zero = "";
+	}
+	cout << "|   " << zero << this->getPlantNumber() << "   |   " << this->coalRequired << "   |  " << this->oilRequired << "   |     " << this->garbageRequired << "   |    " << this->uraniumRequired << "     |        " << this->hybridRequired << "         |       " << this->powersCities << "            |" << endl; 
+
+	
+
 }
