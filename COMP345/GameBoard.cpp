@@ -473,6 +473,36 @@ void GameBoard::part4()
 		if (plant->power(coal, oil, garbage, uranium))
 		{
 			cout << "you are successfully able to power plant # " << plant->getPlantNumber() << endl;
+
+			int coalRequired = plant->coalRequired;
+			int oilRequired = plant->oilRequired;
+			int garbageRequired = plant->garbageRequired;
+			int uraniumRequired = plant->uraniumRequired;
+			int hybirdRequired = plant->hybridRequired;
+
+			coal = coal - coalRequired;
+			oil = oil - oilRequired;
+			garbage = garbage - garbageRequired;
+			uranium = uranium - uraniumRequired;
+
+			coal = coal - hybirdRequired/2;
+			oil = oil - hybirdRequired/2;
+
+			currentPlayer->coal = coal;
+			currentPlayer->oil = oil;
+			currentPlayer->garbage = garbage;
+			currentPlayer->uranium = uranium;
+
+			
+
+			
+
+			cout << "player " << currentPlayer->getName() << " your updated are resources shown below" << endl;
+
+			printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
+
+			printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
+
 		}
 		else
 		{
