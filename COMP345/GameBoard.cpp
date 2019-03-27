@@ -67,6 +67,14 @@ const int priceList1[2][8] = { {22, 19, 16, 13, 10, 7, 4, 1},
 const int priceList2[2][12] = { {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1},
 								{1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16} };
 
+
+// the resupply for the number of cities in the bureaucracy phase 
+const int resupply[21] = 
+{
+	10, 22, 33, 44, 54, 64, 73, 82, 90, 98, 105, 112, 118, 124, 119, 134, 138, 142, 145, 148, 150
+};
+
+
 void setUpPowerPlantCards();
 int getPowerPlant(int x);
 void getBoardStatus(vector<City*> cities);
@@ -415,113 +423,180 @@ void GameBoard::part4()
 
 		Player* currentPlayer = players.at(i);
 		cout << currentPlayer->getName() << " it your turn take part in bureaucracy" << endl;
+		cout << currentPlayer->getElektro() << " is you elektro balance " << endl;
 
-		cout << endl << "you owned powerplant are listed below " << endl;
+		int numberOfPowerPlants = currentPlayer->ownedPlants.size();
 
-		cout << "|-------------------------------------------------------------------------------------------|	" << endl;
-		cout << "|  id  | plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  |" << endl;
-		cout << "|-------------------------------------------------------------------------------------------|	" << endl;
-		for (int i = 0; i < currentPlayer->ownedPlants.size(); i++)
+		bool* plantPowered = new bool[numberOfPowerPlants];
+		bool poweringTurn = true;
+		int cityPowered = 0;
+
+		while (poweringTurn)
 		{
-			cout << "|  " << i << "   ";
-			currentPlayer->ownedPlants.at(i)->printPlantInfo();
-		}
-		cout << "|-------------------------------------------------------------------------------------------|	" << endl << endl;
-		cout << endl;
+			cout << endl << "Your owned powerplant are listed below " << endl;
 
-		int coal = currentPlayer->getCoal();
-		int oil = currentPlayer->getOil();
-		int garbage = currentPlayer->getGarbage();
-		int uranium = currentPlayer->getUranium();
-		
-		cout << "player " << currentPlayer->getName() << " you have the resources shown below" << endl;
+			cout << "|-----------------------------------------------------------------------------------------------------|" << endl;
+			cout << "|  id | plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  | powered  |" << endl;
+			cout << "|-----------------------------------------------------------------------------------------------------|" << endl;
+			for (int i = 0; i < currentPlayer->ownedPlants.size(); i++)
+			{
+				cout << "|  " << i << "  ";
+				currentPlayer->ownedPlants.at(i)->printPlantInfo();
+				string powered = "";
+				if (plantPowered[i] == true)
+				{
+					powered = "true ";
+				}
+				else {
+					powered = "false";
+				}
 
-		printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
+				cout << "  " << powered << "   |" << endl;
+			}
+			cout << "|-----------------------------------------------------------------------------------------------------|" << endl << endl;
+			cout << endl;
 
-		printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
-		
+			int coal = currentPlayer->getCoal();
+			int oil = currentPlayer->getOil();
+			int garbage = currentPlayer->getGarbage();
+			int uranium = currentPlayer->getUranium();
 
-		if (coal == 0 && oil == 0 && garbage == 0 && uranium == 0)
-		{
-			cout << endl << "you do not have enough resources to power anything" << endl;
-			cout << "your turn is forfeit " << endl << endl;
-			continue;
-		}
-
-
-		int plantid;
-		cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
-		cin >> plantid;
-
-		if (plantid == -1)
-		{
-			cout << "you have chosen not to power anything this phase " << endl;
-			continue;
-		}
-
-		if (plantid >= currentPlayer->ownedPlants.size())
-		{
-			cout << "invalid input and you lost your turn " << endl;
-			continue;
-		}
-
-
-
-		PowerPlant* plant = currentPlayer->ownedPlants.at(plantid);
-
-		if (plant->powersCities > currentPlayer->totalHouses)
-		{
-			cout << "you do not have enough houses to use this card to power cities " << endl;
-			cout << "card " << plant->getPlantNumber() << " power " << plant->powersCities << " cities " << endl;
-			cout << "You only have " << currentPlayer->totalHouses << endl;
-			continue;
-		}
-
-		cout << endl;
-		cout << "you selected plant # " << plant->getPlantNumber() << endl;
-
-		if (plant->power(coal, oil, garbage, uranium))
-		{
-			cout << "you are successfully able to power plant # " << plant->getPlantNumber() << endl;
-
-			int coalRequired = plant->coalRequired;
-			int oilRequired = plant->oilRequired;
-			int garbageRequired = plant->garbageRequired;
-			int uraniumRequired = plant->uraniumRequired;
-			int hybirdRequired = plant->hybridRequired;
-
-			coal = coal - coalRequired;
-			oil = oil - oilRequired;
-			garbage = garbage - garbageRequired;
-			uranium = uranium - uraniumRequired;
-
-			coal = coal - hybirdRequired/2;
-			oil = oil - hybirdRequired/2;
-
-			currentPlayer->coal = coal;
-			currentPlayer->oil = oil;
-			currentPlayer->garbage = garbage;
-			currentPlayer->uranium = uranium;
-
-
-			cout << "player " << currentPlayer->getName() << " your updated are resources shown below" << endl;
+			cout << "player " << currentPlayer->getName() << " you have the resources shown below" << endl;
 
 			printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
 
 			printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
+
+
+			if (coal == 0 && oil == 0 && garbage == 0 && uranium == 0)
+			{
+				cout << endl << "you do not have enough resources to power anything" << endl;
+				cout << "your turn is forfeit " << endl << endl;
+				poweringTurn = false;
+				break;
+			}
+
+
 			cout << endl;
+			int plantid;
+			cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
+			cin >> plantid;
 
-			cout << "you have " << currentPlayer->totalHouses << " houses on the map " << endl;
+			if (plantid == -1)
+			{
+				cout << "you have chosen not to power anything this phase " << endl;
+				poweringTurn = false;
+				break;
+			}
 
-			int housesAbleToPower = plant->powersCities;
+			if (plantid >= currentPlayer->ownedPlants.size())
+			{
+				cout << "invalid input and you lost your turn " << endl;
+				poweringTurn = false;
+				break;
+			}
 
+			if (plantPowered[plantid] == true)
+			{
+				cout << "this plant is already powered " << endl;
+				cout << "your turn is forfeit " << endl << endl;
+				plantPowered = false;
+				break;
+			}
+
+
+
+			PowerPlant* plant = currentPlayer->ownedPlants.at(plantid);
+
+			if (plant->powersCities > currentPlayer->totalHouses)
+			{
+				cout << "you do not have enough houses to use this card to power cities " << endl;
+				cout << "card " << plant->getPlantNumber() << " power " << plant->powersCities << " cities " << endl;
+				cout << "You only have " << currentPlayer->totalHouses << endl;
+				poweringTurn = false;
+				break;
+			}
+
+			cout << endl;
+			cout << "you selected plant # " << plant->getPlantNumber() << endl;
+
+			if (plant->power(coal, oil, garbage, uranium))
+			{
+				cout << "you are successfully able to power plant # " << plant->getPlantNumber() << endl << endl;
+
+				// getting the required resources of the card
+				int coalRequired = plant->coalRequired;
+				int oilRequired = plant->oilRequired;
+				int garbageRequired = plant->garbageRequired;
+				int uraniumRequired = plant->uraniumRequired;
+				int hybirdRequired = plant->hybridRequired;
+
+				coal = coal - coalRequired;
+				oil = oil - oilRequired;
+				garbage = garbage - garbageRequired;
+				uranium = uranium - uraniumRequired;
+
+				coal = coal - hybirdRequired / 2;
+				oil = oil - hybirdRequired / 2;
+
+
+				// removing resources of the player 
+				currentPlayer->coal = coal;
+				currentPlayer->oil = oil;
+				currentPlayer->garbage = garbage;
+				currentPlayer->uranium = uranium;
+
+				// making sure this powerplant cannot be powered again 
+				plantPowered[plantid] = true;
+
+				cout << "player " << currentPlayer->getName() << " your updated are resources shown below" << endl;
+
+				printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
+
+				printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
+				cout << endl;
+
+
+
+				cityPowered += plant->powersCities;
+				cout << "at this point you have the ability to power " << cityPowered << " city."<< endl;
+
+				int input;
+				cout << "would you like to select another powerplant to power (1 for yes and 0 for no) > ";
+				cin >> input;
+				cout << endl;
+				if (input == 1)
+				{
+					poweringTurn = true;
+					cout << endl;
+				}
+				else {
+					poweringTurn = false;
+					break;
+				}
+			}
+			else
+			{
+				cout << "you were not able to power power plant # " << plant->getPlantNumber() << endl;
+			}
 
 		}
-		else
+
+		if (cityPowered > 0)
 		{
-			cout << "you were not able to power power plant # " << plant->getPlantNumber() << endl;
+			cout << "You have the ability to power " << cityPowered << " cities. "<< endl;
+
+			int elektro = 0;
+			
+			elektro += resupply[cityPowered];
+			
+			cout << "You have recieved " << resupply[cityPowered] << " elektro " << endl;
+
+			currentPlayer->assignElektro(elektro);
+
+			cout << currentPlayer->getName() << ", your new balance is " << currentPlayer->getElektro() << endl << endl;
+
 		}
-		
 	}
 
 }
@@ -602,11 +677,11 @@ void phase4()
 			}
 			else {
 				currentPlayer->subtractElektro(connectionCost);
-				cout << currentPlayer->getName() << " you balance is " << currentPlayer->getElektro() << endl;
 				possibleCities.at(city_id)->placeHouse(currentPlayer->getColor());
 				currentPlayer->totalHouses++;
 
-				cout << "a " << currentPlayer->getColor() << " house was placed on " << possibleCities.at(city_id)->getCityName() << endl;
+				cout << "A " << currentPlayer->getColor() << " house was placed on " << possibleCities.at(city_id)->getCityName() << endl;
+				cout << currentPlayer->getName() << " your updated balance is " << currentPlayer->getElektro() << " elektro." << endl;
 			}
 		}
 

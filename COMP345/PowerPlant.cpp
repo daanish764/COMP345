@@ -61,7 +61,7 @@ void PowerPlant::printPlantInfo() const
 	else {
 		zero = "";
 	}
-	cout << "|   " << zero << this->getPlantNumber() << "   |   " << this->coalRequired << "   |  " << this->oilRequired << "   |     " << this->garbageRequired << "   |    " << this->uraniumRequired << "     |        " << this->hybridRequired << "         |       " << this->powersCities << "            |" << endl; 
+	cout << "|   " << zero << this->getPlantNumber() << "   |   " << this->coalRequired << "   |  " << this->oilRequired << "   |     " << this->garbageRequired << "   |    " << this->uraniumRequired << "     |        " << this->hybridRequired << "         |       " << this->powersCities << "            |"; 
 
 	
 
