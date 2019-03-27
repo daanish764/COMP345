@@ -189,3 +189,18 @@ void Player::buyPlant(PowerPlant * plant, int cost, int maxPlants)
 		largestPlant = plant->getPlantNumber();
 	}
 }
+
+bool Player::isConnectedToCity(City * city)
+{
+	for (int i = 0; i < ownedCities.size(); i++)
+	{
+		if (ownedCities.at(i) == city)
+			return true;
+	}
+	return false;
+}
+
+void Player::connectToCity(City * city)
+{
+	ownedCities.push_back(city);
+}

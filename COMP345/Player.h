@@ -9,6 +9,7 @@ class Player
 private:
 	string name;
 	string color;
+	vector<City*> ownedCities;
 	
 public:
 	int elektro;
@@ -45,4 +46,7 @@ public:
 	void subtractElektro(int num);
 	void placeHouse(City* city);
 	void buyPlant(PowerPlant* plant, int cost, int maxPlants);
+
+	bool isConnectedToCity(City* city);
+	void connectToCity(City* city);
 };

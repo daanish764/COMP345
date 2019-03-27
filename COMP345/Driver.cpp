@@ -8,13 +8,18 @@ int main()
 	
 	GameBoard gameboard = GameBoard();
 
-	gameboard.part1();
 
-	gameboard.part2();
-	
-	gameboard.part3();
+	while (true)
+	{
 
-	gameboard.part4();
+		gameboard.part1();
+
+		gameboard.part2();
+
+		gameboard.part3();
+
+		gameboard.part4();
+	}
 
 
 

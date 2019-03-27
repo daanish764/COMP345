@@ -91,6 +91,7 @@ int getGarbageCost();
 int getUraniumCost();
 
 void phase4();
+vector<City*> getConnectableCities(Map* map, City* city, Player* player);
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
@@ -461,11 +462,11 @@ void GameBoard::part4()
 			int garbage = currentPlayer->getGarbage();
 			int uranium = currentPlayer->getUranium();
 
-			cout << "player " << currentPlayer->getName() << " you have the resources shown below" << endl;
+			cout << "player " << currentPlayer->getName() << " you have your  resources shown below" << endl;
 
-			printf("%-25s%-20s%-15s\n", "Coal", "Oil", "Garbage", "Uranium");
+			printf("%-25s%-20s%-15s%\n", "Coal", "Oil", "Garbage", "Uranium");
 
-			printf("%-25s%-20s%-15s\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
+			printf("%-25s%-20s%-15s%\n", std::to_string(coal).c_str(), std::to_string(oil).c_str(), ::to_string(garbage).c_str(), ::to_string(uranium).c_str());
 
 
 			if (coal == 0 && oil == 0 && garbage == 0 && uranium == 0)
@@ -614,7 +615,7 @@ void phase4()
 
 		cout << currentPlayer->getName() << " its your turn and " << currentPlayer->getStartCity()->getCityName() << " is your start city" << endl;
 
-		vector<City*> possibleCities = citiesMap->getConnectableCities(currentPlayer->getStartCity(), currentPlayer->getColor());
+		vector<City*> possibleCities = getConnectableCities(citiesMap, currentPlayer->getStartCity(), currentPlayer);
 
 		int connectionCost = 10;
 		int city_id;
@@ -681,6 +682,7 @@ void phase4()
 				currentPlayer->totalHouses++;
 
 				cout << "A " << currentPlayer->getColor() << " house was placed on " << possibleCities.at(city_id)->getCityName() << endl;
+				currentPlayer->connectToCity(possibleCities.at(city_id));
 				cout << currentPlayer->getName() << " your updated balance is " << currentPlayer->getElektro() << " elektro." << endl;
 			}
 		}
@@ -724,6 +726,65 @@ int getUraniumCost() {
 	}
 	return 1000;
 }
+
+vector<City*> getConnectableCities(Map* map, City* city, Player* player)
+{
+	vector<City*> result;
+	vector<City*> possibleCities = map->getCities();
+
+	// loop over all the cities 
+	for (std::vector<City*>::iterator it = possibleCities.begin(); it != possibleCities.end(); ++it) 
+	{
+		City* currentCity = *(it);
+		
+		// if the city is the city we are looking 
+		if (currentCity == city)
+		{
+			//cout << "found the city " << currentCity->getCityName() << endl;
+			// and there is no house on it then we add to possible cities 
+			if (currentCity->getNumberOfHouses(player->getColor()) == 0)
+			{
+				//cout << "if reached ** " << endl;
+				//cout << "the city has " << currentCity->getNumberOfHouses(player->getColor()) << " of houses on it " << endl;
+				result.push_back(currentCity);
+				return result;
+			}
+			else 
+			{
+				//cout << "else reached ** " << endl;
+
+				// if there is a house on it, 
+
+				// loop over all adjacent houses and push only if there is no house on it 
+				vector<City*> adjacentCities = currentCity->getAdjacentCities();
+				for (int i = 0; i < adjacentCities.size(); i++)
+				{
+					City* currentAdjCity = adjacentCities.at(i);
+
+
+					//cout << "the city has " << currentAdjCity->getNumberOfHouses(player->getColor()) << " of houses on it " << endl;
+
+					// if there is no house on it 
+					if (currentAdjCity->getNumberOfHouses() != 0)
+						continue;
+					else {
+						if (!player->isConnectedToCity(currentAdjCity))
+						{
+
+							result.push_back(currentAdjCity);
+							//cout << "putting adjacent city " << currentAdjCity->getCityName() << endl;
+						}
+
+					}						
+					
+				}
+
+			}
+		}
+	}
+	return result;
+}
+
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer) //number of players == number of regions
 {
