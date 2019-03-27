@@ -1,7 +1,10 @@
 #include "PowerPlant.h"
-#include "Player.h"
 #include <iostream>
+#include<string>
 
+using std::cout;
+using std::endl;
+using std::string;
 
 PowerPlant::PowerPlant()
 {
@@ -17,6 +20,12 @@ PowerPlant::PowerPlant()
 PowerPlant::PowerPlant(int plantNumber)
 {
 	this->plantNumber = plantNumber;
+	powersCities = 0;
+	coalRequired = 0;
+	oilRequired = 0;
+	garbageRequired = 0;
+	uraniumRequired = 0;
+	hybridRequired = 0;
 }
 
 PowerPlant::PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired)
@@ -39,10 +48,44 @@ int PowerPlant::getPlantNumber() const
 	return plantNumber;
 }
 
-void PowerPlant::setOwner(Player* name) {
-	this->owner = name;
+void PowerPlant::printPlantInfo() const
+{
+	
+	
+
+
+	string zero = "";
+	if (this->getPlantNumber() < 10) {
+		zero = "0";
+	}
+	else {
+		zero = "";
+	}
+	cout << "|   " << zero << this->getPlantNumber() << "   |   " << this->coalRequired << "   |  " << this->oilRequired << "   |     " << this->garbageRequired << "   |    " << this->uraniumRequired << "     |        " << this->hybridRequired << "         |       " << this->powersCities << "            |"; 
+
+	
+
 }
 
-Player* PowerPlant::getOwner() {
-	return this->owner;
+bool PowerPlant::power(int coal, int oil, int garbage, int uranium)
+{
+
+	if (garbageRequired != 0 && garbage <= garbageRequired)
+		return false;
+	if (uraniumRequired != 0 && uranium <= uraniumRequired)
+		return false;
+	int coalAndOil = coal + oil;
+
+	if (hybridRequired != 0 && coalAndOil <= hybridRequired)
+	{
+		return false;
+	}
+
+	if (coalRequired != 0 && coal <= coalRequired)
+		return false;
+
+	if (oilRequired != 0 & oil <= oilRequired)
+		return false;
+
+	return true;
 }

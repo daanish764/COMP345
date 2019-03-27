@@ -3,9 +3,10 @@
 #include"Map.h"
 #include"City.h"
 #include<vector>
-#include <unordered_map> 
+#include<unordered_map> 
 #include<map>
 #include<stack>
+#include<algorithm>
 
 using namespace std;
 
@@ -16,9 +17,6 @@ Map::Map()
 
 Map::~Map()
 {
-	// this does not work and I do not why
-	// delete &cityList;
-	// delete firstCity;
 	
 }
 
@@ -56,7 +54,7 @@ void Map::removeCity(City * city)
 	}
 }
 
-const void Map::connectCity(City* city1, City* city2)
+const void Map::connectCity(City* city1, City* city2, int cost)
 {
 
 	if (getCity(city1->getCityName()) != NULL)
@@ -67,8 +65,8 @@ const void Map::connectCity(City* city1, City* city2)
 	{
 		city2 = getCity(city2->getCityName());
 	}
-	city1->addAdjacentCity(city2);
-	city2->addAdjacentCity(city1);
+	city1->addAdjacentCity(city2, cost);
+	city2->addAdjacentCity(city1, cost);
 }
 
 const bool Map::allCitiesConnected() const {
@@ -166,6 +164,34 @@ City* Map::getCity(string cityName)
 	return NULL;
 }
 
-vector<City*> Map::getCityList() {
-	return cityList;
+vector<City*> Map::getCities() const
+{
+	return this->cityList;
 }
+
+vector<City*> Map::getConnectableCities(City* city, string color)
+{
+	vector<City*> result;
+	// if there is no house on the starting city, we simply add it to result vector and return the result
+	if (city->getNumberOfHouses() == 0)
+		result.push_back(city);
+	else
+	{
+		// loop over all adjacent cities and if there is no house on the 
+		vector<City*> adjCities = city->getAdjacentCities();
+
+		for (int i = 0; i < adjCities.size(); i++)
+		{
+			// if the city is already in the vector we dont want to insert it twice
+			if (std::find(result.begin(), result.end(), adjCities.at(i)) != result.end())
+				continue;
+
+			// if there is no house on the city we would like to add it
+			if (adjCities.at(i)->getNumberOfHouses() == 0)
+				result.push_back(adjCities.at(i));
+		}
+	}
+
+	return result;
+}
+
