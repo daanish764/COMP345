@@ -753,13 +753,17 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 			{
 				//cout << "else reached ** " << endl;
 
-				// if there is a house on it, 
+				cout << currentCity->getCityName() << " already has a house on it." << endl;
 
+				// if there is a house on it, 
+				
 				// loop over all adjacent houses and push only if there is no house on it 
 				vector<City*> adjacentCities = currentCity->getAdjacentCities();
+
 				for (int i = 0; i < adjacentCities.size(); i++)
 				{
 					City* currentAdjCity = adjacentCities.at(i);
+					cout << currentCity->getCityName() << " has an adjacent city " << currentAdjCity->getCityName() << endl;
 
 
 					//cout << "the city has " << currentAdjCity->getNumberOfHouses(player->getColor()) << " of houses on it " << endl;
@@ -772,7 +776,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 						{
 
 							result.push_back(currentAdjCity);
-							//cout << "putting adjacent city " << currentAdjCity->getCityName() << endl;
+							cout << "putting adjacent city " << currentAdjCity->getCityName() << endl;
 						}
 
 					}						

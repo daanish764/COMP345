@@ -168,7 +168,7 @@ vector<City*> Map::getCities() const
 {
 	return this->cityList;
 }
-
+/*
 vector<City*> Map::getConnectableCities(City* city, string color)
 {
 	vector<City*> result;
@@ -195,3 +195,4 @@ vector<City*> Map::getConnectableCities(City* city, string color)
 	return result;
 }
 
+*/
