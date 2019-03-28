@@ -29,6 +29,7 @@ public:
 	Player* owner;
 
 	OverviewCard();
+	~OverviewCard();
 	OverviewCard(int num);
 
 	void setOwner(Player* name);

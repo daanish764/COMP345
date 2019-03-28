@@ -65,6 +65,10 @@ void Player::setStartCity(City * startCity)
 
 Player::~Player()
 {
+	// ownedCities is deleted by vector class
+	// ownedPlants is deleted by vector class
+	delete startCity;
+	startCity = NULL;
 }
 
 string Player::getName() const

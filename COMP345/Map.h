@@ -21,7 +21,6 @@ public:
 	const void printAllCities() const;
 	City* getCity(const string cityName);
 	vector<City*> getCities() const;
-	// vector<City *> getConnectableCities(City* start_city, string color);
-	// int getConnectionCost(City* start_city, City* end_city);
+	
 };
 

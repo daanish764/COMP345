@@ -9,6 +9,12 @@ OverviewCard::OverviewCard()
 
 }
 
+OverviewCard::~OverviewCard()
+{
+	delete owner;
+	owner = NULL;
+}
+
 OverviewCard::OverviewCard(int num)
 {
 	this->overviewCardNumber = num;
