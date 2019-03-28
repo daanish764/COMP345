@@ -1,10 +1,15 @@
+/*
+Team 24
+
+Daanish Rehman [27027753]
+Jawed Bhojani [29060936]
+Kadeem Caines [26343600]
+*/
+
 #include"GameBoard.h"
 #include<string>
 #include<algorithm>
 using namespace std;
-
-
-
 
 Player::Player()
 {
