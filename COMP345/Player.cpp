@@ -14,6 +14,7 @@ Player::Player()
 	garbage = 0;
 	oil = 0;
 	uranium = 0;
+	poweredCities = 0;
 	startCity = NULL;
 
 }
@@ -28,6 +29,7 @@ Player::Player(string playerName)
 	uranium = 0;
 	totalHouses = 0;
 	largestPlant = 0;
+	poweredCities = 0;
 	startCity = NULL;
 }
 
@@ -43,6 +45,7 @@ Player::Player(string name, string color, int maxPlants)
 	uranium = 0;
 	totalHouses = 0;
 	largestPlant = 0;
+	poweredCities = 0;
 	startCity = NULL;
 }
 

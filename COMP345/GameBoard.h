@@ -21,4 +21,5 @@ public:
 	void part3();
 	void part4();
 	void printMarket();
+	bool gameWinCondition();
 };

@@ -19,6 +19,10 @@ int main()
 		gameboard.part3();
 
 		gameboard.part4();
+
+		if (gameboard.gameWinCondition() == true) {
+			break;
+		}
 	}
 
 

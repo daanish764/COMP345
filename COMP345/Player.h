@@ -19,6 +19,7 @@ public:
 	int uranium;
 	int totalHouses;
 	int largestPlant;
+	int poweredCities;
 	City* startCity;
 
 	vector<PowerPlant*> ownedPlants;

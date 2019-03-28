@@ -49,7 +49,8 @@ int numberOfPlayer = 0;
 // the connected map with all the cities 
 Map* citiesMap;
 
-int step;
+int step2 = 0;
+int step3 = 0;
 
 //Summary card/array. Absolutely see the rulebook to know exactly what this is.
 const int summaryCard[5][5] = {	{2, 3, 4, 5, 6},		// number of regions/players (set according to assignment requirement, not official rules)
@@ -67,6 +68,31 @@ const int priceList1[2][8] = { {22, 19, 16, 13, 10, 7, 4, 1},
 const int priceList2[2][12] = { {12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1},
 								{1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16} };
 
+//Replenishment rates for each resource
+//step(depth) X players(width)
+const int coalReplenish[3][5] = { {3, 4, 5, 5, 7},
+									{4, 5, 6, 7, 9},
+									{3, 3, 4, 5, 6}
+};
+
+//step(depth) X players(width)
+const int oilReplenish[3][5] = { {2,2,3,4,5},
+									{2,3,4,5,6},
+									{4,4,4,6,7}
+};
+
+//step(depth) X players(width)
+const int garbageReplenish[3][5] = { {1,1,2,3,3},
+									{2,2,3,3,5},
+									{3,3,4,5,6}
+};
+
+//step(depth) X players(width)
+const int uraniumReplenish[3][5] = { {1,1,1,2,2},
+									{1,1,2,3,3},
+									{1,1,2,2,3}
+};
+
 
 // the resupply for the number of cities in the bureaucracy phase 
 const int resupply[21] = 
@@ -83,6 +109,40 @@ void printDeck();
 void sortPlayersDescending();
 void sortPlayersAscending();
 void sortMarket();
+void sortWinners();
+
+bool GameBoard::gameWinCondition() {
+	for (int i = 0; i < players.size(); i++) {
+		if (players[i]->getOwnedCities().size() >= summaryCard[4][numberOfPlayer - 2]) {
+			step2 = 1;
+			cout << "\n\n****************\nGAME ENDED!\n****************\n\n";
+			sortWinners();
+			cout << "\n\nTHE STANDING AT THE END IS:\n";
+			for (int k = 0; k < players.size(); k++) {
+				cout << k + 1 << ": " << players[k]->getName() << " with powered cities: " << players[k]->poweredCities << " and elektro: " << players[k]->elektro << endl;
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+
+void printGameStatus() {
+	vector<City*> cities = citiesMap->getCities();
+
+	cout << "\n***Lets see what each player owns at this point:\n";
+	for (int i = 0; i < players.size(); i++) {
+		cout << endl << endl;
+		players[i]->getPlayerInfo();
+
+		printPlayerNetwork(players[i], cities);
+	}
+
+	cout << "\n\n***AVAILABLE RESOURCES";
+	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
+	cout << availRes << "\n\n";
+}
 
 //phase3 functions
 int getCoalCost();
@@ -110,10 +170,8 @@ void GameBoard::part1()
 	}
 	cout << "----END----\n" << endl;
 
-	setUpPowerPlantCards();
+	
 	cout << "\n***The Plantdeck has been shuffled, " << summaryCard[1][numberOfPlayer - 2] << " cards have been randomly removed and Step 3 card has been put at the bottom and plant 13 at the top.\n";
-
-	//getBoardStatus(cities);
 }
 
 void GameBoard::part2()
@@ -193,8 +251,21 @@ void GameBoard::part2()
 				cout << "Powerplant " << chosenPlant << " bought by " << activeBidders[0]->getName() << " for " << std::max(chosenPlant, highestBid) << " Elektros!" << endl;
 
 
-				//replacing the won powerplant with the top card of the deck
-				market[getPowerPlant(chosenPlant)] = deck[deck.size() - 1];
+				//replacing the won powerplant with the top card of the deck and checking for step 3(powerplant 0) card.
+				if (deck[deck.size() - 1]->getPlantNumber() != 0) {
+					market[getPowerPlant(chosenPlant)] = deck[deck.size() - 1];
+				}
+				else {
+					//if it's a step 3 card, lets take it out of the deck
+					deck.pop_back();
+
+					// then put the card under the step 3 card into the market
+					market[getPowerPlant(chosenPlant)] = deck[deck.size() - 1];
+
+					//activate step3 and let the players know
+					step3 = 1;
+					cout << "\n\n****************\nSTEP 3 ACTIVATED!!\n****************\n\n";
+				}
 
 				//Sort the future/actual market
 				sortMarket();
@@ -212,16 +283,8 @@ void GameBoard::part2()
 		}
 	}
 	//Lets see the possessions all the player own
-
-	vector<City*> cities = citiesMap->getCities();
-
-	cout << "\n***Lets see what each player owns at this point:\n";
-	for (int i = 0; i < players.size(); i++) {
-		cout << endl << endl;
-		players[i]->getPlayerInfo();
-		
-		printPlayerNetwork(players[i], cities);
-	}
+	printGameStatus();
+	
 }
 
 void GameBoard::part3() {
@@ -257,25 +320,29 @@ void GameBoard::part3() {
 		int excessOil = 0;
 		//For loop goes through player's powerplants to scan each plant's resource capacity and subtracts what they already own to give new capacity. Excess oil and coal are also calculated here.
 		for (int k = 0; k < players[i]->ownedPlants.size(); k++) {
-			coalCapacity += (players[i]->ownedPlants[k]->coalRequired * 2) - players[i]->getCoal();
+			coalCapacity += (players[i]->ownedPlants[k]->coalRequired * 2);
+			coalCapacity -= players[i]->getCoal();
 			if (coalCapacity < 0) { //if capacity is negative, turn capacity=0 in this case and update the excessCoal int.
 				excessCoal += players[i]->coal - coalCapacity;
 				coalCapacity = 0;
 			}
 
-			oilCapacity += (players[i]->ownedPlants[k]->oilRequired * 2) - players[i]->getOil();
+			oilCapacity += (players[i]->ownedPlants[k]->oilRequired * 2);
+			oilCapacity -= players[i]->getOil();
 			if (oilCapacity < 0) {
 				excessOil += players[i]->oil - oilCapacity;
 				oilCapacity = 0;
 			}
 
-			garbageCapacity += (players[i]->ownedPlants[k]->garbageRequired * 2) - players[i]->getGarbage();
+			garbageCapacity += (players[i]->ownedPlants[k]->garbageRequired * 2);
+			garbageCapacity -= players[i]->getGarbage();
 			if (garbageCapacity < 0) { //If capacity<what we already have, dump the excess
 				players[i]->garbage -= garbageCapacity;
 				garbageCapacity = 0;
 			}
 
-			uraniumCapacity += (players[i]->ownedPlants[k]->uraniumRequired * 2) - players[i]->getUranium();
+			uraniumCapacity += (players[i]->ownedPlants[k]->uraniumRequired * 2);
+			uraniumCapacity -= players[i]->getUranium();
 			if (uraniumCapacity < 0) { //If capacity<what we already have, dump the excess
 				players[i]->uranium -= uraniumCapacity;
 				uraniumCapacity = 0;
@@ -292,6 +359,16 @@ void GameBoard::part3() {
 					if (excessOil > 0) {
 						players[i]->oil -= 1;
 						excessOil -= 1;
+						hybridCapacity++;
+					}
+					// if the program enters this IF statement, it means that a hybrid plant was dropped so we didn't have excess oil/coal at the non-hybrid
+					// plants. So we dump oil and coal one-by-one and check each time until we're not overcapacity.
+					if (excessOil == 0 && excessCoal == 0 && hybridCapacity < 0) {
+						//dump one coal, if capacity is good, the while loop will break, else it'll drop one oil and process repeats.
+						players[i]->coal -= 1;
+						hybridCapacity++;
+
+						players[i]->oil -= 1;
 						hybridCapacity++;
 					}
 				}
@@ -396,18 +473,7 @@ void GameBoard::part3() {
 	}
 
 	//Lets see the possessions all the player own
-
-	vector<City*> cities = citiesMap->getCities();
-
-	cout << "\n\n***Lets see what each player owns at this point:\n";
-	for (int i = 0; i < players.size(); i++) {
-		cout << endl << endl;
-		players[i]->getPlayerInfo();
-		printPlayerNetwork(players[i], cities);
-	}
-	cout << "\n\n***AVAILABLE RESOURCES";
-	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
-	cout << availRes << "\n\n";
+	printGameStatus();
 	
 
 	phase4();
@@ -524,6 +590,7 @@ void GameBoard::part4()
 			if (plant->power(coal, oil, garbage, uranium))
 			{
 				cout << "you are successfully able to power plant # " << plant->getPlantNumber() << endl << endl;
+				players[i]->poweredCities++;
 
 				// getting the required resources of the card
 				int coalRequired = plant->coalRequired;
@@ -599,12 +666,52 @@ void GameBoard::part4()
 
 		}
 	}
+	//checking if Step 2 needs to be activated
+	for (int i = 0; i < players.size(); i++) {
+		if (players[i]->getOwnedCities().size() >= summaryCard[3][numberOfPlayer-2]) {
+			step2 = 1;
+			cout << "\n\n****************\nSTEP 2 ACTIVATED!!\n****************\n\n";
+		}
+	}
+
+	//Resource replenishment depending on the phase 
+	if (step3 == 1) {
+		GameBoard::availableCoal += coalReplenish[2][numberOfPlayer - 2];
+		GameBoard::availableOil += oilReplenish[2][numberOfPlayer - 2];
+		GameBoard::availableGarbage += garbageReplenish[2][numberOfPlayer - 2];
+		GameBoard::availableUranium += uraniumReplenish[2][numberOfPlayer - 2];
+	}
+	else if (step2 == 1) {
+		GameBoard::availableCoal += coalReplenish[1][numberOfPlayer - 2];
+		GameBoard::availableOil += oilReplenish[1][numberOfPlayer - 2];
+		GameBoard::availableGarbage += garbageReplenish[1][numberOfPlayer - 2];
+		GameBoard::availableUranium += uraniumReplenish[1][numberOfPlayer - 2];
+	}
+	else {
+		GameBoard::availableCoal += coalReplenish[0][numberOfPlayer - 2];
+		GameBoard::availableOil += oilReplenish[0][numberOfPlayer - 2];
+		GameBoard::availableGarbage += garbageReplenish[0][numberOfPlayer - 2];
+		GameBoard::availableUranium += uraniumReplenish[0][numberOfPlayer - 2];
+	}
+
+
+	//placing the highest priced plant from the market to the bottom of the deck
+	deck.insert(deck.begin(), market[7]);
+
+	//replacing that plant in the market with the top card of the deck
+	market[7] = deck[deck.size() - 1];
+
+	//popping that card from the deck
+	deck.pop_back();
+
+	//sorting the market again
+	sortMarket();
 
 }
 
 void phase4()
 {
-	cout << "--------------------------------------------" << endl;
+	cout << "\n\n--------------------------------------------" << endl;
 	cout << "phase 4 buidling  " << endl;
 	cout << "--------------------------------------------" << endl;
 
@@ -631,11 +738,11 @@ void phase4()
 			{
 				
 				// different charges based on step
-				if (step == 2)
+				if (step2 == 1)
 				{
 					connectionCost = 15;
 				}
-				else if (step == 3)
+				else if (step3 == 1)
 				{
 					connectionCost = 20;
 				}
@@ -689,6 +796,8 @@ void phase4()
 
 		cout << endl;
 	}
+
+	printGameStatus();
 }
 
 int getCoalCost() {
@@ -880,8 +989,6 @@ void GameBoard::printMarket()
 
 void setUp()
 {
-	step = 1;
-
 	// creating a Map
 	Map* map = new Map();
 	vector<string> houseColors= { "red", "green", "blue", "purple", "orange", "yellow" };
@@ -1151,6 +1258,18 @@ void sortPlayersAscending() {
 	});
 }
 
+//method to call when game ends so the players vector gets sorted by winning rank
+void sortWinners() {
+	stable_sort(players.begin(), players.end(), [](const Player* lhs, const Player* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
+
+		//tiebreaker
+		if (lhs->poweredCities == rhs->poweredCities) {
+			return lhs->elektro > rhs->elektro;
+		}
+		return lhs->poweredCities > rhs->poweredCities;
+	});
+}
+
 //Sorts market (future/actual)
 void sortMarket() {
 	stable_sort(market.begin(), market.end(), [](const PowerPlant* lhs, const PowerPlant* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
@@ -1162,4 +1281,5 @@ void sortMarket() {
 GameBoard::GameBoard()
 {
 	setUp();
+	setUpPowerPlantCards();
 }
