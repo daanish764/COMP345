@@ -204,3 +204,8 @@ void Player::connectToCity(City * city)
 {
 	ownedCities.push_back(city);
 }
+
+vector<City*> Player::getOwnedCities()
+{
+	return this->ownedCities;
+}

@@ -729,17 +729,26 @@ int getUraniumCost() {
 
 vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 {
+
+
 	vector<City*> result;
-	vector<City*> possibleCities = map->getCities();
+
+	if (player->getOwnedCities().size() == 0)
+	{
+		cout << player->getName() << "has only no city " << endl;
+		cout << player->getStartCity()->getCityName() << " is pushed to possible cities";
+		result.push_back(player->getStartCity());
+		return result;
+	}
+	vector<City*> possibleCities = player->getOwnedCities();
 
 	// loop over all the cities 
 	for (std::vector<City*>::iterator it = possibleCities.begin(); it != possibleCities.end(); ++it) 
 	{
 		City* currentCity = *(it);
+		cout << currentCity->getCityName() << endl;
 		
-		// if the city is the city we are looking 
-		if (currentCity == city)
-		{
+		
 			//cout << "found the city " << currentCity->getCityName() << endl;
 			// and there is no house on it then we add to possible cities 
 			if (currentCity->getNumberOfHouses(player->getColor()) == 0)
@@ -770,7 +779,9 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 
 					// if there is no house on it 
 					if (currentAdjCity->getNumberOfHouses() != 0)
-						continue;
+					{
+
+					}
 					else {
 						if (!player->isConnectedToCity(currentAdjCity))
 						{
@@ -784,7 +795,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 				}
 
 			}
-		}
+		
 	}
 	return result;
 }
