@@ -735,8 +735,8 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 
 	if (player->getOwnedCities().size() == 0)
 	{
-		cout << player->getName() << "has only no city " << endl;
-		cout << player->getStartCity()->getCityName() << " is pushed to possible cities";
+		//cout << player->getName() << "has only no city " << endl;
+		//cout << player->getStartCity()->getCityName() << " is pushed to possible cities";
 		result.push_back(player->getStartCity());
 		return result;
 	}
@@ -746,7 +746,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 	for (std::vector<City*>::iterator it = possibleCities.begin(); it != possibleCities.end(); ++it) 
 	{
 		City* currentCity = *(it);
-		cout << currentCity->getCityName() << endl;
+		//cout << currentCity->getCityName() << endl;
 		
 		
 			//cout << "found the city " << currentCity->getCityName() << endl;
@@ -762,7 +762,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 			{
 				//cout << "else reached ** " << endl;
 
-				cout << currentCity->getCityName() << " already has a house on it." << endl;
+				//cout << currentCity->getCityName() << " already has a house on it." << endl;
 
 				// if there is a house on it, 
 				
@@ -772,7 +772,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 				for (int i = 0; i < adjacentCities.size(); i++)
 				{
 					City* currentAdjCity = adjacentCities.at(i);
-					cout << currentCity->getCityName() << " has an adjacent city " << currentAdjCity->getCityName() << endl;
+					// cout << currentCity->getCityName() << " has an adjacent city " << currentAdjCity->getCityName() << endl;
 
 
 					//cout << "the city has " << currentAdjCity->getNumberOfHouses(player->getColor()) << " of houses on it " << endl;
@@ -787,7 +787,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 						{
 
 							result.push_back(currentAdjCity);
-							cout << "putting adjacent city " << currentAdjCity->getCityName() << endl;
+							// cout << "putting adjacent city " << currentAdjCity->getCityName() << endl;
 						}
 
 					}						
