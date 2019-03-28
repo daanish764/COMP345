@@ -646,6 +646,11 @@ void GameBoard::part4()
 			else
 			{
 				cout << "you were not able to power power plant # " << plant->getPlantNumber() << endl;
+				if (currentPlayer->poweredCities > 1)
+				{
+					currentPlayer->poweredCities--;
+				}
+
 			}
 
 		}
