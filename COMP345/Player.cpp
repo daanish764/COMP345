@@ -14,6 +14,7 @@ Player::Player()
 	garbage = 0;
 	oil = 0;
 	uranium = 0;
+	poweredCities = 0;
 	startCity = NULL;
 
 }
@@ -28,6 +29,7 @@ Player::Player(string playerName)
 	uranium = 0;
 	totalHouses = 0;
 	largestPlant = 0;
+	poweredCities = 0;
 	startCity = NULL;
 }
 
@@ -43,6 +45,7 @@ Player::Player(string name, string color, int maxPlants)
 	uranium = 0;
 	totalHouses = 0;
 	largestPlant = 0;
+	poweredCities = 0;
 	startCity = NULL;
 }
 
@@ -62,6 +65,10 @@ void Player::setStartCity(City * startCity)
 
 Player::~Player()
 {
+	// ownedCities is deleted by vector class
+	// ownedPlants is deleted by vector class
+	delete startCity;
+	startCity = NULL;
 }
 
 string Player::getName() const
@@ -188,4 +195,24 @@ void Player::buyPlant(PowerPlant * plant, int cost, int maxPlants)
 	if (largestPlant < plant->getPlantNumber()) {
 		largestPlant = plant->getPlantNumber();
 	}
+}
+
+bool Player::isConnectedToCity(City * city)
+{
+	for (int i = 0; i < ownedCities.size(); i++)
+	{
+		if (ownedCities.at(i) == city)
+			return true;
+	}
+	return false;
+}
+
+void Player::connectToCity(City * city)
+{
+	ownedCities.push_back(city);
+}
+
+vector<City*> Player::getOwnedCities()
+{
+	return this->ownedCities;
 }

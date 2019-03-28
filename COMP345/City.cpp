@@ -18,7 +18,7 @@ City::City(string cityName)
 
 City::~City()
 {
-
+	// the vector class will handle deleting of pointers in adjacentCities
 }
 
 void City::setCityName(const string cityName)
