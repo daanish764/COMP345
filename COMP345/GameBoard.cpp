@@ -110,39 +110,8 @@ void sortPlayersDescending();
 void sortPlayersAscending();
 void sortMarket();
 void sortWinners();
+void printGameStatus();
 
-bool GameBoard::gameWinCondition() {
-	for (int i = 0; i < players.size(); i++) {
-		if (players[i]->getOwnedCities().size() >= summaryCard[4][numberOfPlayer - 2]) {
-			step2 = 1;
-			cout << "\n\n****************\nGAME ENDED!\n****************\n\n";
-			sortWinners();
-			cout << "\n\nTHE STANDING AT THE END IS:\n";
-			for (int k = 0; k < players.size(); k++) {
-				cout << k + 1 << ": " << players[k]->getName() << " with powered cities: " << players[k]->poweredCities << " and elektro: " << players[k]->elektro << endl;
-			}
-			return true;
-		}
-	}
-	return false;
-}
-
-
-void printGameStatus() {
-	vector<City*> cities = citiesMap->getCities();
-
-	cout << "\n***Lets see what each player owns at this point:\n";
-	for (int i = 0; i < players.size(); i++) {
-		cout << endl << endl;
-		players[i]->getPlayerInfo();
-
-		printPlayerNetwork(players[i], cities);
-	}
-
-	cout << "\n\n***AVAILABLE RESOURCES";
-	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
-	cout << availRes << "\n\n";
-}
 
 //phase3 functions
 int getCoalCost();
@@ -154,6 +123,7 @@ void phase4();
 vector<City*> getConnectableCities(Map* map, City* city, Player* player);
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
+
 
 void GameBoard::part1()
 {
@@ -174,6 +144,8 @@ void GameBoard::part1()
 	cout << "\n***The Plantdeck has been shuffled, " << summaryCard[1][numberOfPlayer - 2] << " cards have been randomly removed and Step 3 card has been put at the bottom and plant 13 at the top.\n";
 }
 
+
+// implementation of phase 1 and phase 2 of the game 
 void GameBoard::part2()
 {
 	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
@@ -714,6 +686,24 @@ void GameBoard::part4()
 
 }
 
+// the class checks if the winning condition has been met for the game to end 
+bool GameBoard::gameWinCondition() {
+	for (int i = 0; i < players.size(); i++) {
+		if (players[i]->getOwnedCities().size() >= summaryCard[4][numberOfPlayer - 2]) {
+			step2 = 1;
+			cout << "\n\n****************\nGAME ENDED!\n****************\n\n";
+			sortWinners();
+			cout << "\n\nTHE STANDING AT THE END IS:\n";
+			for (int k = 0; k < players.size(); k++) {
+				cout << k + 1 << ": " << players[k]->getName() << " with powered cities: " << players[k]->poweredCities << " and elektro: " << players[k]->elektro << endl;
+			}
+			return true;
+		}
+	}
+	return false;
+}
+
+
 void phase4()
 {
 	cout << "\n\n--------------------------------------------" << endl;
@@ -839,6 +829,24 @@ int getUraniumCost() {
 		}
 	}
 	return 1000;
+}
+
+// prints the status of the game 
+// show the amount of resources on the map as well
+void printGameStatus() {
+	vector<City*> cities = citiesMap->getCities();
+
+	cout << "\n***Lets see what each player owns at this point:\n";
+	for (int i = 0; i < players.size(); i++) {
+		cout << endl << endl;
+		players[i]->getPlayerInfo();
+
+		printPlayerNetwork(players[i], cities);
+	}
+
+	cout << "\n\n***AVAILABLE RESOURCES";
+	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
+	cout << availRes << "\n\n";
 }
 
 vector<City*> getConnectableCities(Map* map, City* city, Player* player)
@@ -1097,8 +1105,10 @@ void setUp()
 
 void setUpPowerPlantCards()
 {	
+	// we are initially setting up powerplants here that will be used in the game 
+	// the format of the powerplants being inserted are as followed
 	//PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired)
-	
+
 	PowerPlant* pp3 = new PowerPlant(3, 1, 0, 2, 0, 0, 0);
 	PowerPlant* pp4 = new PowerPlant(4, 1, 2, 0, 0, 0, 0);
 	PowerPlant* pp5 = new PowerPlant(5, 1, 0, 0, 0, 0, 2);
@@ -1179,12 +1189,14 @@ void setUpPowerPlantCards()
 	cout << endl;
 }
 
+
 void getBoardStatus(vector<City*> cities) {
 	for (int i = 0; i < cities.size(); i++) {
 		cout << cities[i]->getCityStatus() << ' ';
 	}
 }
 
+// this prints the houses in the players market
 void printPlayerNetwork(Player* player, vector<City*> cityList) {
 	cout << "\nPlayer " + player->getName() + " has in his network:";
 
@@ -1285,6 +1297,7 @@ void sortMarket() {
 
 GameBoard::GameBoard()
 {
+	// setup loads the map and setUpPowerPlantCards sets up the deck initally
 	setUp();
 	setUpPowerPlantCards();
 }
