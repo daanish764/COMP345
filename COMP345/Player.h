@@ -11,9 +11,10 @@ Kadeem Caines [26343600]
 using std::string;
 #include "City.h"
 #include "PowerPlant.h"
+#include "Subject.h"
 
-class Player
-{
+class Player : public Subject {
+
 private:
 	string name;
 	string color;

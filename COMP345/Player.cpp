@@ -55,6 +55,7 @@ Player::Player(string name, string color, int maxPlants)
 }
 
 string Player::getHouseColor() {
+	Notify();
 	return this->color;
 }
 
