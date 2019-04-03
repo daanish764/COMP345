@@ -7,3 +7,4 @@ public:
 protected:
 	Observer();
 };
+

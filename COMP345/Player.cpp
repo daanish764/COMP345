@@ -55,7 +55,6 @@ Player::Player(string name, string color, int maxPlants)
 }
 
 string Player::getHouseColor() {
-	Notify();
 	return this->color;
 }
 
@@ -79,7 +78,9 @@ Player::~Player()
 
 string Player::getName() const
 {
+	
 	return name;
+	
 }
 
 int Player::getElektro()
@@ -127,6 +128,8 @@ void Player::getPlayerInfo()
 		std::cout << " " << ownedPlants[i]->getPlantNumber();
 	}
 	std::cout << std::endl;
+
+	Notify();
 }
 
 void Player::assignOil(int num, int cost) {
@@ -220,5 +223,8 @@ void Player::connectToCity(City * city)
 
 vector<City*> Player::getOwnedCities()
 {
+	
 	return this->ownedCities;
 }
+
+

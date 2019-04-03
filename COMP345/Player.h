@@ -13,8 +13,8 @@ using std::string;
 #include "PowerPlant.h"
 #include "Subject.h"
 
-class Player : public Subject {
-
+class Player: public Subject
+{
 private:
 	string name;
 	string color;

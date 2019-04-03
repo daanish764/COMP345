@@ -1,7 +1,7 @@
 #pragma once
+#include "Observer.h"
 #include <list>
 using namespace std;
-class Observer;
 class Subject {
 public:
 	virtual void Attach(Observer* o);

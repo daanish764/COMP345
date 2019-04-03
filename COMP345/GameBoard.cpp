@@ -20,6 +20,7 @@ Kadeem Caines [26343600]
 #include"GameBoard.h"
 #include"PowerPlant.h"
 #include"OverviewCard.h"
+#include "PhaseObserver.h"
 
 using std::cout;
 using std::endl;
@@ -140,6 +141,9 @@ void GameBoard::part1()
 	cout << "\n----PLAYER STATUS LIST-----" << endl;
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
+
+		PhaseObserver *test = new PhaseObserver(players[i]);
+
 		players[i]->getPlayerInfo();
 		
 		printPlayerNetwork(players[i], cities);
@@ -261,9 +265,13 @@ void GameBoard::part2()
 				}
 			}
 		}
+
+		
 	}
 	//Lets see the possessions all the player own
 	printGameStatus();
+
+
 	
 }
 
