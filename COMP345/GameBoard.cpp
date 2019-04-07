@@ -133,8 +133,6 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player);
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
-PhaseObserver test;
-
 void GameBoard::part1()
 {
 	string trash;
@@ -143,7 +141,7 @@ void GameBoard::part1()
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
 
-		PhaseObserver *test = new PhaseObserver(players[i],0);
+		PhaseObserver *test = new PhaseObserver(players[i],1);
 
 		players[i]->printPhaseStatus();
 
@@ -171,7 +169,7 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		test.nextPhase();
+		
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 
 		players[i]->printPhaseStatus();
