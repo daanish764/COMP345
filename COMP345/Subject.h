@@ -6,7 +6,7 @@ class Subject {
 public:
 	virtual void Attach(Observer* o);
 	virtual void Detach(Observer* o);
-	virtual void Notify();
+	virtual void Notify() const;
 	Subject();
 	~Subject();
 private:

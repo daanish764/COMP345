@@ -133,6 +133,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player);
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
+PhaseObserver test;
 
 void GameBoard::part1()
 {
@@ -142,7 +143,9 @@ void GameBoard::part1()
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
 
-		PhaseObserver *test = new PhaseObserver(players[i]);
+		PhaseObserver *test = new PhaseObserver(players[i],0);
+
+		players[i]->printPhaseStatus();
 
 		players[i]->getPlayerInfo();
 		
@@ -168,8 +171,13 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
+		test.nextPhase();
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
+
+		players[i]->printPhaseStatus();
 	}
+
+
 
 	cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
 
@@ -186,6 +194,8 @@ void GameBoard::part2()
 		if (market[0]->getPlantNumber() > activeAtAuction[0]->getElektro()) {
 			cout << "This player can't afford the cheapest powerplant on the market. Taking out of auction." << endl;
 			activeAtAuction.erase(activeAtAuction.begin());
+
+			activeAtAuction[0]->printPhaseStatus();
 		}
 		else {
 			while (getPowerPlant(chosenPlant) == -1 || chosenPlant > activeAtAuction[0]->getElektro()) { //getPowerPlant == -1 means its not a valid plant from the actual market. 
@@ -285,10 +295,14 @@ void GameBoard::part3() {
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
+		players[i]->printPhaseStatus();
 	}
 
 	
 	for (int i = 0; i < players.size(); i++){
+
+		players[i]->printPhaseStatus();
+
 		//Capacity for one player to carry any resource given there powerplants
 		int coalCapacity = 0;
 		int oilCapacity = 0;

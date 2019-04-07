@@ -56,6 +56,7 @@ public:
 	void subtractElektro(int num);
 	void placeHouse(City* city);
 	void buyPlant(PowerPlant* plant, int cost, int maxPlants);
+	void printPhaseStatus();
 
 	bool isConnectedToCity(City* city);
 	void connectToCity(City* city);

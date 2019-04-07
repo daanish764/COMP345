@@ -119,6 +119,10 @@ string Player::getColor() const
 	return this->color;
 }
 
+void Player::printPhaseStatus(){
+	Notify();
+}
+
 void Player::getPlayerInfo()
 {
 	std::cout << "*******";
@@ -129,7 +133,7 @@ void Player::getPlayerInfo()
 	}
 	std::cout << std::endl;
 
-	Notify();
+	
 }
 
 void Player::assignOil(int num, int cost) {

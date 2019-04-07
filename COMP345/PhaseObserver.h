@@ -5,10 +5,12 @@ class PhaseObserver: public Observer
 {
 public:
 	PhaseObserver();
-	PhaseObserver(Player* s);
+	PhaseObserver(Player* s, int turn);
 	~PhaseObserver();
 	void Update();
 	void display();
+	void nextPhase();
+	
 
 private:
 
