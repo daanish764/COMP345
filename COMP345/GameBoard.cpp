@@ -1050,7 +1050,7 @@ void GameBoard::printMarket()
 		else {
 			zero = "";
 		}
-		cout << "|   " << zero << market[i]->getPlantNumber() << "   |   " << market[i]->coalRequired << "   |  " << market[i]->oilRequired << "   |     " << market[i]->garbageRequired << "   |    " << market[i]->uraniumRequired << "     |        " << market[i]->hybridRequired << "         |       " << market[i]->powersCities << "            |       " << market[i]->environmentalPlant << "     |" << endl;
+		cout << "|   " << zero << market[i]->getPlantNumber() << "   |   " << market[i]->coalRequired << "   |  " << market[i]->oilRequired << "   |     " << market[i]->garbageRequired << "   |    " << market[i]->uraniumRequired << "     |        " << market[i]->hybridRequired << "         |       " << market[i]->powersCities << "            |       " << market[i]->environmentalPlant << "    |" << endl;
 	}
 	cout << "|-------------------------------------------------------------------------------------------------|	" << endl << endl;
 }
