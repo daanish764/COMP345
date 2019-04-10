@@ -34,9 +34,10 @@ PowerPlant::PowerPlant(int plantNumber)
 	garbageRequired = 0;
 	uraniumRequired = 0;
 	hybridRequired = 0;
+	environmentalPlant == false;
 }
 
-PowerPlant::PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired)
+PowerPlant::PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired, bool environmentalPlant)
 {
 	this->plantNumber = plantNumber;
 	this->powersCities = powersCities;
@@ -45,6 +46,7 @@ PowerPlant::PowerPlant(int plantNumber, int powersCities, int coalRequired, int 
 	this->garbageRequired = garbageRequired;
 	this->uraniumRequired = uraniumRequired;
 	this->hybridRequired = hybridRequired;
+	this->environmentalPlant = environmentalPlant;
 }
 
 PowerPlant::~PowerPlant()
