@@ -20,6 +20,7 @@ Kadeem Caines [26343600]
 #include"GameBoard.h"
 #include"PowerPlant.h"
 #include"OverviewCard.h"
+#include"StepSingleton.h"
 
 using std::cout;
 using std::endl;
@@ -57,8 +58,7 @@ int numberOfPlayer = 0;
 // the connected map with all the cities 
 Map* citiesMap;
 
-int step2 = 0;
-int step3 = 0;
+
 
 //Summary card/array. Absolutely see the rulebook to know exactly what this is.
 const int summaryCard[5][5] = {	{2, 3, 4, 5, 6},		// number of regions/players (set according to assignment requirement, not official rules)
@@ -243,7 +243,7 @@ void GameBoard::part2()
 					market[getPowerPlant(chosenPlant)] = deck[deck.size() - 1];
 
 					//activate step3 and let the players know
-					step3 = 1;
+					StepSingleton::getInstance()->setStep(3);
 					cout << "\n\n****************\nSTEP 3 ACTIVATED!!\n****************\n\n";
 				}
 
@@ -654,19 +654,19 @@ void GameBoard::part4()
 	//checking if Step 2 needs to be activated
 	for (int i = 0; i < players.size(); i++) {
 		if (players[i]->getOwnedCities().size() >= summaryCard[3][numberOfPlayer-2]) {
-			step2 = 1;
+			StepSingleton::getInstance()->setStep(2);
 			cout << "\n\n****************\nSTEP 2 ACTIVATED!!\n****************\n\n";
 		}
 	}
 
 	//Resource replenishment depending on the phase 
-	if (step3 == 1) {
+	if (StepSingleton::getInstance()->getStep() == 3) {
 		GameBoard::availableCoal += coalReplenish[2][numberOfPlayer - 2];
 		GameBoard::availableOil += oilReplenish[2][numberOfPlayer - 2];
 		GameBoard::availableGarbage += garbageReplenish[2][numberOfPlayer - 2];
 		GameBoard::availableUranium += uraniumReplenish[2][numberOfPlayer - 2];
 	}
-	else if (step2 == 1) {
+	else if (StepSingleton::getInstance()->getStep() == 2) {
 		GameBoard::availableCoal += coalReplenish[1][numberOfPlayer - 2];
 		GameBoard::availableOil += oilReplenish[1][numberOfPlayer - 2];
 		GameBoard::availableGarbage += garbageReplenish[1][numberOfPlayer - 2];
@@ -698,7 +698,7 @@ void GameBoard::part4()
 bool GameBoard::gameWinCondition() {
 	for (int i = 0; i < players.size(); i++) {
 		if (players[i]->getOwnedCities().size() >= summaryCard[4][numberOfPlayer - 2]) {
-			step2 = 1;
+			StepSingleton::getInstance()->setStep(2);
 			cout << "\n\n****************\nGAME ENDED!\n****************\n\n";
 			sortWinners();
 			cout << "\n\nTHE STANDING AT THE END IS:\n";
@@ -741,11 +741,11 @@ void phase4()
 			{
 				
 				// different charges based on step
-				if (step2 == 1)
+				if (StepSingleton::getInstance()->getStep() == 2)
 				{
 					connectionCost = 15;
 				}
-				else if (step3 == 1)
+				else if (StepSingleton::getInstance()->getStep() == 3)
 				{
 					connectionCost = 20;
 				}
@@ -1305,6 +1305,10 @@ void sortMarket() {
 
 GameBoard::GameBoard()
 {
+	// set stepSingleton to step 1
+	StepSingleton::getInstance();
+	StepSingleton::getInstance()->getStep();
+
 	// setup loads the map and setUpPowerPlantCards sets up the deck initally
 	setUp();
 	setUpPowerPlantCards();
