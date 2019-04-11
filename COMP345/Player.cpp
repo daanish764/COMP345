@@ -125,7 +125,6 @@ void Player::printPhaseStatus(){
 
 void Player::getPlayerInfo()
 {
-	std::cout << "*******";
 	std::cout << "Player Name: " << name << "\nColor: " << color << "\nTotal Houses on Board: " << totalHouses << "\nElektro: " << elektro << "\nCoal: " << coal << "\nGarbage: " << garbage << "\nOil: " << oil << "\nUranium: " << uranium << std::endl;
 	std::cout << "Owned power plants:";
 	for (int i = 0; i < ownedPlants.size(); i++) {
@@ -229,6 +228,53 @@ vector<City*> Player::getOwnedCities()
 {
 	
 	return this->ownedCities;
+}
+
+void Player::printPlayerNetwork(vector<City*> cityList) {
+	cout << "\nPlayer " + name + " has in his network:";
+
+	if (color == "red") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->redHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (color == "blue") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->blueHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (color == "green") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->greenHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (color == "purple") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->purpleHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (color == "orange") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->orangeHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
+	if (color == "yellow") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->yellowHouse == 1) {
+				cout << " " + cityList[i]->getCityName();
+			}
+		}
+	}
 }
 
 

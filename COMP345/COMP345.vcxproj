@@ -22,18 +22,24 @@
     <ClInclude Include="City.h" />
     <ClInclude Include="GameBoard.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="OverviewCard.h" />
+    <ClInclude Include="PhaseObserver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PowerPlant.h" />
+    <ClInclude Include="Subject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="City.cpp" />
     <ClCompile Include="Driver.cpp" />
     <ClCompile Include="GameBoard.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Observer.cpp" />
     <ClCompile Include="OverviewCard.cpp" />
+    <ClCompile Include="PhaseObserver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerPlant.cpp" />
+    <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="data.txt" />

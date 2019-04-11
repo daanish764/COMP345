@@ -61,4 +61,5 @@ public:
 	bool isConnectedToCity(City* city);
 	void connectToCity(City* city);
 	vector<City*> getOwnedCities();
+	void printPlayerNetwork(vector<City*> cityList);
 };
