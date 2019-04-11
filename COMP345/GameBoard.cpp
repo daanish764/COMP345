@@ -20,6 +20,7 @@ Kadeem Caines [26343600]
 #include"GameBoard.h"
 #include"PowerPlant.h"
 #include"OverviewCard.h"
+#include "PhaseObserver.h"
 #include"StepSingleton.h"
 
 using std::cout;
@@ -55,7 +56,7 @@ vector<PowerPlant*> powerplants;
 // number of Players playing the game
 int numberOfPlayer = 0;
 
-// the connected map with all the cities 
+// the connected map with all the cities
 Map* citiesMap;
 
 
@@ -102,8 +103,8 @@ const int uraniumReplenish[3][5] = { {1,1,1,2,2},
 };
 
 
-// the resupply for the number of cities in the bureaucracy phase 
-const int resupply[21] = 
+// the resupply for the number of cities in the bureaucracy phase
+const int resupply[21] =
 {
 	10, 22, 33, 44, 54, 64, 73, 82, 90, 98, 105, 112, 118, 124, 119, 134, 138, 142, 145, 148, 150
 };
@@ -132,7 +133,6 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player);
 
 bool readMapFromFile(Map* map, string file, int numberOfPlayer);
 
-
 void GameBoard::part1()
 {
 	string trash;
@@ -140,20 +140,25 @@ void GameBoard::part1()
 	cout << "\n----PLAYER STATUS LIST-----" << endl;
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
+
+
 		players[i]->getPlayerInfo();
-		
+
 		printPlayerNetwork(players[i], cities);
 
 		cout << "\n\n" << endl;
+
 	}
+
 	cout << "----END----\n" << endl;
 
-	
 	cout << "\n***The Plantdeck has been shuffled, " << summaryCard[1][numberOfPlayer - 2] << " cards have been randomly removed and Step 3 card has been put at the bottom and plant 13 at the top.\n";
+
+
 }
 
 
-// implementation of phase 1 and phase 2 of the game 
+// implementation of phase 1 and phase 2 of the game
 void GameBoard::part2()
 {
 	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
@@ -164,27 +169,47 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
+		PhaseObserver *test = new PhaseObserver(players[i], 1);
+		players[i]->printPhaseStatus();
+
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
+
+		delete test;
 	}
+
+
 
 	cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
 
 	int chosenPlant = 0;
 	vector<Player*> activeAtAuction = players;
 
+
 	//WHILE LOOP FOR PEOPLE WHO ARE STILL ACTIVE IN PHASE 2 A.K.A HAVE NOT PASSED OR WON A POWERPLANT YET.
 	while (activeAtAuction.size() > 0) {
+
+		PhaseObserver *test = new PhaseObserver(activeAtAuction[0], 2);
+
 		cout << endl << endl;
 		printMarket();
+
+		activeAtAuction[0]->printPhaseStatus();
+
+		delete test;
+
 		cout << "It's " << activeAtAuction[0]->getName() << "'s ("<< activeAtAuction[0]->getElektro() <<" Elektros) turn." << endl;
+
+
 
 		//if the person can't even afford the cheapest plant in the market, we take him/her out of the auction entirely
 		if (market[0]->getPlantNumber() > activeAtAuction[0]->getElektro()) {
 			cout << "This player can't afford the cheapest powerplant on the market. Taking out of auction." << endl;
 			activeAtAuction.erase(activeAtAuction.begin());
+
 		}
 		else {
-			while (getPowerPlant(chosenPlant) == -1 || chosenPlant > activeAtAuction[0]->getElektro()) { //getPowerPlant == -1 means its not a valid plant from the actual market. 
+			while (getPowerPlant(chosenPlant) == -1 || chosenPlant > activeAtAuction[0]->getElektro()) { //getPowerPlant == -1 means its not a valid plant from the actual market.
+
 				cout << "Please choose the power plant(you can afford) to bid on from actual market or enter 0 to pass and sit out entirely: ";
 				cin >> chosenPlant;
 				if (chosenPlant == 0) { break; }
@@ -205,11 +230,16 @@ void GameBoard::part2()
 
 				//THE AUCTION WHILE LOOP. ENDS WHEN THERE'S ONE BIDDER LEFT
 				while (activeBidders.size() > 1) {
+
+					PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
+
+					activeBidders[currentBidder]->printPhaseStatus();
+
 					cout << "It's " << activeBidders[currentBidder]->getName() << "'s (" << activeBidders[currentBidder]->getElektro() << " Elektros) turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
 
 					//ensures the auction starter bids minimum the plant value AND people don't bid over than what they have
-					currentBid = std::min(std::max(currentBid, chosenPlant), activeBidders[currentBidder]->getElektro()); 
+					currentBid = std::min(std::max(currentBid, chosenPlant), activeBidders[currentBidder]->getElektro());
 
 					if (currentBid <= highestBid) { //Bad bid. Lower than or equal to  highest bid
 						cout << "Chose to sit out of current bidding war.\n" << endl;
@@ -223,10 +253,12 @@ void GameBoard::part2()
 						currentBidder = (currentBidder + 1) % activeBidders.size(); //point to the next person to ask their bid
 						highestBid = currentBid; //the current bid is now the highest bid
 					}
+
+					delete test;
 				}
 				//*******************AUCTION HAS ENDED. NOW TIME TO ASSIGN THE WINNER THE POWERPLANT AND REPLACE THE POWERPLANT FROM ACTUAL MARKET
 
-				//assign powerplant owner here at activeBidders[0]. Basically the last active bidder. 
+				//assign powerplant owner here at activeBidders[0]. Basically the last active bidder.
 				activeBidders[0]->buyPlant(market[getPowerPlant(chosenPlant)], std::max(chosenPlant, highestBid), summaryCard[2][numberOfPlayer - 2]);
 				cout << "Powerplant " << chosenPlant << " bought by " << activeBidders[0]->getName() << " for " << std::max(chosenPlant, highestBid) << " Elektros!" << endl;
 
@@ -261,10 +293,14 @@ void GameBoard::part2()
 				}
 			}
 		}
+
+
 	}
 	//Lets see the possessions all the player own
 	printGameStatus();
-	
+
+
+
 }
 
 void GameBoard::part3() {
@@ -276,18 +312,27 @@ void GameBoard::part3() {
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
+		PhaseObserver *other = new PhaseObserver(players[i], 1);
+		players[i]->printPhaseStatus();
+
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
+
+		delete other;
 	}
 
-	
+
 	for (int i = 0; i < players.size(); i++){
+
+		PhaseObserver *other = new PhaseObserver(players[i], 3);
+		players[i]->printPhaseStatus();
+
 		//Capacity for one player to carry any resource given there powerplants
 		int coalCapacity = 0;
 		int oilCapacity = 0;
 		int garbageCapacity = 0;
 		int uraniumCapacity = 0;
 		int hybridCapacity = 0;
-		
+
 		//The amounts the player is looking to buy
 		int coalBuy = 0;
 		int oilBuy = 0;
@@ -363,7 +408,13 @@ void GameBoard::part3() {
 		cout << endl;
 
 
+
+
 		if(coalCapacity>0 || hybridCapacity>0){
+
+
+			players[i]->printPhaseStatus();
+
 			cout << "\n\nPlease enter the amount of COAL you want to buy (including for Hybrid plants): ";
 			cin >> coalBuy;
 		}
@@ -371,6 +422,8 @@ void GameBoard::part3() {
 
 		//if the player is buying more coal then there COAL plants can hold, we assume they're buying for the hybrid plant and adjust hybridCapacity.
 		if (coalBuy > coalCapacity) {
+
+
 			hybridCapacity = hybridCapacity - (coalBuy - coalCapacity);
 		}
 
@@ -392,6 +445,9 @@ void GameBoard::part3() {
 		}
 
 		if(oilCapacity>0 || hybridCapacity > 0){
+
+			players[i]->printPhaseStatus();
+
 			cout << "\n\nPlease enter the amount of OIL you want to buy (including for Hybrid plants): ";
 			cin >> oilBuy;
 		}
@@ -412,6 +468,9 @@ void GameBoard::part3() {
 		}
 
 		if(garbageCapacity>0){
+
+
+			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of GARBAGE you want to buy: ";
 			cin >> garbageBuy;
 		}
@@ -432,6 +491,9 @@ void GameBoard::part3() {
 		}
 
 		if(uraniumCapacity>0){
+
+
+			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of URANIUM you want to buy: ";
 			cin >> uraniumBuy;
 		}
@@ -450,11 +512,14 @@ void GameBoard::part3() {
 			players[i]->assignUranium(1, getUraniumCost());
 			uraniumBuy -= 1;
 		}
+
+		delete other;
+
 	}
 
 	//Lets see the possessions all the player own
 	printGameStatus();
-	
+
 
 	phase4();
 }
@@ -468,9 +533,18 @@ void GameBoard::part4()
 	for (int i = 0; i < players.size(); i++)
 	{
 
+
+
 		Player* currentPlayer = players.at(i);
+
+		PhaseObserver *test = new PhaseObserver(currentPlayer, 5);
+
+		currentPlayer->printPhaseStatus();
+
 		cout << currentPlayer->getName() << " it your turn take part in bureaucracy" << endl;
 		cout << currentPlayer->getElektro() << " is you elektro balance " << endl;
+
+
 
 		int numberOfPowerPlants = currentPlayer->ownedPlants.size();
 
@@ -526,6 +600,9 @@ void GameBoard::part4()
 
 			cout << endl;
 			int plantid;
+
+			currentPlayer->printPhaseStatus();
+
 			cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
 			cin >> plantid;
 
@@ -588,13 +665,13 @@ void GameBoard::part4()
 				oil = oil - hybirdRequired / 2;
 
 
-				// removing resources of the player 
+				// removing resources of the player
 				currentPlayer->coal = coal;
 				currentPlayer->oil = oil;
 				currentPlayer->garbage = garbage;
 				currentPlayer->uranium = uranium;
 
-				// making sure this powerplant cannot be powered again 
+				// making sure this powerplant cannot be powered again
 				plantPowered[plantid] = true;
 
 				cout << "player " << currentPlayer->getName() << " your updated are resources shown below" << endl;
@@ -610,6 +687,9 @@ void GameBoard::part4()
 				cout << "at this point you have the ability to power " << cityPowered << " city."<< endl;
 
 				int input;
+
+				currentPlayer->printPhaseStatus();
+
 				cout << "would you like to select another powerplant to power (1 for yes and 0 for no) > ";
 				cin >> input;
 				cout << endl;
@@ -640,9 +720,9 @@ void GameBoard::part4()
 			cout << "You have the ability to power " << cityPowered << " cities. "<< endl;
 
 			int elektro = 0;
-			
+
 			elektro += resupply[cityPowered];
-			
+
 			cout << "You have recieved " << resupply[cityPowered] << " elektro " << endl;
 
 			currentPlayer->assignElektro(elektro);
@@ -650,6 +730,8 @@ void GameBoard::part4()
 			cout << currentPlayer->getName() << ", your new balance is " << currentPlayer->getElektro() << endl << endl;
 
 		}
+
+		delete test;
 	}
 	//checking if Step 2 needs to be activated
 	for (int i = 0; i < players.size(); i++) {
@@ -659,7 +741,7 @@ void GameBoard::part4()
 		}
 	}
 
-	//Resource replenishment depending on the phase 
+	//Resource replenishment depending on the phase
 	if (StepSingleton::getInstance()->getStep() == 3) {
 		GameBoard::availableCoal += coalReplenish[2][numberOfPlayer - 2];
 		GameBoard::availableOil += oilReplenish[2][numberOfPlayer - 2];
@@ -692,9 +774,11 @@ void GameBoard::part4()
 	//sorting the market again
 	sortMarket();
 
+
+
 }
 
-// the class checks if the winning condition has been met for the game to end 
+// the class checks if the winning condition has been met for the game to end
 bool GameBoard::gameWinCondition() {
 	for (int i = 0; i < players.size(); i++) {
 		if (players[i]->getOwnedCities().size() >= summaryCard[4][numberOfPlayer - 2]) {
@@ -723,6 +807,10 @@ void phase4()
 		bool pass = false;
 		Player* currentPlayer = players.at(i);
 
+		PhaseObserver *test = new PhaseObserver(currentPlayer, 4);
+
+		currentPlayer->printPhaseStatus();
+
 		cout << currentPlayer->getName() << " its your turn and " << currentPlayer->getStartCity()->getCityName() << " is your start city" << endl;
 
 		vector<City*> possibleCities = getConnectableCities(citiesMap, currentPlayer->getStartCity(), currentPlayer);
@@ -734,12 +822,12 @@ void phase4()
 		printf("%-25s%-20s%-15s\n", "City id",  "Name", "cost");
 		for (int i = 0; i < possibleCities.size(); i++)
 		{
-			
 
-			// if there is a house on the city and if there is no house that belongs to be player 
+
+			// if there is a house on the city and if there is no house that belongs to be player
 			if (possibleCities.at(i)->getNumberOfHouses() == 1 && possibleCities.at(i)->getNumberOfHouses(currentPlayer->getColor()) == 0)
 			{
-				
+
 				// different charges based on step
 				if (StepSingleton::getInstance()->getStep() == 2)
 				{
@@ -758,6 +846,9 @@ void phase4()
 		if (pass)
 			break;
 		else {
+
+			currentPlayer->printPhaseStatus();
+
 			cout << "please enter which the city id of the city you would like to build on (-1 to pass ) > ";
 
 
@@ -798,6 +889,7 @@ void phase4()
 		}
 
 		cout << endl;
+		delete test;
 	}
 
 	printGameStatus();
@@ -839,7 +931,7 @@ int getUraniumCost() {
 	return 1000;
 }
 
-// prints the status of the game 
+// prints the status of the game
 // show the amount of resources on the map as well
 void printGameStatus() {
 	vector<City*> cities = citiesMap->getCities();
@@ -872,15 +964,15 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 	}
 	vector<City*> possibleCities = player->getOwnedCities();
 
-	// loop over all the cities 
-	for (std::vector<City*>::iterator it = possibleCities.begin(); it != possibleCities.end(); ++it) 
+	// loop over all the cities
+	for (std::vector<City*>::iterator it = possibleCities.begin(); it != possibleCities.end(); ++it)
 	{
 		City* currentCity = *(it);
 		//cout << currentCity->getCityName() << endl;
-		
-		
+
+
 			//cout << "found the city " << currentCity->getCityName() << endl;
-			// and there is no house on it then we add to possible cities 
+			// and there is no house on it then we add to possible cities
 			if (currentCity->getNumberOfHouses(player->getColor()) == 0)
 			{
 				//cout << "if reached ** " << endl;
@@ -888,15 +980,15 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 				result.push_back(currentCity);
 				return result;
 			}
-			else 
+			else
 			{
 				//cout << "else reached ** " << endl;
 
 				//cout << currentCity->getCityName() << " already has a house on it." << endl;
 
-				// if there is a house on it, 
-				
-				// loop over all adjacent houses and push only if there is no house on it 
+				// if there is a house on it,
+
+				// loop over all adjacent houses and push only if there is no house on it
 				vector<City*> adjacentCities = currentCity->getAdjacentCities();
 
 				for (int i = 0; i < adjacentCities.size(); i++)
@@ -907,7 +999,7 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 
 					//cout << "the city has " << currentAdjCity->getNumberOfHouses(player->getColor()) << " of houses on it " << endl;
 
-					// if there is no house on it 
+					// if there is no house on it
 					if (currentAdjCity->getNumberOfHouses() != 0)
 					{
 
@@ -920,12 +1012,12 @@ vector<City*> getConnectableCities(Map* map, City* city, Player* player)
 							// cout << "putting adjacent city " << currentAdjCity->getCityName() << endl;
 						}
 
-					}						
-					
+					}
+
 				}
 
 			}
-		
+
 	}
 	return result;
 }
@@ -993,11 +1085,11 @@ void GameBoard::printMarket()
 	cout << "|------------------------------------------------------------------------------------|	" << endl;
 	cout << "| plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  |" << endl;
 	cout << "|------------------------------------------------------------------------------------|	" << endl;
-	
+
 	for (int i = 0; i < 8; i++)
 	{
 		string zero;
-		if (market[i]->getPlantNumber() < 10) { 
+		if (market[i]->getPlantNumber() < 10) {
 			zero = "0";
 		}
 		else {
@@ -1013,7 +1105,7 @@ void setUp()
 	// creating a Map
 	Map* map = new Map();
 	vector<string> houseColors= { "red", "green", "blue", "purple", "orange", "yellow" };
-	citiesMap = map; 
+	citiesMap = map;
 	string trash;
 
 	cout << "Please enter number of players: ";
@@ -1068,7 +1160,7 @@ void setUp()
 		newCard->setOwner(players[i]);
 		overviewCards.push_back(newCard);
 		cout << players[i]->getName() <<" - Overview Card handed to player." << endl;
-		
+
 	}
 	cout << "----END----\n" << endl;
 
@@ -1112,8 +1204,8 @@ void setUp()
 }
 
 void setUpPowerPlantCards()
-{	
-	// we are initially setting up powerplants here that will be used in the game 
+{
+	// we are initially setting up powerplants here that will be used in the game
 	// the format of the powerplants being inserted are as followed
 	//PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired)
 
@@ -1146,7 +1238,7 @@ void setUpPowerPlantCards()
 	market.push_back(pp9);
 	market.push_back(pp10);
 
-	//CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD. 
+	//CARD NUMBER 0 IS THE PHASE 3/STEP 3 CARD.
 	//for loop creates the powerplant cards only(11 to 43) EXCEPT 13 and pushes them to the deck vector (deck vector created at the top of this file)
 	for (int i = 11; i <= 43; i++)
 	{

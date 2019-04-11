@@ -11,8 +11,9 @@ Kadeem Caines [26343600]
 using std::string;
 #include "City.h"
 #include "PowerPlant.h"
+#include "Subject.h"
 
-class Player
+class Player: public Subject
 {
 private:
 	string name;
@@ -55,8 +56,10 @@ public:
 	void subtractElektro(int num);
 	void placeHouse(City* city);
 	void buyPlant(PowerPlant* plant, int cost, int maxPlants);
+	void printPhaseStatus();
 
 	bool isConnectedToCity(City* city);
 	void connectToCity(City* city);
 	vector<City*> getOwnedCities();
+	void printPlayerNetwork(vector<City*> cityList);
 };

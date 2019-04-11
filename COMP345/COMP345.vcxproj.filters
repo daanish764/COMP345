@@ -1,71 +1,79 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="City.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PowerPlant.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameBoard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OverviewCard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StepSingleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Subject.cpp" />
+    <ClCompile Include="City.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Driver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="City.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PowerPlant.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="GameBoard.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="OverviewCard.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PhaseObserver.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerPlant.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="StepSingleton.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="data.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <ClInclude Include="GameBoard.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="OverviewCard.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="StepSingleton.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerPlant.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PhaseObserver.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="City.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{b900b650-e4c7-4646-b777-1015b3fc2c31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{cf5542f8-7b77-4fa4-90ea-24d9ba14510e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

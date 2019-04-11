@@ -16,6 +16,7 @@ int main()
 {
 	
 	GameBoard gameboard = GameBoard();
+	
 
 
 	while (true)
