@@ -10,6 +10,7 @@ Kadeem Caines [26343600]
 using namespace std;
 
 #include"GameBoard.h"
+#include"StepSingleton.h"
 
 int main()
 {
@@ -32,7 +33,6 @@ int main()
 			break;
 		}
 	}
-
 
 
 	cout << endl;
