@@ -1,3 +1,5 @@
+//source of code: "COMP345:Advanced Program Design with C++ Lecture 6: Model View Controller Architecture Observer Pattern" lecture notes.
+
 #include "Subject.h"
 #include "Observer.h"
 Subject::Subject() {

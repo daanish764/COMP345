@@ -36,48 +36,49 @@ void PhaseObserver::display() {
 
 	if (turn == 1) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "DETERMINING PLAYER ORDER" << endl;
-		_subject->getPlayerInfo();
+		cout << "		              Phase Status: " << "DETERMINING PLAYER ORDER" << endl;
+		cout << "                     Player:          " << _subject->getName() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 	}
 
+
+
 	if (turn == 2) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "AUCTION"<< endl;
-		_subject->getPlayerInfo();
+		cout << "		              Phase Status: " << "AUCTION"<< endl;
+		cout << "                     Player:          " << _subject->getName() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 	}
 
 	
 	if (turn == 3) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "RESOURCE BUYING" << endl;
-		_subject->getPlayerInfo();
+		cout << "		              Phase Status: " << "RESOURCE BUYING" << endl;
+		cout << "                     Player:          " << _subject->getName() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 	}
 
 	if (turn == 3) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "RESOURCE BUYING" << endl;
-		_subject->getPlayerInfo();
+		cout << "		              Phase Status: " << "RESOURCE BUYING" << endl;
+		cout << "                     Player:          " << _subject->getName() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 	}
 
 	if (turn == 4) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "BUILDING" << endl;
-		_subject->getPlayerInfo();
+		cout << "		              Phase Status: " << "BUILDING" << endl;
+		cout << "                     Player:          " << _subject->getName() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 		
 	}
 
 	if (turn == 5) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "BUREAUCRACY" << endl;
-		_subject->getPlayerInfo();
+		cout << "		              Phase Status: " << "BUREAUCRACY" << endl;
+		cout << "                     Player:          " << _subject->getName() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 	}
-
 
 	
 	
