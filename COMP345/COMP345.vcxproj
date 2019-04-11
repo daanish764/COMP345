@@ -27,6 +27,7 @@
     <ClInclude Include="PhaseObserver.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PowerPlant.h" />
+    <ClInclude Include="StepSingleton.h" />
     <ClInclude Include="Subject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +40,7 @@
     <ClCompile Include="PhaseObserver.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PowerPlant.cpp" />
+    <ClCompile Include="StepSingleton.cpp" />
     <ClCompile Include="Subject.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,7 @@
 #include "PhaseObserver.h"
 #include "Player.h"
 
-
+#include"StepSingleton.h"
 
 PhaseObserver::PhaseObserver()
 {
@@ -46,6 +46,7 @@ void PhaseObserver::display() {
 	
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 		cout << "\n" <<  stage << endl;
+		cout << "\n" << "Step #" << StepSingleton::getInstance()->getStep() << endl << endl;
 		cout << "Player Info:          " << endl;
 		_subject->getPlayerInfo();
 		cout << "Player Network: " << endl;
