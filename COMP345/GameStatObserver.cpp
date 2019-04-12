@@ -33,7 +33,8 @@ void GameStatObserver::display()
 	_subject->printPlayerNetwork(_subject->getOwnedCities());
 	cout << endl;
 	cout << "number of houses " << _subject->getOwnedCities().size() << endl;
-	cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
+	_subject->printPlayerGraph(_subject->getOwnedCities());
+	cout << endl <<"|------------------------------------------------------------------------------------|	" << endl << endl;
 
 }
 

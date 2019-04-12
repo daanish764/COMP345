@@ -33,7 +33,7 @@ void PhaseObserver::display() {
 
 	string stage = "";
 	if (turn == 1)
-		stage = "";
+		stage = "Phase Status:  DETERMINING PLAYER ORDER";
 	if (turn == 2)
 		stage = "Phase Status:  AUCTION";
 	if(turn == 3)
@@ -47,14 +47,4 @@ void PhaseObserver::display() {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 		cout << "\n" <<  stage << endl;
 		cout << "\n" << "Step #" << StepSingleton::getInstance()->getStep() << endl << endl;
-		
-		/*
-		cout << "Player Info:          " << endl;
-		_subject->getPlayerInfo();
-		cout << "Player Network: " << endl;
-		_subject->printPlayerNetwork(_subject->getOwnedCities());
-		cout << endl;
-		cout << "number of houses " << _subject->getOwnedCities().size() << endl;
-		cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
-		*/
 }

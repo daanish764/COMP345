@@ -162,7 +162,7 @@ void GameBoard::part1()
 // implementation of phase 1 and phase 2 of the game
 void GameBoard::part2()
 {
-	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
+	//cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
 
 	sortPlayersDescending(); //sorts by total houses owned. Ties broken by largest plant owned.
 	cout << "***Players with most houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
@@ -170,18 +170,18 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		PhaseObserver* test = new PhaseObserver(players[i], 1);
-		GameStatObserver* gameStatObserver = new GameStatObserver(players[i], 1);
-		players[i]->printPhaseStatus();
+		//... PhaseObserver* test = new PhaseObserver(players[i], 1);
+		// ... GameStatObserver* gameStatObserver = new GameStatObserver(players[i], 1);
+		// ... players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 
-		delete test;
+		// delete test;
 	}
 
 
 
-	cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
+	//cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
 
 	int chosenPlant = 0;
 	vector<Player*> activeAtAuction = players;
@@ -196,7 +196,7 @@ void GameBoard::part2()
 		cout << endl << endl;
 		printMarket();
 
-		activeAtAuction[0]->printPhaseStatus();
+		//activeAtAuction[0]->printPhaseStatus();
 
 		delete test;
 
@@ -233,13 +233,19 @@ void GameBoard::part2()
 				int highestBid = 0;
 				int currentBidder = 0;
 
+				PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
+				GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
+
+
+				delete test;
+
 				//THE AUCTION WHILE LOOP. ENDS WHEN THERE'S ONE BIDDER LEFT
 				while (activeBidders.size() > 1) {
 
-					PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
-					GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
+					
+					
 
-					activeBidders[currentBidder]->printPhaseStatus();
+					//activeBidders[currentBidder]->printPhaseStatus();
 
 					cout << "It's " << activeBidders[currentBidder]->getName() << "'s (" << activeBidders[currentBidder]->getElektro() << " Elektros) turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
@@ -260,7 +266,7 @@ void GameBoard::part2()
 						highestBid = currentBid; //the current bid is now the highest bid
 					}
 
-					delete test;
+					
 				}
 				//*******************AUCTION HAS ENDED. NOW TIME TO ASSIGN THE WINNER THE POWERPLANT AND REPLACE THE POWERPLANT FROM ACTUAL MARKET
 
@@ -303,14 +309,14 @@ void GameBoard::part2()
 
 	}
 	//Lets see the possessions all the player own
-	printGameStatus();
+	// printGameStatus();
 
 
 
 }
 
 void GameBoard::part3() {
-	cout << "\n\nPHASE 3: RESOURCE BUYING\n*************************************" << endl << endl;
+	//cout << "\n\nPHASE 3: RESOURCE BUYING\n*************************************" << endl << endl;
 
 	sortPlayersAscending(); //sorts by total houses owned. Ties broken by largest plant owned. But in reverse order than previously done
 	cout << "***Players with least houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
@@ -318,21 +324,17 @@ void GameBoard::part3() {
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		PhaseObserver *other = new PhaseObserver(players[i], 1);
-		GameStatObserver* gameStatObserver = new GameStatObserver(players[i], 1);
-		players[i]->printPhaseStatus();
+		
+		// players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
-
-		delete other;
 	}
 
 
 	for (int i = 0; i < players.size(); i++){
 
-		PhaseObserver *other = new PhaseObserver(players[i], 3);
-		GameStatObserver* gameStatObserer = new GameStatObserver(players[i], 3);
-		players[i]->printPhaseStatus();
+		
+		// ... players[i]->printPhaseStatus();
 
 		//Capacity for one player to carry any resource given there powerplants
 		int coalCapacity = 0;
@@ -533,12 +535,11 @@ void GameBoard::part3() {
 			uraniumBuy -= 1;
 		}
 
-		delete other;
 
 	}
 
 	//Lets see the possessions all the player own
-	printGameStatus();
+	// printGameStatus();
 
 
 	phase4();
@@ -546,19 +547,13 @@ void GameBoard::part3() {
 
 void GameBoard::part4()
 {
-	cout << "--------------------------------------------" << endl;
-	cout << "PHASE 5 bureaucracy" << endl;
-	cout << "--------------------------------------------" << endl;
+	//cout << "--------------------------------------------" << endl;
+	//cout << "PHASE 5 bureaucracy" << endl;
+	//cout << "--------------------------------------------" << endl;
 
 	for (int i = 0; i < players.size(); i++)
 	{
-
-
-
 		Player* currentPlayer = players.at(i);
-
-		PhaseObserver *test = new PhaseObserver(currentPlayer, 5);
-		GameStatObserver* gameStatObserver = new GameStatObserver(currentPlayer, 5);
 
 		currentPlayer->printPhaseStatus();
 
@@ -753,7 +748,7 @@ void GameBoard::part4()
 
 		}
 
-		delete test;
+		//... delete test;
 	}
 	//checking if Step 2 needs to be activated
 	for (int i = 0; i < players.size(); i++) {
@@ -830,9 +825,9 @@ bool GameBoard::gameWinCondition() {
 
 void phase4()
 {
-	cout << "\n\n--------------------------------------------" << endl;
-	cout << "phase 4 buidling  " << endl;
-	cout << "--------------------------------------------" << endl;
+	//cout << "\n\n--------------------------------------------" << endl;
+	//cout << "phase 4 buidling  " << endl;
+	//cout << "--------------------------------------------" << endl;
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -925,7 +920,7 @@ void phase4()
 		delete test;
 	}
 
-	printGameStatus();
+	// printGameStatus();
 }
 
 int getCoalCost() {

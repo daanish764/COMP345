@@ -319,3 +319,50 @@ void Player::printPlayerNetwork(vector<City*> cityList) {
 		}
 	}
 }
+
+void Player::printPlayerGraph(vector<City*> cityList) {
+	cout << "\n" << name + " : ";
+
+	if (color == "red") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->redHouse == 1) {
+				cout << " *";
+			}
+		}
+	}
+	if (color == "blue") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->blueHouse == 1) {
+				cout << " *";
+			}
+		}
+	}
+	if (color == "green") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->greenHouse == 1) {
+				cout << " *";
+			}
+		}
+	}
+	if (color == "purple") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->purpleHouse == 1) {
+				cout << " *";
+			}
+		}
+	}
+	if (color == "orange") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->orangeHouse == 1) {
+				cout << " *";
+			}
+		}
+	}
+	if (color == "yellow") {
+		for (int i = 0; i < cityList.size(); i++) {
+			if (cityList[i]->yellowHouse == 1) {
+				cout << " *";
+			}
+		}
+	}
+}
