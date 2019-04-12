@@ -161,6 +161,8 @@ void GameBoard::part1()
 // implementation of phase 1 and phase 2 of the game
 void GameBoard::part2()
 {
+	PhaseObserver *test = nullptr;
+
 	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
 
 	sortPlayersDescending(); //sorts by total houses owned. Ties broken by largest plant owned.
@@ -169,12 +171,12 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		PhaseObserver *test = new PhaseObserver(players[i], 1);
-		players[i]->printPhaseStatus();
+//		PhaseObserver *test = new PhaseObserver(players[i], 1);
+//		players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 
-		delete test;
+		
 	}
 
 
@@ -188,14 +190,14 @@ void GameBoard::part2()
 	//WHILE LOOP FOR PEOPLE WHO ARE STILL ACTIVE IN PHASE 2 A.K.A HAVE NOT PASSED OR WON A POWERPLANT YET.
 	while (activeAtAuction.size() > 0) {
 
-		PhaseObserver *test = new PhaseObserver(activeAtAuction[0], 2);
+		test = new PhaseObserver(activeAtAuction[0], 2);
 
 		cout << endl << endl;
 		printMarket();
 
 		activeAtAuction[0]->printPhaseStatus();
 
-		delete test;
+		// delete test;
 
 		cout << "It's " << activeAtAuction[0]->getName() << "'s ("<< activeAtAuction[0]->getElektro() <<" Elektros) turn." << endl;
 
@@ -233,9 +235,9 @@ void GameBoard::part2()
 				//THE AUCTION WHILE LOOP. ENDS WHEN THERE'S ONE BIDDER LEFT
 				while (activeBidders.size() > 1) {
 
-					PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
+//	...				PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
 
-					activeBidders[currentBidder]->printPhaseStatus();
+// ...					activeBidders[currentBidder]->printPhaseStatus();
 
 					cout << "It's " << activeBidders[currentBidder]->getName() << "'s (" << activeBidders[currentBidder]->getElektro() << " Elektros) turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
@@ -256,7 +258,7 @@ void GameBoard::part2()
 						highestBid = currentBid; //the current bid is now the highest bid
 					}
 
-					delete test;
+					
 				}
 				//*******************AUCTION HAS ENDED. NOW TIME TO ASSIGN THE WINNER THE POWERPLANT AND REPLACE THE POWERPLANT FROM ACTUAL MARKET
 
@@ -295,17 +297,18 @@ void GameBoard::part2()
 				}
 			}
 		}
-
+//		delete test;
 
 	}
 	//Lets see the possessions all the player own
 	printGameStatus();
 
-
-
+	
+	delete test;
 }
 
 void GameBoard::part3() {
+	PhaseObserver* resource = nullptr;
 	cout << "\n\nPHASE 3: RESOURCE BUYING\n*************************************" << endl << endl;
 
 	sortPlayersAscending(); //sorts by total houses owned. Ties broken by largest plant owned. But in reverse order than previously done
@@ -314,18 +317,18 @@ void GameBoard::part3() {
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		PhaseObserver *other = new PhaseObserver(players[i], 1);
-		players[i]->printPhaseStatus();
+//		PhaseObserver *other = new PhaseObserver(players[i], 1);
+//		players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 
-		delete other;
+//		
 	}
 
 
 	for (int i = 0; i < players.size(); i++){
 
-		PhaseObserver *other = new PhaseObserver(players[i], 3);
+		resource  = new PhaseObserver(players[i], 3);
 		players[i]->printPhaseStatus();
 
 		//Capacity for one player to carry any resource given there powerplants
@@ -423,7 +426,7 @@ void GameBoard::part3() {
 		if(coalCapacity>0 || hybridCapacity>0){
 
 
-			players[i]->printPhaseStatus();
+//...			players[i]->printPhaseStatus();
 
 			cout << "\n\nPlease enter the amount of COAL you want to buy (including for Hybrid plants): ";
 			cin >> coalBuy;
@@ -457,7 +460,7 @@ void GameBoard::part3() {
 
 		if(oilCapacity>0 || hybridCapacity > 0){
 
-			players[i]->printPhaseStatus();
+//...			players[i]->printPhaseStatus();
 
 			cout << "\n\nPlease enter the amount of OIL you want to buy (including for Hybrid plants): ";
 			cin >> oilBuy;
@@ -482,7 +485,7 @@ void GameBoard::part3() {
 		if(garbageCapacity>0){
 
 
-			players[i]->printPhaseStatus();
+//...			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of GARBAGE you want to buy: ";
 			cin >> garbageBuy;
 			garbageBuy = players[i]->strategicResourceBuy(garbageCapacity, garbageBuy);
@@ -506,7 +509,7 @@ void GameBoard::part3() {
 		if(uraniumCapacity>0){
 
 
-			players[i]->printPhaseStatus();
+//...			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of URANIUM you want to buy: ";
 			cin >> uraniumBuy;
 			uraniumBuy = players[i]->strategicResourceBuy(uraniumCapacity, uraniumBuy);
@@ -527,19 +530,20 @@ void GameBoard::part3() {
 			uraniumBuy -= 1;
 		}
 
-		delete other;
+		// delete other;
 
 	}
 
 	//Lets see the possessions all the player own
 	printGameStatus();
 
-
+	delete resource;
 	phase4();
 }
 
 void GameBoard::part4()
 {
+	PhaseObserver *test = nullptr;
 	cout << "--------------------------------------------" << endl;
 	cout << "PHASE 5 bureaucracy" << endl;
 	cout << "--------------------------------------------" << endl;
@@ -551,7 +555,7 @@ void GameBoard::part4()
 
 		Player* currentPlayer = players.at(i);
 
-		PhaseObserver *test = new PhaseObserver(currentPlayer, 5);
+		test = new PhaseObserver(currentPlayer, 5);
 
 		currentPlayer->printPhaseStatus();
 
@@ -615,7 +619,7 @@ void GameBoard::part4()
 			cout << endl;
 			int plantid;
 
-			currentPlayer->printPhaseStatus();
+// ...			currentPlayer->printPhaseStatus();
 
 			cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
 			cin >> plantid;
@@ -703,7 +707,7 @@ void GameBoard::part4()
 
 				int input;
 
-				currentPlayer->printPhaseStatus();
+//				currentPlayer->printPhaseStatus();
 
 				cout << "would you like to select another powerplant to power (1 for yes and 0 for no) > ";
 				cin >> input;
@@ -746,7 +750,7 @@ void GameBoard::part4()
 
 		}
 
-		delete test;
+
 	}
 	//checking if Step 2 needs to be activated
 	for (int i = 0; i < players.size(); i++) {
@@ -800,7 +804,7 @@ void GameBoard::part4()
 		players[i]->setStrategy(playerType);
 		cout << endl;
 	}
-
+	delete test;
 }
 
 // the class checks if the winning condition has been met for the game to end
@@ -823,6 +827,7 @@ bool GameBoard::gameWinCondition() {
 
 void phase4()
 {
+	PhaseObserver * test = nullptr;
 	cout << "\n\n--------------------------------------------" << endl;
 	cout << "phase 4 buidling  " << endl;
 	cout << "--------------------------------------------" << endl;
@@ -832,7 +837,7 @@ void phase4()
 		bool pass = false;
 		Player* currentPlayer = players.at(i);
 
-		PhaseObserver *test = new PhaseObserver(currentPlayer, 4);
+		test = new PhaseObserver(currentPlayer, 4);
 
 		currentPlayer->printPhaseStatus();
 
@@ -872,7 +877,7 @@ void phase4()
 			break;
 		else {
 
-			currentPlayer->printPhaseStatus();
+//			currentPlayer->printPhaseStatus();
 
 			cout << "please enter which the city id of the city you would like to build on (-1 to pass ) > ";
 
@@ -914,10 +919,11 @@ void phase4()
 		}
 
 		cout << endl;
-		delete test;
+		// delete test;
 	}
 
 	printGameStatus();
+	delete test;
 }
 
 int getCoalCost() {
@@ -959,8 +965,9 @@ int getUraniumCost() {
 // prints the status of the game
 // show the amount of resources on the map as well
 void printGameStatus() {
-	vector<City*> cities = citiesMap->getCities();
+//	vector<City*> cities = citiesMap->getCities();
 
+	/*
 	cout << "\n***Lets see what each player owns at this point:\n";
 	for (int i = 0; i < players.size(); i++) {
 		cout << endl << endl;
@@ -968,7 +975,7 @@ void printGameStatus() {
 
 		printPlayerNetwork(players[i], cities);
 	}
-
+	*/
 	cout << "\n\n***AVAILABLE RESOURCES";
 	string availRes = ("\nCoal: " + std::to_string(GameBoard::availableCoal) + " | Oil: " + std::to_string(GameBoard::availableOil) + " | Garbage: " + std::to_string(GameBoard::availableGarbage) + " | Uranium: " + std::to_string(GameBoard::availableUranium));
 	cout << availRes << "\n\n";
