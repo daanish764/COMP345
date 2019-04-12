@@ -47,6 +47,8 @@ void PhaseObserver::display() {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
 		cout << "\n" <<  stage << endl;
 		cout << "\n" << "Step #" << StepSingleton::getInstance()->getStep() << endl << endl;
+		
+		/*
 		cout << "Player Info:          " << endl;
 		_subject->getPlayerInfo();
 		cout << "Player Network: " << endl;
@@ -54,5 +56,5 @@ void PhaseObserver::display() {
 		cout << endl;
 		cout << "number of houses " << _subject->getOwnedCities().size() << endl;
 		cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
-		
+		*/
 }

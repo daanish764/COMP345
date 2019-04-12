@@ -32,6 +32,7 @@
     <ClCompile Include="StepSingleton.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="GameStatObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameBoard.h">
@@ -73,9 +74,8 @@
     <ClInclude Include="Subject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Strategy.cpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Strategy.cpp" />
+    <ClInclude Include="GameStatObserver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Player.cpp">

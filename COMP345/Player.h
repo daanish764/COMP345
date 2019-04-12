@@ -8,11 +8,13 @@ Kadeem Caines [26343600]
 
 #pragma once
 #include<iostream>
-using std::string;
+
 #include "City.h"
 #include "PowerPlant.h"
 #include "Subject.h"
 #include "Strategy.cpp"
+
+using std::string;
 
 class Player: public Subject
 {

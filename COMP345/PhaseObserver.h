@@ -12,10 +12,7 @@ public:
 	void Update();
 	void display();
 	void nextPhase();
-	
-
 private:
-
 	Player* _subject;
 	int turn;
 };

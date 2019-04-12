@@ -21,6 +21,7 @@ Kadeem Caines [26343600]
 #include"PowerPlant.h"
 #include"OverviewCard.h"
 #include "PhaseObserver.h"
+#include "GameStatObserver.h"
 #include"StepSingleton.h"
 
 using std::cout;
@@ -169,7 +170,8 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-		PhaseObserver *test = new PhaseObserver(players[i], 1);
+		PhaseObserver* test = new PhaseObserver(players[i], 1);
+		GameStatObserver* gameStatObserver = new GameStatObserver(players[i], 1);
 		players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
@@ -189,6 +191,7 @@ void GameBoard::part2()
 	while (activeAtAuction.size() > 0) {
 
 		PhaseObserver *test = new PhaseObserver(activeAtAuction[0], 2);
+		GameStatObserver* gameStatObserver = new GameStatObserver(activeAtAuction[0], 2);
 
 		cout << endl << endl;
 		printMarket();
@@ -234,6 +237,7 @@ void GameBoard::part2()
 				while (activeBidders.size() > 1) {
 
 					PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
+					GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
 
 					activeBidders[currentBidder]->printPhaseStatus();
 
@@ -315,6 +319,7 @@ void GameBoard::part3() {
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
 		PhaseObserver *other = new PhaseObserver(players[i], 1);
+		GameStatObserver* gameStatObserver = new GameStatObserver(players[i], 1);
 		players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
@@ -326,6 +331,7 @@ void GameBoard::part3() {
 	for (int i = 0; i < players.size(); i++){
 
 		PhaseObserver *other = new PhaseObserver(players[i], 3);
+		GameStatObserver* gameStatObserer = new GameStatObserver(players[i], 3);
 		players[i]->printPhaseStatus();
 
 		//Capacity for one player to carry any resource given there powerplants
@@ -552,6 +558,7 @@ void GameBoard::part4()
 		Player* currentPlayer = players.at(i);
 
 		PhaseObserver *test = new PhaseObserver(currentPlayer, 5);
+		GameStatObserver* gameStatObserver = new GameStatObserver(currentPlayer, 5);
 
 		currentPlayer->printPhaseStatus();
 
@@ -833,6 +840,7 @@ void phase4()
 		Player* currentPlayer = players.at(i);
 
 		PhaseObserver *test = new PhaseObserver(currentPlayer, 4);
+		GameStatObserver* gameStatObserver = new GameStatObserver(currentPlayer, 4);
 
 		currentPlayer->printPhaseStatus();
 
