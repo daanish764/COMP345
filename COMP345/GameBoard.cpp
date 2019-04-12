@@ -233,11 +233,11 @@ void GameBoard::part2()
 				int highestBid = 0;
 				int currentBidder = 0;
 
-				PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
-				GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
+				//... PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
+				//... GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
 
 
-				delete test;
+				// ... delete test;
 
 				//THE AUCTION WHILE LOOP. ENDS WHEN THERE'S ONE BIDDER LEFT
 				while (activeBidders.size() > 1) {
@@ -325,7 +325,7 @@ void GameBoard::part3() {
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
 		
-		// players[i]->printPhaseStatus();
+		//... players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 	}
@@ -334,7 +334,7 @@ void GameBoard::part3() {
 	for (int i = 0; i < players.size(); i++){
 
 		
-		// ... players[i]->printPhaseStatus();
+		players[i]->printPhaseStatus();
 
 		//Capacity for one player to carry any resource given there powerplants
 		int coalCapacity = 0;
@@ -431,7 +431,7 @@ void GameBoard::part3() {
 		if(coalCapacity>0 || hybridCapacity>0){
 
 
-			players[i]->printPhaseStatus();
+			//... players[i]->printPhaseStatus();
 
 			cout << "\n\nPlease enter the amount of COAL you want to buy (including for Hybrid plants): ";
 			cin >> coalBuy;
@@ -465,7 +465,7 @@ void GameBoard::part3() {
 
 		if(oilCapacity>0 || hybridCapacity > 0){
 
-			players[i]->printPhaseStatus();
+			//... players[i]->printPhaseStatus();
 
 			cout << "\n\nPlease enter the amount of OIL you want to buy (including for Hybrid plants): ";
 			cin >> oilBuy;
@@ -490,7 +490,7 @@ void GameBoard::part3() {
 		if(garbageCapacity>0){
 
 
-			players[i]->printPhaseStatus();
+			//... players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of GARBAGE you want to buy: ";
 			cin >> garbageBuy;
 			garbageBuy = players[i]->strategicResourceBuy(garbageCapacity, garbageBuy);
@@ -514,7 +514,7 @@ void GameBoard::part3() {
 		if(uraniumCapacity>0){
 
 
-			players[i]->printPhaseStatus();
+			//... players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of URANIUM you want to buy: ";
 			cin >> uraniumBuy;
 			uraniumBuy = players[i]->strategicResourceBuy(uraniumCapacity, uraniumBuy);
