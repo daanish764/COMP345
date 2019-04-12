@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Subject.cpp" />
     <ClCompile Include="City.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -30,6 +29,12 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="StepSingleton.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStatObserver.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,7 +79,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Strategy.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStatObserver.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
