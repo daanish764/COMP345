@@ -70,4 +70,6 @@ public:
 	int strategicResourceBuy(int capacity, int initialAction);
 	int strategicPlantPick(vector<PowerPlant*> plants, int initialAction);
 	int strategicBuilding(int step2, int step2trigger, int initialAction);
+	void printPlayerNetwork(vector<City*> cityList);
+
 };

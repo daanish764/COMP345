@@ -81,9 +81,10 @@ public:
 	//AFFECTS PHASE 4
 	//Moderate player's target is to avoid triggering step 2(if it's already not triggered). So this function checks if the building decision will 
 	//lead to step 2 and if step 2 has not already been activated. If that's not true, it avoids building, else goes with the original decision.
-	int buildingAction(int numberOfCitiesOwned, int step2, int step2trigger, int initialAction) {
-		if (step2trigger - numberOfCitiesOwned < 2 && step2==0 && initialAction!=-1) {
+	int buildingAction(int numberOfCitiesOwned, int step, int step2trigger, int initialAction) {
+		if (step2trigger - numberOfCitiesOwned < 2 && step<2 && initialAction!=-1) {
 			cout << "Player is moderate and looking to avoid step 2! We chose not to build for now for you!";
+			return -1;
 		}
 		return initialAction;
 	}

@@ -1,4 +1,6 @@
+
 #pragma once
+
 #include "Observer.h"
 #include "Player.h"
 class PhaseObserver: public Observer

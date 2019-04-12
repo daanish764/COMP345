@@ -1,7 +1,7 @@
 #include "PhaseObserver.h"
 #include "Player.h"
 
-
+#include"StepSingleton.h"
 
 PhaseObserver::PhaseObserver()
 {
@@ -31,54 +31,28 @@ void PhaseObserver::nextPhase() {
 
 void PhaseObserver::display() {
 
-	
-
-
-	if (turn == 1) {
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "DETERMINING PLAYER ORDER" << endl;
-		_subject->getPlayerInfo();
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-	}
-
-	if (turn == 2) {
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "AUCTION"<< endl;
-		_subject->getPlayerInfo();
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-	}
+	string stage = "";
+	if (turn == 1)
+		stage = "";
+	if (turn == 2)
+		stage = "Phase Status:  AUCTION";
+	if(turn == 3)
+		stage = "Phase Status:  RESOURCE BUYING";
+	if (turn == 4)
+		stage = "Phase Status:  BUILDING";
+	if (turn == 5)
+		stage = "Phase Status:  BUREAUCRACY";
 
 	
-	if (turn == 3) {
 		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "RESOURCE BUYING" << endl;
+		cout << "\n" <<  stage << endl;
+		cout << "\n" << "Step #" << StepSingleton::getInstance()->getStep() << endl << endl;
+		cout << "Player Info:          " << endl;
 		_subject->getPlayerInfo();
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-	}
-
-	if (turn == 3) {
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "RESOURCE BUYING" << endl;
-		_subject->getPlayerInfo();
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-	}
-
-	if (turn == 4) {
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "BUILDING" << endl;
-		_subject->getPlayerInfo();
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
+		cout << "Player Network: " << endl;
+		_subject->printPlayerNetwork(_subject->getOwnedCities());
+		cout << endl;
+		cout << "number of houses " << _subject->getOwnedCities().size() << endl;
+		cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
 		
-	}
-
-	if (turn == 5) {
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-		cout << "		                    Phase Status: " << "BUREAUCRACY" << endl;
-		_subject->getPlayerInfo();
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
-	}
-
-
-	
-	
 }
