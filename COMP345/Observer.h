@@ -1,4 +1,10 @@
-//source of code: "COMP345:Advanced Program Design with C++ Lecture 6: Model View Controller Architecture Observer Pattern" lecture notes.
+/*
+Team 24
+
+Daanish Rehman [27027753]
+Jawed Bhojani [29060936]
+Kadeem Caines [26343600]
+*/
 
 #pragma once
 
