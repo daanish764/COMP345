@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="City.h" />
     <ClInclude Include="GameBoard.h" />
+    <ClInclude Include="Strategy.cpp" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="OverviewCard.h" />

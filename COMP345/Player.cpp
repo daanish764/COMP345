@@ -39,7 +39,7 @@ Player::Player(string playerName)
 }
 
 
-Player::Player(string name, string color, int maxPlants)
+Player::Player(string name, string color, int maxPlants, int playerType)
 {
 	this->name = name;
 	this->color = color;
@@ -52,6 +52,14 @@ Player::Player(string name, string color, int maxPlants)
 	largestPlant = 0;
 	poweredCities = 0;
 	startCity = NULL;
+	//this->strategy = new Environmentalist();
+	if(playerType == 1)this->strategy = new Aggressive();
+	else if(playerType == 2)this->strategy = new Moderate();
+	else if(playerType == 3)this->strategy = new Environmentalist();
+	else {
+		this->strategy = new Moderate();
+		cout << "\nAssigned Moderate by default" << endl;
+	}
 }
 
 string Player::getHouseColor() {
@@ -78,9 +86,9 @@ Player::~Player()
 
 string Player::getName() const
 {
-	
+
 	return name;
-	
+
 }
 
 int Player::getElektro()
@@ -132,7 +140,7 @@ void Player::getPlayerInfo()
 	}
 	std::cout << std::endl;
 
-	
+
 }
 
 void Player::assignOil(int num, int cost) {
@@ -193,7 +201,7 @@ void Player::placeHouse(City * city)
 void Player::buyPlant(PowerPlant * plant, int cost, int maxPlants)
 {
 	if (ownedPlants.size() == maxPlants) { //If there's no more capacity, takes out the smallest plant by sorting first and removing first plant
-		
+
 		stable_sort(ownedPlants.begin(), ownedPlants.end(), [](const PowerPlant* lhs, const PowerPlant* rhs) { //CHANGE stable_sort TO sort IF YOU ENCOUNTER ANY ISSUES
 			return lhs->getPlantNumber() < rhs->getPlantNumber();
 		});
@@ -226,8 +234,43 @@ void Player::connectToCity(City * city)
 
 vector<City*> Player::getOwnedCities()
 {
-	
+
 	return this->ownedCities;
+}
+
+
+void Player::setStrategy(int playerType)
+{
+	if (playerType == 1) { this->strategy = new Aggressive(); cout << "\nChanged to AGGRESSIVE!" << endl; ; }
+	else if (playerType == 2) { this->strategy = new Moderate();  cout << "\nChanged to MODERATE!" << endl; ; }
+	else if (playerType == 3) { this->strategy = new Environmentalist(); cout << "\nChanged to ENVIRONMENTALIST!" << endl; }
+	else {
+		//do nothing and assume they didn't want to change
+		cout << "\nNo changes made!" << endl;
+	}
+}
+
+int Player::strategicBid(int plantPosition, int highestBid, int playerBid, bool environmental)
+{
+	int numberOfPlantsOwned = ownedPlants.size();
+	int currentElektro = this->getElektro();
+	return this->strategy->auctionAction(numberOfPlantsOwned, currentElektro, plantPosition, highestBid, playerBid, environmental);
+}
+
+int Player::strategicResourceBuy(int capacity, int initialAction) {
+	int currentElektro = this->getElektro();
+	return this->strategy->resourceAction(currentElektro, capacity, initialAction);
+}
+
+int Player::strategicPlantPick(vector<PowerPlant*> plants, int initialAction) {
+	int currentElektro = this->getElektro();
+	int numberOfPlantsOwned = ownedPlants.size();
+	return this->strategy->pickingAction(numberOfPlantsOwned, currentElektro, plants, initialAction);
+}
+
+int Player::strategicBuilding(int step2, int step2trigger, int initialAction) {
+	int numberOfCitiesOwned = this->ownedCities.size();
+	return this->strategy->buildingAction(numberOfCitiesOwned, step2, step2trigger, initialAction);
 }
 
 void Player::printPlayerNetwork(vector<City*> cityList) {
@@ -276,5 +319,3 @@ void Player::printPlayerNetwork(vector<City*> cityList) {
 		}
 	}
 }
-
-

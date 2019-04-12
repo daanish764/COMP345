@@ -22,10 +22,11 @@ public:
 	int garbageRequired;
 	int uraniumRequired;
 	int hybridRequired;
+	bool environmentalPlant;
 
 	PowerPlant();
 	PowerPlant(int plantNumber);
-	PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired);
+	PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired, bool environmentalPlant);
 	~PowerPlant();
 
 	int getPlantNumber() const;

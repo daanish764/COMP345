@@ -12,6 +12,7 @@ using std::string;
 #include "City.h"
 #include "PowerPlant.h"
 #include "Subject.h"
+#include "Strategy.cpp"
 
 class Player: public Subject
 {
@@ -19,7 +20,8 @@ private:
 	string name;
 	string color;
 	vector<City*> ownedCities;
-	
+	Strategy* strategy;
+
 public:
 	int elektro;
 	int coal;
@@ -35,7 +37,7 @@ public:
 
 	Player();
 	Player(string name);
-	Player(string name, string color, int maxPlants);
+	Player(string name, string color, int maxPlants, int playerType);
 	string getHouseColor();
 	~Player();
 	string getName() const;
@@ -61,5 +63,13 @@ public:
 	bool isConnectedToCity(City* city);
 	void connectToCity(City* city);
 	vector<City*> getOwnedCities();
+
+	//ASSIGNMENT 3
+	void setStrategy(int playerType);
+	int strategicBid(int plantPosition, int highestBid, int playerBid, bool environmental);
+	int strategicResourceBuy(int capacity, int initialAction);
+	int strategicPlantPick(vector<PowerPlant*> plants, int initialAction);
+	int strategicBuilding(int step2, int step2trigger, int initialAction);
 	void printPlayerNetwork(vector<City*> cityList);
+
 };

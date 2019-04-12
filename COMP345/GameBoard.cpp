@@ -212,6 +212,8 @@ void GameBoard::part2()
 
 				cout << "Please choose the power plant(you can afford) to bid on from actual market or enter 0 to pass and sit out entirely: ";
 				cin >> chosenPlant;
+				chosenPlant = activeAtAuction[0]->strategicPlantPick(market, chosenPlant);
+
 				if (chosenPlant == 0) { break; }
 			}
 
@@ -238,8 +240,8 @@ void GameBoard::part2()
 					cout << "It's " << activeBidders[currentBidder]->getName() << "'s (" << activeBidders[currentBidder]->getElektro() << " Elektros) turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
 
-					//ensures the auction starter bids minimum the plant value AND people don't bid over than what they have
-					currentBid = std::min(std::max(currentBid, chosenPlant), activeBidders[currentBidder]->getElektro());
+					//ensures the auction starter bids minimum the plant value AND people don't bid over than what they have. For assignment 3 this implements strategicBid.
+					currentBid = std::min(std::max(activeBidders[currentBidder]->strategicBid(getPowerPlant(chosenPlant), highestBid, currentBid, market[getPowerPlant(chosenPlant)]->environmentalPlant), chosenPlant), activeBidders[currentBidder]->getElektro());
 
 					if (currentBid <= highestBid) { //Bad bid. Lower than or equal to  highest bid
 						cout << "Chose to sit out of current bidding war.\n" << endl;
@@ -333,6 +335,12 @@ void GameBoard::part3() {
 		int uraniumCapacity = 0;
 		int hybridCapacity = 0;
 
+		//premptively adjust capacity by taking out what's already owned
+		coalCapacity -= players[i]->getCoal();
+		oilCapacity -= players[i]->getOil();
+		garbageCapacity -= players[i]->getGarbage();
+		uraniumCapacity -= players[i]->getUranium();
+
 		//The amounts the player is looking to buy
 		int coalBuy = 0;
 		int oilBuy = 0;
@@ -346,28 +354,28 @@ void GameBoard::part3() {
 		//For loop goes through player's powerplants to scan each plant's resource capacity and subtracts what they already own to give new capacity. Excess oil and coal are also calculated here.
 		for (int k = 0; k < players[i]->ownedPlants.size(); k++) {
 			coalCapacity += (players[i]->ownedPlants[k]->coalRequired * 2);
-			coalCapacity -= players[i]->getCoal();
+
 			if (coalCapacity < 0) { //if capacity is negative, turn capacity=0 in this case and update the excessCoal int.
 				excessCoal += players[i]->coal - coalCapacity;
 				coalCapacity = 0;
 			}
 
 			oilCapacity += (players[i]->ownedPlants[k]->oilRequired * 2);
-			oilCapacity -= players[i]->getOil();
+
 			if (oilCapacity < 0) {
 				excessOil += players[i]->oil - oilCapacity;
 				oilCapacity = 0;
 			}
 
 			garbageCapacity += (players[i]->ownedPlants[k]->garbageRequired * 2);
-			garbageCapacity -= players[i]->getGarbage();
+
 			if (garbageCapacity < 0) { //If capacity<what we already have, dump the excess
 				players[i]->garbage -= garbageCapacity;
 				garbageCapacity = 0;
 			}
 
 			uraniumCapacity += (players[i]->ownedPlants[k]->uraniumRequired * 2);
-			uraniumCapacity -= players[i]->getUranium();
+
 			if (uraniumCapacity < 0) { //If capacity<what we already have, dump the excess
 				players[i]->uranium -= uraniumCapacity;
 				uraniumCapacity = 0;
@@ -399,6 +407,8 @@ void GameBoard::part3() {
 				}
 			}
 		}
+
+
 		cout << "\n\n" << players[i]->getName() << "'s total storage capacity for each resource given his/her power plants, minus current resources owned:";
 		cout << "\nCoal Plant(s) Capacity : " << coalCapacity << endl;
 		cout << "Oil Plant(s) Capacity : " << oilCapacity << endl;
@@ -417,6 +427,7 @@ void GameBoard::part3() {
 
 			cout << "\n\nPlease enter the amount of COAL you want to buy (including for Hybrid plants): ";
 			cin >> coalBuy;
+			coalBuy = players[i]->strategicResourceBuy(coalCapacity, coalBuy);
 		}
 		coalBuy = std::min((coalCapacity + hybridCapacity), coalBuy); //std::min ensures player doesn't get to input more than what they can hold, coal + hybrid capacity in this case.
 
@@ -450,6 +461,7 @@ void GameBoard::part3() {
 
 			cout << "\n\nPlease enter the amount of OIL you want to buy (including for Hybrid plants): ";
 			cin >> oilBuy;
+			oilBuy = players[i]->strategicResourceBuy(oilCapacity, oilBuy);
 		}
 		oilBuy = std::min((oilCapacity + hybridCapacity), oilBuy);
 
@@ -473,6 +485,7 @@ void GameBoard::part3() {
 			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of GARBAGE you want to buy: ";
 			cin >> garbageBuy;
+			garbageBuy = players[i]->strategicResourceBuy(garbageCapacity, garbageBuy);
 		}
 		garbageBuy = std::min(garbageCapacity, garbageBuy);
 
@@ -496,6 +509,7 @@ void GameBoard::part3() {
 			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of URANIUM you want to buy: ";
 			cin >> uraniumBuy;
+			uraniumBuy = players[i]->strategicResourceBuy(uraniumCapacity, uraniumBuy);
 		}
 		uraniumBuy = std::min(uraniumCapacity, uraniumBuy);
 
@@ -605,6 +619,7 @@ void GameBoard::part4()
 
 			cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
 			cin >> plantid;
+			plantid = currentPlayer->strategicBuilding(StepSingleton::getInstance()->getStep(), summaryCard[3][numberOfPlayer - 2], plantid);
 
 			if (plantid == -1)
 			{
@@ -774,7 +789,17 @@ void GameBoard::part4()
 	//sorting the market again
 	sortMarket();
 
+	cout << "\n\nThis is your chance to change player strategies!" << endl;
+	for (int i = 0; i < players.size(); i++)
+	{
+		int playerType;
 
+		cout << "For " << players[i]->getName() << "..." << endl;
+		cout << "\nEnter player type number [1] Aggressive [2] Moderate [3] Environmentalist [4] No Change : ";
+		cin >> playerType;
+		players[i]->setStrategy(playerType);
+		cout << endl;
+	}
 
 }
 
@@ -1082,9 +1107,9 @@ void GameBoard::printMarket()
 {
 
 	cout << "The Actual And Future Market Is:" << endl;
-	cout << "|------------------------------------------------------------------------------------|	" << endl;
-	cout << "| plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites  |" << endl;
-	cout << "|------------------------------------------------------------------------------------|	" << endl;
+	cout << "|-------------------------------------------------------------------------------------------------|	" << endl;
+	cout << "| plant# | coal  | oil  | garbage | uranium  | coil-oil-hybrid  | can power # cites | wind plant? |" << endl;
+	cout << "|-------------------------------------------------------------------------------------------------|	" << endl;
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -1095,9 +1120,9 @@ void GameBoard::printMarket()
 		else {
 			zero = "";
 		}
-		cout << "|   " << zero << market[i]->getPlantNumber() << "   |   " << market[i]->coalRequired << "   |  " << market[i]->oilRequired << "   |     " << market[i]->garbageRequired << "   |    " << market[i]->uraniumRequired << "     |        " << market[i]->hybridRequired << "         |       " << market[i]->powersCities << "            |" << endl;
+		cout << "|   " << zero << market[i]->getPlantNumber() << "   |   " << market[i]->coalRequired << "   |  " << market[i]->oilRequired << "   |     " << market[i]->garbageRequired << "   |    " << market[i]->uraniumRequired << "     |        " << market[i]->hybridRequired << "         |       " << market[i]->powersCities << "            |       " << market[i]->environmentalPlant << "    |" << endl;
 	}
-	cout << "|------------------------------------------------------------------------------------|	" << endl << endl;
+	cout << "|-------------------------------------------------------------------------------------------------|	" << endl << endl;
 }
 
 void setUp()
@@ -1145,11 +1170,14 @@ void setUp()
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
 		string name;
+		int playerType;
 		string color;
 
 		cout << "\nPlayer " << i + 1 << " / " << "House " << houseColors[i] << ": Please enter player name: " ;
-		getline(cin, name);
-		players.push_back(new Player(name, houseColors[i], maximumPlantsPerPlayer));
+		cin >> name;
+		cout << "\nEnter player type number [1] Aggressive [2] Moderate [3] Environmentalist: ";
+		cin >> playerType;
+		players.push_back(new Player(name, houseColors[i], maximumPlantsPerPlayer, playerType));
 		cout << endl;
 	}
 
@@ -1187,7 +1215,7 @@ void setUp()
 		{
 			cout << players[i]->getName();
 			cout << " pick a starting city: ";
-			getline(cin, startcity);
+			cin >> startcity;
 
 			City* start_city = citiesMap->getCity(startcity);
 
@@ -1209,14 +1237,14 @@ void setUpPowerPlantCards()
 	// the format of the powerplants being inserted are as followed
 	//PowerPlant(int plantNumber, int powersCities, int coalRequired, int oilRequired, int garbageRequired, int uraniumRequired, int hybridRequired)
 
-	PowerPlant* pp3 = new PowerPlant(3, 1, 0, 2, 0, 0, 0);
-	PowerPlant* pp4 = new PowerPlant(4, 1, 2, 0, 0, 0, 0);
-	PowerPlant* pp5 = new PowerPlant(5, 1, 0, 0, 0, 0, 2);
-	PowerPlant* pp6 = new PowerPlant(6, 1, 0, 0, 1, 0, 0);
-	PowerPlant* pp7 = new PowerPlant(7, 2, 0, 3, 0, 0, 0);
-	PowerPlant* pp8 = new PowerPlant(8, 2, 3, 0, 0, 0, 0);
-	PowerPlant* pp9 = new PowerPlant(9, 1, 0, 1, 0, 0, 0);
-	PowerPlant* pp10 = new PowerPlant(10, 2, 2, 0, 0, 0, 0);
+	PowerPlant* pp3 = new PowerPlant(3, 1, 0, 3, 0, 0, 0, false);
+	PowerPlant* pp4 = new PowerPlant(4, 1, 2, 0, 0, 0, 0, false);
+	PowerPlant* pp5 = new PowerPlant(5, 1, 0, 0, 0, 0, 2, false);
+	PowerPlant* pp6 = new PowerPlant(6, 1, 0, 0, 0, 0, 0, true);
+	PowerPlant* pp7 = new PowerPlant(7, 2, 0, 3, 0, 0, 0, false);
+	PowerPlant* pp8 = new PowerPlant(8, 2, 3, 0, 0, 0, 0, false);
+	PowerPlant* pp9 = new PowerPlant(9, 1, 0, 1, 0, 0, 0, false);
+	PowerPlant* pp10 = new PowerPlant(10, 2, 2, 0, 0, 0, 0, false);
 
 	//placing plants in the powerplant vector
 	powerplants.push_back(pp3);
@@ -1260,7 +1288,7 @@ void setUpPowerPlantCards()
 	}
 
 	//placing plant 13 at the top which I believe is also the requirement. The windmill one.
-	PowerPlant* plant13 = new PowerPlant(13, 2, 0, 0, 0, 0, 0);
+	PowerPlant* plant13 = new PowerPlant(13, 2, 0, 0, 0, 0, 0, true);
 	deck.push_back(plant13);
 	powerplants.push_back(plant13);
 
