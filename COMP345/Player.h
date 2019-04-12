@@ -62,6 +62,8 @@ public:
 	void buyPlant(PowerPlant* plant, int cost, int maxPlants);
 	void printPhaseStatus();
 
+	void printGameStatus();
+
 	bool isConnectedToCity(City* city);
 	void connectToCity(City* city);
 	vector<City*> getOwnedCities();

@@ -131,6 +131,10 @@ void Player::printPhaseStatus(){
 	Notify();
 }
 
+void Player::printGameStatus() {
+	NotifyGameStatus();
+}
+
 void Player::getPlayerInfo()
 {
 	std::cout << "Player Name: " << name << "\nColor: " << color << "\nTotal Houses on Board: " << totalHouses << "\nElektro: " << elektro << "\nCoal: " << coal << "\nGarbage: " << garbage << "\nOil: " << oil << "\nUranium: " << uranium << std::endl;

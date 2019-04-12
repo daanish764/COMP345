@@ -9,6 +9,7 @@ public:
 	virtual void Attach(Observer* o);
 	virtual void Detach(Observer* o);
 	virtual void Notify() const;
+	void NotifyGameStatus() const;
 	Subject();
 	~Subject();
 private:

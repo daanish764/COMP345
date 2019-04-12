@@ -10,6 +10,7 @@ public:
 	PhaseObserver(Player* s, int turn);
 	~PhaseObserver();
 	void Update();
+	void UpdateGameStatus();
 	void display();
 	void nextPhase();
 private:

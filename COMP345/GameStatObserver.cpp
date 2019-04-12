@@ -21,12 +21,28 @@ GameStatObserver::~GameStatObserver()
 
 void GameStatObserver::Update()
 {
-	display();
+	// display();
+}
+
+void GameStatObserver::UpdateGameStatus()
+{
+	cout << "|------------------------------------------------------------------------------------|	" << endl;
+	cout << "\nGAME STAT OBSERVER" << endl;
+	cout << "PLAYER INFO          " << endl;
+	_subject->getPlayerInfo();
+	cout << "Player Network: " << endl;
+	_subject->printPlayerNetwork(_subject->getOwnedCities());
+	cout << endl;
+	cout << "number of houses " << _subject->getOwnedCities().size() << endl;
+	_subject->printPlayerGraph(_subject->getOwnedCities());
+	cout << endl << "|------------------------------------------------------------------------------------|	" << endl << endl;
+
 }
 
 void GameStatObserver::display()
 {
 	cout << "|------------------------------------------------------------------------------------|	" << endl;
+	cout << "\nGAME STAT OBSERVER" << endl;
 	cout << "PLAYER INFO          " << endl;
 	_subject->getPlayerInfo();
 	cout << "Player Network: " << endl;

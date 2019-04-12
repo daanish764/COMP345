@@ -162,7 +162,7 @@ void GameBoard::part1()
 // implementation of phase 1 and phase 2 of the game
 void GameBoard::part2()
 {
-	//cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
+	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
 
 	sortPlayersDescending(); //sorts by total houses owned. Ties broken by largest plant owned.
 	cout << "***Players with most houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
@@ -196,9 +196,9 @@ void GameBoard::part2()
 		cout << endl << endl;
 		printMarket();
 
-		//activeAtAuction[0]->printPhaseStatus();
+		activeAtAuction[0]->printPhaseStatus();
 
-		delete test;
+		//... delete test;
 
 		cout << "It's " << activeAtAuction[0]->getName() << "'s ("<< activeAtAuction[0]->getElektro() <<" Elektros) turn." << endl;
 
@@ -233,8 +233,8 @@ void GameBoard::part2()
 				int highestBid = 0;
 				int currentBidder = 0;
 
-				//... PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
-				//... GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
+				PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
+				GameStatObserver* gameStatObserver = new GameStatObserver(activeBidders[currentBidder], 2);
 
 
 				// ... delete test;
@@ -617,7 +617,7 @@ void GameBoard::part4()
 			cout << endl;
 			int plantid;
 
-			currentPlayer->printPhaseStatus();
+			//... currentPlayer->printPhaseStatus();
 
 			cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
 			cin >> plantid;
@@ -705,7 +705,7 @@ void GameBoard::part4()
 
 				int input;
 
-				currentPlayer->printPhaseStatus();
+				//... currentPlayer->printPhaseStatus();
 
 				cout << "would you like to select another powerplant to power (1 for yes and 0 for no) > ";
 				cin >> input;
@@ -875,7 +875,7 @@ void phase4()
 			break;
 		else {
 
-			currentPlayer->printPhaseStatus();
+			//... currentPlayer->printPhaseStatus();
 
 			cout << "please enter which the city id of the city you would like to build on (-1 to pass ) > ";
 
@@ -917,7 +917,7 @@ void phase4()
 		}
 
 		cout << endl;
-		delete test;
+		//... delete test;
 	}
 
 	// printGameStatus();

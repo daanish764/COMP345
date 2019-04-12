@@ -24,6 +24,10 @@ void PhaseObserver::Update() {
 	display();
 }
 
+void PhaseObserver::UpdateGameStatus()
+{
+}
+
 
 void PhaseObserver::nextPhase() {
 	turn++;
@@ -36,15 +40,16 @@ void PhaseObserver::display() {
 		stage = "Phase Status:  DETERMINING PLAYER ORDER";
 	if (turn == 2)
 		stage = "Phase Status:  AUCTION";
-	if(turn == 3)
+	if (turn == 3)
 		stage = "Phase Status:  RESOURCE BUYING";
 	if (turn == 4)
 		stage = "Phase Status:  BUILDING";
 	if (turn == 5)
 		stage = "Phase Status:  BUREAUCRACY";
 
-	
-		cout << "|------------------------------------------------------------------------------------|	" << endl;
+		
+		cout << endl << "|------------------------------------------------------------------------------------|	" << endl;
+		cout << "\nPHASE OBSERVER" << endl;
 		cout << "\n" <<  stage << endl;
 		cout << "\n" << "Step #" << StepSingleton::getInstance()->getStep() << endl << endl;
 }

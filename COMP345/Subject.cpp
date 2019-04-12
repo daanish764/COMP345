@@ -19,3 +19,9 @@ void Subject::Notify() const {
 	for (; i != _observers->end(); ++i)
 		(*i)->Update();
 };
+
+void Subject::NotifyGameStatus() const {
+	list<Observer *>::iterator i = _observers->begin();
+	for (; i != _observers->end(); ++i)
+		(*i)->UpdateGameStatus();
+};
