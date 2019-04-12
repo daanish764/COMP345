@@ -163,7 +163,7 @@ void GameBoard::part2()
 {
 	PhaseObserver *test = nullptr;
 
-	cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
+	//cout << "\n\nPHASE 1: DETERMINING PLAYER ORDER\n*************************************" << endl << endl;
 
 	sortPlayersDescending(); //sorts by total houses owned. Ties broken by largest plant owned.
 	cout << "***Players with most houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
@@ -171,8 +171,6 @@ void GameBoard::part2()
 	//display new order
 	for (int i = 0; i < numberOfPlayer; i++)
 	{
-//		PhaseObserver *test = new PhaseObserver(players[i], 1);
-//		players[i]->printPhaseStatus();
 
 		cout << (i + 1) << ". " << players[i]->getName() << " with " << players[i]->totalHouses << " house(s). Largest plant owned: " << players[i]->largestPlant << endl;
 
@@ -181,7 +179,7 @@ void GameBoard::part2()
 
 
 
-	cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
+	//cout << "\n\nPHASE 2: AUCTION\n*************************************" << endl;
 
 	int chosenPlant = 0;
 	vector<Player*> activeAtAuction = players;
@@ -234,10 +232,6 @@ void GameBoard::part2()
 
 				//THE AUCTION WHILE LOOP. ENDS WHEN THERE'S ONE BIDDER LEFT
 				while (activeBidders.size() > 1) {
-
-//	...				PhaseObserver *test = new PhaseObserver(activeBidders[currentBidder], 2);
-
-// ...					activeBidders[currentBidder]->printPhaseStatus();
 
 					cout << "It's " << activeBidders[currentBidder]->getName() << "'s (" << activeBidders[currentBidder]->getElektro() << " Elektros) turn to place a bid on plant " << chosenPlant << ". Enter a bid: ";
 					cin >> currentBid;
@@ -309,7 +303,7 @@ void GameBoard::part2()
 
 void GameBoard::part3() {
 	PhaseObserver* resource = nullptr;
-	cout << "\n\nPHASE 3: RESOURCE BUYING\n*************************************" << endl << endl;
+	//cout << "\n\nPHASE 3: RESOURCE BUYING\n*************************************" << endl << endl;
 
 	sortPlayersAscending(); //sorts by total houses owned. Ties broken by largest plant owned. But in reverse order than previously done
 	cout << "***Players with least houses go first. Ties are broken by largest plant owned. Else the order remains intact." << endl;
@@ -425,9 +419,6 @@ void GameBoard::part3() {
 
 		if(coalCapacity>0 || hybridCapacity>0){
 
-
-//...			players[i]->printPhaseStatus();
-
 			cout << "\n\nPlease enter the amount of COAL you want to buy (including for Hybrid plants): ";
 			cin >> coalBuy;
 			coalBuy = players[i]->strategicResourceBuy(coalCapacity, coalBuy);
@@ -460,8 +451,6 @@ void GameBoard::part3() {
 
 		if(oilCapacity>0 || hybridCapacity > 0){
 
-//...			players[i]->printPhaseStatus();
-
 			cout << "\n\nPlease enter the amount of OIL you want to buy (including for Hybrid plants): ";
 			cin >> oilBuy;
 			oilBuy = players[i]->strategicResourceBuy(oilCapacity, oilBuy);
@@ -484,8 +473,6 @@ void GameBoard::part3() {
 
 		if(garbageCapacity>0){
 
-
-//...			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of GARBAGE you want to buy: ";
 			cin >> garbageBuy;
 			garbageBuy = players[i]->strategicResourceBuy(garbageCapacity, garbageBuy);
@@ -508,8 +495,6 @@ void GameBoard::part3() {
 
 		if(uraniumCapacity>0){
 
-
-//...			players[i]->printPhaseStatus();
 			cout << "\n\nPlease enter the amount of URANIUM you want to buy: ";
 			cin >> uraniumBuy;
 			uraniumBuy = players[i]->strategicResourceBuy(uraniumCapacity, uraniumBuy);
@@ -544,9 +529,9 @@ void GameBoard::part3() {
 void GameBoard::part4()
 {
 	PhaseObserver *test = nullptr;
-	cout << "--------------------------------------------" << endl;
-	cout << "PHASE 5 bureaucracy" << endl;
-	cout << "--------------------------------------------" << endl;
+	//cout << "--------------------------------------------" << endl;
+	//cout << "PHASE 5 bureaucracy" << endl;
+	//cout << "--------------------------------------------" << endl;
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -618,8 +603,6 @@ void GameBoard::part4()
 
 			cout << endl;
 			int plantid;
-
-// ...			currentPlayer->printPhaseStatus();
 
 			cout << "please enter the plant id of the plant you wish to power (-1 to skip phase) > ";
 			cin >> plantid;
@@ -828,9 +811,9 @@ bool GameBoard::gameWinCondition() {
 void phase4()
 {
 	PhaseObserver * test = nullptr;
-	cout << "\n\n--------------------------------------------" << endl;
-	cout << "phase 4 buidling  " << endl;
-	cout << "--------------------------------------------" << endl;
+	//cout << "\n\n--------------------------------------------" << endl;
+	//cout << "phase 4 buidling  " << endl;
+	//cout << "--------------------------------------------" << endl;
 
 	for (int i = 0; i < players.size(); i++)
 	{
@@ -1229,7 +1212,6 @@ void setUp()
 			if (start_city != NULL)
 			{
 				players[i]->setStartCity(start_city);
-				// players[i]->placeHouse(start_city);
 				break;
 			}
 
